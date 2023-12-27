@@ -23,3 +23,36 @@ repos:
             -
                 id: editorconfig-checker
                 exclude: *default_excludes
+    -
+        repo: https://github.com/pre-commit/pre-commit-hooks
+        rev: v4.5.0
+        hooks:
+            -
+                id: check-case-conflict
+                exclude: *default_excludes
+            -
+                id: check-merge-conflict
+                exclude: *default_excludes
+            -
+                id: check-symlinks
+                exclude: *default_excludes
+            -
+                id: check-vcs-permalinks
+                exclude: *default_excludes
+            -
+                id: destroyed-symlinks
+                exclude: *default_excludes
+    -
+        repo: https://github.com/pre-commit/pygrep-hooks
+        rev: v1.10.0
+        hooks:
+            -
+                id: text-unicode-replacement-char
+                exclude: *default_excludes
+    -
+        repo: https://github.com/Yelp/detect-secrets
+        rev: v1.4.0
+        hooks:
+            -
+                id: detect-secrets
+                exclude: *default_excludes
