@@ -65,8 +65,8 @@ indent_style = tab
 # never seen anyone make them more than eight characters wide. By
 # setting indent_size to 8, we’re significantly decreasing the chances
 # that lines go over the 78 character limit. If a line doesn’t surpass
-# that limit with tabs that eight characters wide, then it won’t surpass
-# that limit with tabs that are smaller.
+# that limit with tabs that are eight characters wide, then it won’t
+# surpass that limit with tabs that are smaller.
 #
 # [1]: <https://jasonyundt.website/submitting-patches.html#send>
 # [2]: <https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#_project_over_email>
