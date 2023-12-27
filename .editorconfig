@@ -3,13 +3,9 @@
 root = true
 
 [**]
-# I personally prefer tabs for a few reasons:
+# I’ve chosen to use spaces for indentation for several reasons. The
+# main reason has to do with how tab characters are handled in emails.
 #
-# 1. One tab character is smaller than two or more space characters.
-# 2. A tab character clearly means “indentation”. A space character
-# could mean “indentation” or it could mean “space”.
-indent_style = tab
-
 # I accept patches using git-send-email [1]. When sending a patch using
 # git-send-email, the diff is embedded in the body of the message [2].
 # According to the standard for the format of email messages [3]: “There
@@ -58,15 +54,22 @@ indent_style = tab
 # After all that searching, I was unable to find any applicable
 # standards that defined the width of a tab character in an email. As a
 # result, the width of a tab character in an email is implementation
-# defined. In other words: it could be anything.
+# defined. In other words: it could be anything. This means that we
+# can’t use tab characters and guarantee compliance with that email
+# standard from before (“Each line of characters MUST be no more than
+# 998 characters, and SHOULD be no more than 78 characters, excluding
+# the CRLF.” [3]). In an email, “\tA” might be three characters long, or
+# it might be one hundred characters long. On the other hand, “    A” is
+# guaranteed to be five characters long. There’s no chance that it
+# crosses the seventy-eight character limit.
 #
-# In practice, the maximum width I’ve seen for tab characters is eight.
-# I’ve seen people make them less than eight characters wide, but I’ve
-# never seen anyone make them more than eight characters wide. By
-# setting indent_size to 8, we’re significantly decreasing the chances
-# that lines go over the seventy-eight character limit. If a line
-# doesn’t surpass that limit with tabs that are eight characters wide,
-# then it won’t surpass that limit with tabs that are smaller.
+# Using spaces also has other advantages. Some tools default to using
+# spaces for indentation, and others default to using tabs. The majority
+# of the tools that I use default to using space. One tool that I’ve
+# been wanting to use doesn’t support using tabs for indentation yet
+# [10]. I’m also aware of at least one language that requires that you
+# use spaces instead of tabs [11]. I’m not aware of any tools or
+# languages that support tabs but don’t support spaces.
 #
 # [1]: <https://jasonyundt.website/submitting-patches.html#send>
 # [2]: <https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#_project_over_email>
@@ -77,7 +80,13 @@ indent_style = tab
 # [7]: <https://ecma-international.org/publications-and-standards/standards/ecma-48/>
 # [8]: <https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf#page=34>
 # [9]: <https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf#page=59>
-indent_size = 8
+# [10]: <https://github.com/nix-community/nixpkgs-fmt/issues/306>
+# [11]: <https://yaml.org/spec/1.2.2/#61-indentation-spaces>
+indent_style = space
+
+# This is just my personal preference. I don’t have a good reason for
+# choosing 4 over any other number.
+indent_size = 4
 
 # Ideally, I would use U+2028 LINE SEPARATOR. Unlike other options,
 # U+2028 is platform-neutral. Platform neutrality is very important to
@@ -167,9 +176,3 @@ trim_trailing_whitespace = true
 # [1]: <https://stackoverflow.com/q/729692/7593853>
 # [2]: <https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html#cat-invocation>
 insert_final_newline = true
-
-[**.yaml]
-# YAML requires spaces for indentation:
-# <https://yaml.org/spec/1.2.2/#61-indentation-spaces>.
-indent_style = space
-indent_size = 4
