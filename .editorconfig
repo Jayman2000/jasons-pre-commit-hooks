@@ -52,8 +52,8 @@ indent_style = tab
 # best thing would be to look at ECMA-48 which is available for free on
 # ECMA’s Web site [7]. That standard explains character tabulations in
 # terms of fields. A character tabulation causes text to appear in the
-# next field [8][9]. I wasn’t able to find anything in the standard that
-# says how wide fields are.
+# next field [8][9]. I wasn’t able to find anything in that standard
+# that says how wide fields are.
 #
 # After all that searching, I was unable to find any applicable
 # standards that defined the width of a tab character in an email. As a
