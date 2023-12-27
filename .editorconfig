@@ -71,6 +71,7 @@ root = true
 # use spaces instead of tabs [11]. I’m not aware of any tools or
 # languages that support tabs but don’t support spaces.
 #
+# editorconfig-checker-disable
 # [1]: <https://jasonyundt.website/submitting-patches.html#send>
 # [2]: <https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#_project_over_email>
 # [3]: <https://www.rfc-editor.org/rfc/rfc5322.html#section-2.1.1>
@@ -82,6 +83,7 @@ root = true
 # [9]: <https://ecma-international.org/wp-content/uploads/ECMA-48_5th_edition_june_1991.pdf#page=59>
 # [10]: <https://github.com/nix-community/nixpkgs-fmt/issues/306>
 # [11]: <https://yaml.org/spec/1.2.2/#61-indentation-spaces>
+# editorconfig-checker-enable
 indent_style = space
 
 # This is just my personal preference. I don’t have a good reason for
@@ -156,6 +158,7 @@ end_of_line = lf
 #
 # For all those previous reasons, I chose to set charset to utf-8.
 #
+# editorconfig-checker-disable
 # [1]: <https://spec.editorconfig.org/#supported-pairs>
 # [2]: <https://utf8everywhere.org/#asian>
 # [3]: <https://w3techs.com/technologies/cross/character_encoding/ranking>
@@ -163,6 +166,7 @@ end_of_line = lf
 # [5]: <https://www.unicode.org/versions/Unicode15.0.0/ch23.pdf#G25817>
 # [6]: <https://www.unicode.org/versions/Unicode15.0.0/ch02.pdf#G19273>
 # [7]: <https://unicode.org/faq/utf_bom.html#bom5>
+# editorconfig-checker-enable
 charset = utf-8
 
 # Trailing whitespace makes files larger, and I don’t know of any
@@ -173,6 +177,35 @@ trim_trailing_whitespace = true
 # don’t like it when I cat [2] a file and it puts my prompt on the same
 # line as the last part of the file.
 #
+# editorconfig-checker-disable
 # [1]: <https://stackoverflow.com/q/729692/7593853>
 # [2]: <https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html#cat-invocation>
+# editorconfig-checker-enable
 insert_final_newline = true
+
+# I chose the number seventy-two for a very specific reason. I accept
+# patches via git-send-email [1]. When you submit changes using
+# git-send-email, the diff for your commits is included in the body of
+# one or more emails [2].
+#
+# According to the standard for the format of email messages [3]: “There
+# are two limits that this specification places on the number of
+# characters in a line.  Each line of characters MUST be no more than
+# 998 characters, and SHOULD be no more than 78 characters, excluding
+# the CRLF.”
+#
+# The number seventy-two was chosen to make it less likely that we go
+# past that seventy-eight character limit.
+#
+# I could have just make seventy-eight the limit, but characters tend to
+# get put in front of lines. For example, git-diff will add a space, a
+# plus or a minus before every line [4]. People also sometimes quote
+# diffs which will add an additional “> ” at the beginning of the line.
+#
+# editorconfig-checker-disable
+# [1]: <https://jasonyundt.website/submitting-patches#send>
+# [2]: <https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#_project_over_email>
+# [3]: <https://www.rfc-editor.org/rfc/rfc5322.html#section-2.1.1>
+# [4]: <https://git-scm.com/docs/git-diff#_combined_diff_format>
+# editorconfig-checker-enable
+max_line_length = 72

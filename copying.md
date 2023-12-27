@@ -22,6 +22,8 @@ look at `CC0-1.0` for details.
 All of this repo’s Git metadata (commit messages, annotated tags, hashes
 etc.) is dedicated to the public domain using [🅭🄍1.0][5].
 
+<!-- editorconfig-checker-disable -->
+
 [1]: https://github.com/fsfe/reuse-docs/blob/0913b0a83b36c161966be1c5e70c81bdadfb8a69/spec.md
 [2]: https://spdx.org/licenses/
 [3]: https://sfconservancy.org/news/2022/may/16/vizio-remand-win/
@@ -29,5 +31,6 @@ etc.) is dedicated to the public domain using [🅭🄍1.0][5].
 [5]: https://creativecommons.org/publicdomain/zero/1.0/
 
 <!--
+editorconfig-checker-enable
 REUSE-IgnoreEnd
 -->
