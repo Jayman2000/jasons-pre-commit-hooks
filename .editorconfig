@@ -19,10 +19,10 @@ indent_style = tab
 # the CRLF.”
 #
 # I want to try and avoid having people send messages with lines that
-# are longer than 78 characters. Here’s the problem: in an email, how
-# wide are tab characters? If a line is indented one time, how many more
-# characters am I allowed to type before I hit the 78 character limit?
-# What if the line is indented twice?
+# are longer than seventy-eight characters. Here’s the problem: in an
+# email, how wide are tab characters? If a line is indented one time,
+# how many more characters am I allowed to type before I hit the
+# seventy-eight character limit? What if the line is indented twice?
 #
 # Unfortunately, there isn’t one right answer for those questions. As
 # far as I know, there’s no standard that defines how long a tab
@@ -64,9 +64,9 @@ indent_style = tab
 # I’ve seen people make them less than eight characters wide, but I’ve
 # never seen anyone make them more than eight characters wide. By
 # setting indent_size to 8, we’re significantly decreasing the chances
-# that lines go over the 78 character limit. If a line doesn’t surpass
-# that limit with tabs that are eight characters wide, then it won’t
-# surpass that limit with tabs that are smaller.
+# that lines go over the seventy-eight character limit. If a line
+# doesn’t surpass that limit with tabs that are eight characters wide,
+# then it won’t surpass that limit with tabs that are smaller.
 #
 # [1]: <https://jasonyundt.website/submitting-patches.html#send>
 # [2]: <https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#_project_over_email>
