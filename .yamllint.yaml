@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
+
+extends: default
+rules:
+    indentation:
+        spaces: 4
+        check-multi-line-strings: true
+    new-lines:
+        type: unix
+    trailing-spaces: enable
+    new-line-at-end-of-file: enable
+    line-length:
+        max: 72
+    truthy: enable
