@@ -6,7 +6,8 @@ REUSE-IgnoreStart
 
 # Copying Information for Jason’s Repo Checker
 
-This repo complies with [this specific version of the REUSE Specification][1].
+This repo complies with [this specific version of the REUSE
+Specification][1].
 
 Please note that some items on [the SPDX License List][2] aren’t
 necessarily licenses. For example, [`GPL-2.0-only` can act as a
