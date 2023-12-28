@@ -13,6 +13,8 @@ Follow [these instructions][2] to get started. Skip [the part about
 creating a pre-commit configuration][3].
 - This repo uses an [EditorConfig](https://editorconfig.org) file.
 - Try to keep lines seventy-two characters long or shorter.
+- Use [CommonMark](https://commonmark.org) for
+[Markdown](https://daringfireball.net/projects/markdown) files.
 
 [1]: https://pre-commit.com
 [2]: https://pre-commit.com/#quick-start
