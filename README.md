@@ -11,7 +11,7 @@ SPDX-FileCopyrightText: 2023 Jason Yundt <jason@jasonyundt.email>
 Follow [these instructions][2] to get started. Skip [the part about
 creating a pre-commit configuration][3].
 - This repo uses an [EditorConfig](https://editorconfig.org) file.
-- Try to keep lines seventy-two characters long or shorter.
+- Try to keep lines shorter than seventy-three characters.
 - Use [CommonMark](https://commonmark.org) for
 [Markdown](https://daringfireball.net/projects/markdown) files.
 
