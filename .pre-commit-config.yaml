@@ -25,6 +25,11 @@ repos:
             -
                 id: editorconfig-checker
                 exclude: *default_excludes
+                args:
+                    # If a file is automatically generated, it should
+                    # either not be added to the Git repo or it should
+                    # still respect my EditorConfig.
+                    - -ignore-defaults
     -
         repo: https://github.com/pre-commit/pre-commit-hooks
         rev: v4.5.0
