@@ -57,11 +57,11 @@ repos:
                 id: text-unicode-replacement-char
                 exclude: *default_excludes
     -
-        repo: https://github.com/Yelp/detect-secrets
-        rev: v1.4.0
+        repo: https://github.com/zricethezav/gitleaks
+        rev: v8.18.1
         hooks:
             -
-                id: detect-secrets
+                id: gitleaks
                 exclude: *default_excludes
     -
         # editorconfig-checker-disable
