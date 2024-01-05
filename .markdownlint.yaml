@@ -1,0 +1,22 @@
+%YAML 1.2
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+---
+default: true
+MD003:
+    style: atx
+MD004:
+    style: dash
+MD007:
+    indent: 4
+    start_indented: false
+MD009: true
+MD010: true
+MD013:
+    line_length: &line_length 72
+    heading_line_length: *line_length
+    code_block_line_length: *line_length
+    code_blocks: true
+    tables: true
+    headings: true
+MD047: true
