@@ -1,10 +1,10 @@
 <!--
 SPDX-License-Identifier: CC0-1.0
-SPDX-FileCopyrightText: 2023 Jason Yundt <jason@jasonyundt.email>
+SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
 REUSE-IgnoreStart
 -->
 
-# Copying Information for Jason’s Repo Checker
+# Copying Information for Jason’s Pre-commit Hooks
 
 This repo complies with [this specific version of the REUSE
 Specification][1].
