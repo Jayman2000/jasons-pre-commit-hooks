@@ -51,7 +51,13 @@ repos:
                 id: check-vcs-permalinks
                 exclude: *default_excludes
             -
+                id: debug-statements
+                exclude: *default_excludes
+            -
                 id: destroyed-symlinks
+                exclude: *default_excludes
+            -
+                id: fix-encoding-pragma
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/pygrep-hooks
@@ -83,6 +89,27 @@ repos:
                 # files pattern.
                 types: []
     -
+        # This is the version of language-formatters-pre-commit-hooks
+        # from this PR:
+        # <https://github.com/macisamuele/language-formatters-pre-commit-hooks/pull/208>.
+        #
+        # Normally, I would just use a stable release of
+        # language-formatters-pre-commit-hooks, but stable releases are
+        # likely to not work properly on Windows, and being platform
+        # neutral is very important to me.
+        #
+        # yamllint disable-line rule:line-length
+        repo: https://github.com/Jayman2000/language-formatters-pre-commit-hooks-pr
+        rev: pr208-rev-0
+        hooks:
+            -
+                id: pretty-format-toml
+                exclude: *default_excludes
+                args:
+                    - --autofix
+                    - --indent
+                    - "4"
+    -
         # This is the version of yamllint from this PR:
         # <https://github.com/adrienverge/yamllint/pull/630>.
         #
@@ -101,4 +128,18 @@ repos:
         hooks:
             -
                 id: markdownlint
+                exclude: *default_excludes
+    -
+        repo: https://github.com/pre-commit/mirrors-mypy
+        rev: v1.8.0
+        hooks:
+            -
+                id: mypy
+                exclude: *default_excludes
+    -
+        repo: https://github.com/astral-sh/ruff-pre-commit
+        rev: v0.1.11
+        hooks:
+            -
+                id: ruff
                 exclude: *default_excludes

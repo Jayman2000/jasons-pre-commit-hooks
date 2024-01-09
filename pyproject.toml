@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
+[project]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Quality Assurance"
+]
+description = "Hooks for <https://pre-commit.com>"
+name = "jasons-pre-commit-hooks"
+# This is just the oldest version of Python that’s still supported at
+# the moment: <https://devguide.python.org/versions/>.
+requires-python = ">=3.8"
+version = "0.dev0"
+
+# This file doesn’t really contain a license. Instead, it contains the
+# repo’s copying information.
+[project.license]
+file = "copying.md"
+
+[tool.setuptools]
+packages = ["jasons_pre_commit_hooks"]
