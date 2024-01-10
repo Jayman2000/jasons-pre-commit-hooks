@@ -26,5 +26,8 @@ version = "0.dev0"
 [project.license]
 file = "copying.md"
 
+[project.scripts]
+forbid-paths-that-match = "jasons_pre_commit_hooks:forbid_paths"
+
 [tool.setuptools]
 packages = ["jasons_pre_commit_hooks"]
