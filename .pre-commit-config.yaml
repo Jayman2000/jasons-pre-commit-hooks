@@ -136,6 +136,8 @@ repos:
             -
                 id: mypy
                 exclude: *default_excludes
+                args:
+                    - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
         rev: v0.1.11
