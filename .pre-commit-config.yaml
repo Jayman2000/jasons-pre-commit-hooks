@@ -154,7 +154,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: 4ebf887f0a8ed839ae467acee4e2f446d3d5daa7
+        rev: pre-version-0
         hooks:
             # I’m only enabling this hook to work around this problem:
             # <https://github.com/fsfe/reuse-tool/issues/881>.
