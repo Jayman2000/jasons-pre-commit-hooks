@@ -29,5 +29,8 @@ file = "copying.md"
 [project.scripts]
 forbid-paths-that-match = "jasons_pre_commit_hooks:forbid_paths"
 
+[project.urls]
+Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
+
 [tool.setuptools]
 packages = ["jasons_pre_commit_hooks"]
