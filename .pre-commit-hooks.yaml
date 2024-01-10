@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+-
+    id: &id forbid-paths-that-match
+    name: *id
+    entry: *id
+    language: python
+    description: Causes an error if paths match certain regex patterns

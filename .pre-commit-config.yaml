@@ -145,3 +145,10 @@ repos:
             -
                 id: ruff
                 exclude: *default_excludes
+    -
+        repo: https://github.com/pre-commit/pre-commit
+        rev: v3.6.0
+        hooks:
+            -
+                id: validate_manifest
+                exclude: *default_excludes
