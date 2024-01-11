@@ -8,6 +8,7 @@ import os
 import pathlib
 import re
 import sys
+import textwrap
 import warnings
 
 from collections.abc import Iterable
@@ -56,6 +57,11 @@ REUSE-IgnoreEnd
 -->
 """
 # REUSE-IgnoreEnd
+COPYING_LINK: Final = \
+"""## Copying
+
+See [`copying.md`](./copying.md).
+"""
 
 
 # editorconfig-checker-disable
@@ -221,6 +227,19 @@ def repo_style_checker() -> int:
             f"ERROR: The project’s name in {README_PATH} does not",
             f"match its name in {COPYING_PATH}.",
             README_H1_ERROR,
+            file=sys.stderr
+        )
+        return 1
+    # Does the README link to copying.md?
+    if COPYING_LINK not in README_CONTENTS:
+        COPYING_LINK_INDENTED: Final = textwrap.indent(
+            COPYING_LINK,
+            "\t"
+        )
+        print(
+            f"ERROR: {README_PATH} is missing a link to",
+            f"{COPYING_PATH}. Make sure that {README_PATH} contains",
+            f"the following:\n\n{COPYING_LINK_INDENTED}",
             file=sys.stderr
         )
         return 1
