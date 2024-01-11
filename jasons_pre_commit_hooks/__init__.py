@@ -62,7 +62,47 @@ COPYING_LINK: Final = \
 
 See [`copying.md`](./copying.md).
 """
+
 HINTS_FOR_CONTRIBUTORS_HEADING: Final = "## Hints for Contributors\n"
+HFC_LINE_LENGTH: Final = \
+    "- Try to keep lines shorter than seventy-three characters."
+HFC_PRE_COMMIT: Final = \
+"""
+- You can use [pre-commit][1] to automatically check your contributions.
+Follow [these instructions][2] to get started. Skip [the part about
+creating a pre-commit configuration][3].
+"""
+HFC_PRE_COMMIT_LINKS: Final = \
+"""
+[1]: https://pre-commit.com
+[2]: https://pre-commit.com/#quick-start
+[3]: https://pre-commit.com/#2-add-a-pre-commit-configuration
+"""
+HFC_EDITOR_CONFIG: Final = \
+    "- This repo uses an [EditorConfig](https://editorconfig.org) file."
+HFC_MARKDOWN: Final = \
+"""
+- Use [CommonMark](https://commonmark.org) for
+[Markdown](https://daringfireball.net/projects/markdown) files.
+"""
+HFC_RUFF: Final = \
+"""
+- If you’re using [NixOS](https://nixos.org), then the
+[ruff](https://docs.astral.sh/ruff/) pre-commit hook probably won’t
+work. Here’s how you fix it:
+
+    1. Set the `PIP_NO_BINARY` environment variable to “ruff”.
+    2. Run `pre-commit clean`
+    3. Run `pre-commit install-hooks`
+"""
+HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
+    ('**', HFC_LINE_LENGTH),
+    ('.pre-commit-config.yaml', HFC_PRE_COMMIT),
+    ('.pre-commit-config.yaml', HFC_PRE_COMMIT_LINKS),
+    ('.editorconfig', HFC_EDITOR_CONFIG),
+    ('**.md', HFC_MARKDOWN),
+    ('**.py', HFC_RUFF)
+)
 
 
 # editorconfig-checker-disable
@@ -258,4 +298,24 @@ def repo_style_checker() -> int:
             file=sys.stderr
         )
         return 1
+    # Do the Hints for Contributors contain some standard hints for
+    # certain files?
+    glob: str
+    hint: str
+    for glob, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
+        path: pathlib.Path
+        for path in PATHS:
+            if path.match(glob, case_sensitive=False):
+                if hint not in README_CONTENTS:
+                    hint_indented: str = textwrap.indent(hint, "\t")
+                    print(
+                        f"ERROR: {README_PATH} doesn’t contain this",
+                        f"hint for contributors:\n\n{hint_indented}\n",
+                        file=sys.stderr
+                    )
+                    print(
+                        f"(glob {glob} matched by file {path})",
+                        file=sys.stderr
+                    )
+                    break
     return 0
