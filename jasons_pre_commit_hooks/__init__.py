@@ -16,6 +16,48 @@ from typing import Final
 import dulwich.repo
 
 
+# REUSE-IgnoreStart
+COPYING_TEMPLATE: Final = \
+"""<!--
+SPDX-License-Identifier: CC0-1.0
+SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
+REUSE-IgnoreStart
+-->
+
+# Copying Information for {}
+
+This repo complies with [this specific version of the REUSE
+Specification][1].
+
+Please note that some items on [the SPDX License List][2] aren’t
+necessarily licenses. For example, [`GPL-2.0-only` can act as a
+contract][3] and [`CCO-1.0` is a public domain dedication][4]. If a file
+contains `SPDX-License-Identifier: CC0-1.0` that doesn’t necessarily
+mean that the file is licensed in anyway. You’ll need to look at
+`CC0-1.0` to figure out the legal status of that file. Additionally, if
+that file contains an `SPDX-FileCopyrightText` tag, that doesn’t
+necessarily mean that the file is copyrighted. Again, you’ll need to
+look at `CC0-1.0` for details.
+
+All of this repo’s Git metadata (commit messages, annotated tags, hashes
+etc.) is dedicated to the public domain using [🅭🄍1.0][5].
+
+<!-- editorconfig-checker-disable -->
+
+[1]: https://github.com/fsfe/reuse-docs/blob/0913b0a83b36c161966be1c5e70c81bdadfb8a69/spec.md
+[2]: https://spdx.org/licenses/
+[3]: https://sfconservancy.org/news/2022/may/16/vizio-remand-win/
+[4]: https://wiki.spdx.org/view/Legal_Team/Decisions/Dealing_with_Public_Domain_within_SPDX_Files
+[5]: https://creativecommons.org/publicdomain/zero/1.0/
+
+<!--
+editorconfig-checker-enable
+REUSE-IgnoreEnd
+-->
+"""
+# REUSE-IgnoreEnd
+
+
 # editorconfig-checker-disable
 def make_stdout_stderr_handle_errors_better() -> None:
     """
@@ -102,13 +144,42 @@ def repo_style_checker() -> int:
     # given.
     PARSER.parse_args()
 
+    # Does copying.md exist?
     PATHS: Final = set(path for path in paths_in_repo())
-    COPYING: Final = pathlib.Path('copying.md')
-    if COPYING not in PATHS:
+    COPYING_PATH: Final = pathlib.Path('copying.md')
+    if COPYING_PATH not in PATHS:
         print(
-            f"ERROR: There’s no {COPYING} file.",
+            f"ERROR: There’s no {COPYING_PATH} file.",
             file=sys.stderr
         )
         return 1
+    # Can we determine the project’s name by looking at copying.md?
+    TO_LOOK_FOR: Final = "# Copying Information for "
+    COPYING_CONTENTS: Final = COPYING_PATH.read_text(encoding='utf_8')
+    for line in COPYING_CONTENTS.splitlines():
+        name_location: int = line.find(TO_LOOK_FOR)
+        if name_location != -1:
+            name_start: int = name_location + len(TO_LOOK_FOR)
+            project_name: str = line[name_start:]
+            break
+    else:
+        print(
+            "ERROR: Couldn’t automatically detect the project’s name",
+            f"by looking at {COPYING_PATH}. In order for",
+            f"autodetection to work, {COPYING_PATH} should contain a",
+            "line that looks like",
+            f"this:\n\n\t{TO_LOOK_FOR}<project-name>\n",
+            file=sys.stderr
+        )
+        return 1
+    # Does copying.md contain the correct text?
+    EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(project_name)
+    if EXPECTED_COPYING_INFO.format(project_name) != COPYING_CONTENTS:
+        print(
+            f"ERROR: {COPYING_PATH} doesn’t match the standard copying",
+            "info template. Fixing…",
+            file=sys.stderr
+        )
+        COPYING_PATH.write_text(EXPECTED_COPYING_INFO, encoding='utf_8')
 
     return 0
