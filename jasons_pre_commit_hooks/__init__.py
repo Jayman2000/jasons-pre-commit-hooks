@@ -138,6 +138,10 @@ def paths_in_repo() -> Iterable[pathlib.Path]:
             yield pathlib.Path(os.fsdecode(byte_path))
 
 
+def print_no_file_error(path: pathlib.Path) -> None:
+    print(f"ERROR: There’s no {path} file.", file=sys.stderr)
+
+
 def extract_str_from_line_that_starts_with(
     text: str,
     to_look_for: str
@@ -165,10 +169,7 @@ def repo_style_checker() -> int:
     PATHS: Final = set(path for path in paths_in_repo())
     COPYING_PATH: Final = pathlib.Path('copying.md')
     if COPYING_PATH not in PATHS:
-        print(
-            f"ERROR: There’s no {COPYING_PATH} file.",
-            file=sys.stderr
-        )
+        print_no_file_error(COPYING_PATH)
         return 1
     # Can we determine the project’s name by looking at copying.md?
     TO_LOOK_FOR: Final = "# Copying Information for "
@@ -199,10 +200,7 @@ def repo_style_checker() -> int:
     # Does README.md exist?
     README_PATH: Final = pathlib.Path('README.md')
     if README_PATH not in PATHS:
-        print(
-            f"ERROR: There’s no {README_PATH} file.",
-            file=sys.stderr
-        )
+        print_no_file_error(README_PATH)
     # Does README.md contain an <h1>?
     H1_MARKER: Final = "# "
     README_CONTENTS: Final = README_PATH.read_text(encoding='utf_8')
@@ -243,5 +241,9 @@ def repo_style_checker() -> int:
             file=sys.stderr
         )
         return 1
-
+    # Is pre-commit set up?
+    PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
+    if PC_CONFIG_PATH not in PATHS:
+        print_no_file_error(PC_CONFIG_PATH)
+        return 1
     return 0
