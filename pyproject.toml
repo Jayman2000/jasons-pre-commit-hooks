@@ -14,7 +14,10 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Quality Assurance"
 ]
-dependencies = ["dulwich"]
+dependencies = [
+    "dulwich",
+    "PyYAML"
+]
 description = "Hooks for <https://pre-commit.com>"
 name = "jasons-pre-commit-hooks"
 requires-python = ">=3.12"

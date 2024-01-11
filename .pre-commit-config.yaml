@@ -138,6 +138,8 @@ repos:
                 exclude: *default_excludes
                 additional_dependencies:
                     - dulwich
+                    - PyYAML
+                    - types-PyYAML
                 args:
                     - --strict
     -

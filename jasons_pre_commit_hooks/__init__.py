@@ -12,9 +12,10 @@ import textwrap
 import warnings
 
 from collections.abc import Iterable
-from typing import Final, Optional
+from typing import Any, Final, NamedTuple, Optional
 
 import dulwich.repo
+import yaml
 
 
 # REUSE-IgnoreStart
@@ -102,6 +103,108 @@ HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
     ('.editorconfig', HFC_EDITOR_CONFIG),
     ('**.md', HFC_MARKDOWN),
     ('**.py', HFC_RUFF)
+)
+
+# Pre-commit hooks shouldn’t mess with the files in the LICENSES/
+# directory. See 4f1e797 (Don’t run most pre-commit hooks on LICENSES/,
+# 2023-12-25) for details.
+PRE_COMMIT_STANDARD_EXCLUDE: Final = '^LICENSES/'
+class PreCommitRepoInfo(NamedTuple):
+    url: str
+    hook_ids: Iterable[str]
+    exclude: Optional[str] = PRE_COMMIT_STANDARD_EXCLUDE
+    args: Optional[Iterable[str]] = None
+PCR_REUSE: Final = PreCommitRepoInfo(
+    url='https://github.com/fsfe/reuse-tool',
+    hook_ids=('reuse',),
+    exclude=None,
+    args=None
+)
+PCR_PRE_COMMIT_UPDATE: Final = PreCommitRepoInfo(
+    url='https://gitlab.com/vojko.pribudic/pre-commit-update',
+    hook_ids=('pre-commit-update',)
+)
+PCR_EDITORCONFIG_CHECKER: Final = PreCommitRepoInfo(
+    # editorconfig-checker-disable
+    url='https://github.com/editorconfig-checker/editorconfig-checker.python',
+    # editorconfig-checker-enable
+    hook_ids=('editorconfig-checker',),
+    args=('-ignore-defaults',)
+)
+PCR_OFFICIAL_HOOKS: Final = PreCommitRepoInfo(
+    url='https://github.com/pre-commit/pre-commit-hooks',
+    hook_ids=(
+        'check-case-conflict',
+        'check-merge-conflict',
+        'check-symlinks',
+        'check-vcs-permalinks',
+        'destroyed-symlinks'
+    )
+)
+PCR_OFFICIAL_HOOKS_PYTHON: Final = PreCommitRepoInfo(
+    url='https://github.com/pre-commit/pre-commit-hooks',
+    hook_ids=(
+        'debug-statements',
+        'fix-encoding-pragma'
+    )
+)
+PCR_PYGREP_HOOKS: Final = PreCommitRepoInfo(
+    url='https://github.com/pre-commit/pygrep-hooks',
+    hook_ids=('text-unicode-replacement-char',)
+)
+PCR_GITLEAKS: Final = PreCommitRepoInfo(
+    url='https://github.com/zricethezav/gitleaks',
+    hook_ids=('gitleaks',)
+)
+PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
+    # editorconfig-checker-disable
+    url='https://github.com/Jayman2000/language-formatters-pre-commit-hooks-pr',
+    # editorconfig-checker-enable
+    hook_ids=('pretty-format-toml',),
+    args=('--autofix', '--indent', '4')
+)
+# This is the version of yamllint from this PR:
+# <https://github.com/adrienverge/yamllint/pull/630>.
+#
+# Normally, I would just use a stable release of yamllint, but
+# stable releases are likely to not work properly on Windows,
+# and being platform neutral is very important to me.
+PCR_YAMLLINT: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/yamllint-pr',
+    hook_ids=('yamllint',)
+)
+PCR_MARKDOWNLINT_CLI: Final = PreCommitRepoInfo(
+    url='https://github.com/igorshubovych/markdownlint-cli',
+    hook_ids=('markdownlint',)
+)
+PCR_MYPY: Final = PreCommitRepoInfo(
+    url='https://github.com/pre-commit/mirrors-mypy',
+    hook_ids=('mypy',),
+    args=('--strict',)
+)
+PCR_RUFF: Final = PreCommitRepoInfo(
+    url='https://github.com/astral-sh/ruff-pre-commit',
+    hook_ids=('ruff',)
+)
+PCR_PRE_COMMIT_ITSELF: Final = PreCommitRepoInfo(
+    url='https://github.com/pre-commit/pre-commit',
+    hook_ids=('validate_manifest',)
+)
+PRE_COMMIT_REPOS_BY_PATH: Final = (
+    ('**', PCR_REUSE),
+    ('**', PCR_PRE_COMMIT_UPDATE),
+    ('.editorconfig', PCR_EDITORCONFIG_CHECKER),
+    ('**', PCR_OFFICIAL_HOOKS),
+    ('**.py', PCR_OFFICIAL_HOOKS_PYTHON),
+    ('**', PCR_PYGREP_HOOKS),
+    ('**', PCR_GITLEAKS),
+    ('**.toml', PCR_LANGUAGE_FORMATTERS),
+    ('**.yaml', PCR_YAMLLINT),
+    ('**.yml', PCR_YAMLLINT),
+    ('**.md', PCR_MARKDOWNLINT_CLI),
+    ('**.py', PCR_MYPY),
+    ('**.py', PCR_RUFF),
+    ('.pre-commit-hooks.yaml', PCR_PRE_COMMIT_ITSELF),
 )
 
 
@@ -192,6 +295,141 @@ def extract_str_from_line_that_starts_with(
             extraction_start_point: int = len(to_look_for)
             return line[extraction_start_point:]
     return None
+
+
+def check_pc_config_hooks(
+    pre_commit_config: dict[Any, Any],
+    repo_info: PreCommitRepoInfo,
+    glob: str
+) -> bool:
+    ACTUAL_VALUE: Final = "Its actual value was {}"
+    REPOS: Final = pre_commit_config.get('repos')
+    if not isinstance(REPOS, Iterable):
+        print(
+            "ERROR: The pre-commit config did not contain a key named",
+            "repos, or the repos key’s value wasn’t a list.",
+            ACTUAL_VALUE.format(REPOS),
+            file=sys.stderr
+        )
+        return False
+
+    hooks_found: dict[str, bool] = {}
+    for hook_id in repo_info.hook_ids:
+        hooks_found[hook_id] = False
+    excludes_respected: bool = True
+    args_respected: bool = True
+    no_errors: bool = True
+    repo: Any
+    for repo in REPOS:
+        if not isinstance(repo, dict):
+            print(
+                "ERROR: One of the items on the pre-commit config’s",
+                "repos list was not a YAML mapping.",
+                ACTUAL_VALUE.format(repo),
+                file=sys.stderr
+            )
+            no_errors = False
+            continue
+        url: Any = repo.get('repo')
+        if not isinstance(url, str):
+            print(
+                "ERROR: In the pre-commit config, the URL for one of",
+                "the items on the repos list either wasn’t specified",
+                "wasn’t a string.",
+                ACTUAL_VALUE.format(url),
+            )
+            no_errors = False
+            continue
+        if url != repo_info.url:
+            continue
+        hooks: Any = repo.get('hooks')
+        if not isinstance(hooks, Iterable):
+            print(
+                "ERROR: In the pre-commit config, the hooks list for",
+                f"<{url}> either wasn’t specified or wasn’t a string.",
+                ACTUAL_VALUE.format(hooks),
+                file=sys.stderr
+            )
+            no_errors = False
+            continue
+        hook: Any
+        for hook in hooks:
+            if not isinstance(hook, dict):
+                print(
+                    "ERROR: In the pre-commit config, one of the hooks",
+                    f"for <{url}> was not a YAML mapping.",
+                    ACTUAL_VALUE.format(hook),
+                    file=sys.stderr
+                )
+                no_errors = False
+                continue
+            id: Any = hook.get('id')
+            if id in repo_info.hook_ids:
+                hooks_found[id] = True
+            if repo_info.exclude is not None:
+                exclude: Any = hook.get('exclude')
+                if not isinstance(exclude, str):
+                    print(
+                        f"ERROR: In the pre-commit config, <{url}>’s",
+                        f"{id} hook either did not specify an exclude",
+                        "pattern or specified an exclude pattern that",
+                        "wasn’t a string.",
+                        ACTUAL_VALUE.format(exclude),
+                        file=sys.stderr
+                    )
+                    no_errors = False
+                    continue
+                if exclude != repo_info.exclude:
+                    print(
+                        f"ERROR: In the pre-commit config, <{url}>’s",
+                        f"{id} hook didn’t use the right value for its",
+                        "exclude pattern. It should have been",
+                        f"{repo_info.exclude}.",
+                        ACTUAL_VALUE.format(exclude),
+                        file=sys.stderr
+                    )
+                    excludes_respected = False
+            if repo_info.args is not None:
+                args: Any = hook.get('args')
+                if not isinstance(args, Iterable):
+                    print(
+                        f"ERROR: In the pre-commit config, <{url}>’s",
+                        f"{id} hook either did not specify an args",
+                        "list or set args to something other than a",
+                        "list.",
+                        ACTUAL_VALUE.format(args),
+                        file=sys.stderr
+                    )
+                    no_errors = False
+                    continue
+                args_as_a_tuple: tuple[Any] = tuple(args)
+                expected_arg: str
+                for expected_arg in repo_info.args:
+                    if expected_arg not in args_as_a_tuple:
+                        print(
+                            "ERROR: In the pre-commit config,",
+                            f"<{url}>’s {id} hook did not specify",
+                            f"this argument: {expected_arg}",
+                            file=sys.stderr
+                        )
+                        args_respected = False
+
+    all_hooks_found: bool = True
+    for hook_found in hooks_found.values():
+        all_hooks_found = all_hooks_found and hook_found
+    if not all_hooks_found:
+        print(
+            "ERROR: All of the standard pre-commit hooks for files",
+            f"that match “{glob}” weren’t found. Here’s the hooks that",
+            f"should have been found: {repo_info}",
+            file=sys.stderr
+        )
+    return (
+        no_errors
+        and excludes_respected
+        and args_respected
+        and all_hooks_found
+    )
 
 
 def repo_style_checker() -> int:
@@ -318,4 +556,25 @@ def repo_style_checker() -> int:
                         file=sys.stderr
                     )
                     break
+    # Does the pre-commit config contain some standard hooks for certain
+    # files?
+    missing_hooks: bool = False
+    PC_CONFIG: Final = yaml.safe_load(
+        PC_CONFIG_PATH.read_text(encoding='utf_8')
+    )
+    repo_info: PreCommitRepoInfo
+    for glob, repo_info in PRE_COMMIT_REPOS_BY_PATH:
+        for path in PATHS:
+            if path.match(glob, case_sensitive=False):
+                hooks_found: bool = check_pc_config_hooks(
+                    PC_CONFIG,
+                    repo_info,
+                    glob
+                )
+                if not hooks_found:
+                    missing_hooks = True
+                break
+    if missing_hooks:
+        return 1
+
     return 0
