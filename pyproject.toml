@@ -17,9 +17,7 @@ classifiers = [
 dependencies = ["dulwich"]
 description = "Hooks for <https://pre-commit.com>"
 name = "jasons-pre-commit-hooks"
-# This is just the oldest version of Python that’s still supported at
-# the moment: <https://devguide.python.org/versions/>.
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 version = "0.dev0"
 
 # This file doesn’t really contain a license. Instead, it contains the
