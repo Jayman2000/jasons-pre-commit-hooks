@@ -181,5 +181,12 @@ def repo_style_checker() -> int:
             file=sys.stderr
         )
         COPYING_PATH.write_text(EXPECTED_COPYING_INFO, encoding='utf_8')
+    # Does README.md exist?
+    README_PATH: Final = pathlib.Path('README.md')
+    if README_PATH not in PATHS:
+        print(
+            f"ERROR: There’s no {README_PATH} file.",
+            file=sys.stderr
+        )
 
     return 0
