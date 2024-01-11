@@ -14,6 +14,7 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Quality Assurance"
 ]
+dependencies = ["dulwich"]
 description = "Hooks for <https://pre-commit.com>"
 name = "jasons-pre-commit-hooks"
 # This is just the oldest version of Python that’s still supported at
@@ -28,6 +29,7 @@ file = "copying.md"
 
 [project.scripts]
 forbid-paths-that-match = "jasons_pre_commit_hooks:forbid_paths"
+repo-style-checker = "jasons_pre_commit_hooks:repo_style_checker"
 
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
