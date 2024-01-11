@@ -62,6 +62,7 @@ COPYING_LINK: Final = \
 
 See [`copying.md`](./copying.md).
 """
+HINTS_FOR_CONTRIBUTORS_HEADING: Final = "## Hints for Contributors\n"
 
 
 # editorconfig-checker-disable
@@ -247,5 +248,14 @@ def repo_style_checker() -> int:
     PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
     if PC_CONFIG_PATH not in PATHS:
         print_no_file_error(PC_CONFIG_PATH)
+        return 1
+    # Does README.md have a “Hints for Contributors” section?
+    if HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS:
+        print(
+            f"ERROR: {README_PATH} doesn’t have a “Hints for",
+            f"Contributors” section. Make sure that {README_PATH}",
+            f"contains this:\n\n\t{HINTS_FOR_CONTRIBUTORS_HEADING}",
+            file=sys.stderr
+        )
         return 1
     return 0
