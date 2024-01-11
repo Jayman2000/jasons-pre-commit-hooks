@@ -11,7 +11,7 @@ import sys
 import warnings
 
 from collections.abc import Iterable
-from typing import Final
+from typing import Final, Optional
 
 import dulwich.repo
 
@@ -132,6 +132,17 @@ def paths_in_repo() -> Iterable[pathlib.Path]:
             yield pathlib.Path(os.fsdecode(byte_path))
 
 
+def extract_str_from_line_that_starts_with(
+    text: str,
+    to_look_for: str
+) -> Optional[str]:
+    for line in text.splitlines():
+        if line.startswith(to_look_for):
+            extraction_start_point: int = len(to_look_for)
+            return line[extraction_start_point:]
+    return None
+
+
 def repo_style_checker() -> int:
     make_stdout_stderr_handle_errors_better()
     PARSER: Final = argparse.ArgumentParser(
@@ -156,13 +167,11 @@ def repo_style_checker() -> int:
     # Can we determine the project’s name by looking at copying.md?
     TO_LOOK_FOR: Final = "# Copying Information for "
     COPYING_CONTENTS: Final = COPYING_PATH.read_text(encoding='utf_8')
-    for line in COPYING_CONTENTS.splitlines():
-        name_location: int = line.find(TO_LOOK_FOR)
-        if name_location != -1:
-            name_start: int = name_location + len(TO_LOOK_FOR)
-            project_name: str = line[name_start:]
-            break
-    else:
+    PROJECT_NAME: Final = extract_str_from_line_that_starts_with(
+        COPYING_CONTENTS,
+        TO_LOOK_FOR
+    )
+    if PROJECT_NAME is None:
         print(
             "ERROR: Couldn’t automatically detect the project’s name",
             f"by looking at {COPYING_PATH}. In order for",
@@ -173,8 +182,8 @@ def repo_style_checker() -> int:
         )
         return 1
     # Does copying.md contain the correct text?
-    EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(project_name)
-    if EXPECTED_COPYING_INFO.format(project_name) != COPYING_CONTENTS:
+    EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(PROJECT_NAME)
+    if EXPECTED_COPYING_INFO.format(PROJECT_NAME) != COPYING_CONTENTS:
         print(
             f"ERROR: {COPYING_PATH} doesn’t match the standard copying",
             "info template. Fixing…",
@@ -188,5 +197,32 @@ def repo_style_checker() -> int:
             f"ERROR: There’s no {README_PATH} file.",
             file=sys.stderr
         )
+    # Does README.md contain an <h1>?
+    H1_MARKER: Final = "# "
+    README_CONTENTS: Final = README_PATH.read_text(encoding='utf_8')
+    README_H1_CONTENTS: Final = extract_str_from_line_that_starts_with(
+        README_CONTENTS,
+        H1_MARKER
+    )
+    README_H1_ERROR: Final = (
+        "Make sure that there’s a line that looks like"
+        f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
+    )
+    if README_H1_CONTENTS is None:
+        print(
+            f"ERROR: There’s no <h1> in {README_PATH}.",
+            README_H1_ERROR,
+            file=sys.stderr
+        )
+        return 1
+    # Does the <h1> match the project’s name?
+    if README_H1_CONTENTS != PROJECT_NAME:
+        print(
+            f"ERROR: The project’s name in {README_PATH} does not",
+            f"match its name in {COPYING_PATH}.",
+            README_H1_ERROR,
+            file=sys.stderr
+        )
+        return 1
 
     return 0
