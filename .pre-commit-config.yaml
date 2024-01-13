@@ -117,7 +117,7 @@ repos:
         # stable releases are likely to not work properly on Windows,
         # and being platform neutral is very important to me.
         repo: https://github.com/Jayman2000/yamllint-pr
-        rev: pr630-rev-1
+        rev: pr630-rev-2
         hooks:
             -
                 id: yamllint
@@ -144,7 +144,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.1.11
+        rev: v0.1.13
         hooks:
             -
                 id: ruff
