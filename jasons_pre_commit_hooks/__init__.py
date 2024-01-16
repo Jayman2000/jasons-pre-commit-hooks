@@ -64,6 +64,10 @@ COPYING_LINK: Final = \
 See [`copying.md`](./copying.md).
 """
 
+
+YAML_GLOBS: Final = ('**.yml', '**.yaml')
+
+
 HINTS_FOR_CONTRIBUTORS_HEADING: Final = "## Hints for Contributors\n"
 HFC_LINE_LENGTH: Final = \
     "- Try to keep lines shorter than seventy-three characters."
@@ -97,12 +101,12 @@ work. Here’s how you fix it:
     3. Run `pre-commit install-hooks`
 """
 HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
-    ('**', HFC_LINE_LENGTH),
-    ('.pre-commit-config.yaml', HFC_PRE_COMMIT),
-    ('.pre-commit-config.yaml', HFC_PRE_COMMIT_LINKS),
-    ('.editorconfig', HFC_EDITOR_CONFIG),
-    ('**.md', HFC_MARKDOWN),
-    ('**.py', HFC_RUFF)
+    (('**',), HFC_LINE_LENGTH),
+    (('.pre-commit-config.yaml',), HFC_PRE_COMMIT),
+    (('.pre-commit-config.yaml',), HFC_PRE_COMMIT_LINKS),
+    (('.editorconfig',), HFC_EDITOR_CONFIG),
+    (('**.md',), HFC_MARKDOWN),
+    (('**.py',), HFC_RUFF)
 )
 
 # Pre-commit hooks shouldn’t mess with the files in the LICENSES/
@@ -191,20 +195,19 @@ PCR_PRE_COMMIT_ITSELF: Final = PreCommitRepoInfo(
     hook_ids=('validate_manifest',)
 )
 PRE_COMMIT_REPOS_BY_PATH: Final = (
-    ('**', PCR_REUSE),
-    ('.pre-commit-hooks.yaml', PCR_PRE_COMMIT_UPDATE),
-    ('.editorconfig', PCR_EDITORCONFIG_CHECKER),
-    ('**', PCR_OFFICIAL_HOOKS),
-    ('**.py', PCR_OFFICIAL_HOOKS_PYTHON),
-    ('**', PCR_PYGREP_HOOKS),
-    ('**', PCR_GITLEAKS),
-    ('**.toml', PCR_LANGUAGE_FORMATTERS),
-    ('**.yaml', PCR_YAMLLINT),
-    ('**.yml', PCR_YAMLLINT),
-    ('**.md', PCR_MARKDOWNLINT_CLI),
-    ('**.py', PCR_MYPY),
-    ('**.py', PCR_RUFF),
-    ('.pre-commit-hooks.yaml', PCR_PRE_COMMIT_ITSELF),
+    (('**',), PCR_REUSE),
+    (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_UPDATE),
+    (('.editorconfig',), PCR_EDITORCONFIG_CHECKER),
+    (('**',), PCR_OFFICIAL_HOOKS),
+    (('**.py',), PCR_OFFICIAL_HOOKS_PYTHON),
+    (('**',), PCR_PYGREP_HOOKS),
+    (('**',), PCR_GITLEAKS),
+    (('**.toml',), PCR_LANGUAGE_FORMATTERS),
+    (YAML_GLOBS, PCR_YAMLLINT),
+    (('**.md',), PCR_MARKDOWNLINT_CLI),
+    (('**.py',), PCR_MYPY),
+    (('**.py',), PCR_RUFF),
+    (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
 )
 
 
@@ -541,24 +544,27 @@ def repo_style_checker() -> int:
         return 1
     # Do the Hints for Contributors contain some standard hints for
     # certain files?
-    glob: str
+    globs: Iterable[str]
     hint: str
-    for glob, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
+    for globs, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
         path: pathlib.Path
         for path in PATHS:
-            if path.match(glob, case_sensitive=False):
-                if hint not in README_CONTENTS:
-                    hint_indented: str = textwrap.indent(hint, "\t")
-                    print(
-                        f"ERROR: {README_PATH} doesn’t contain this",
-                        f"hint for contributors:\n\n{hint_indented}\n",
-                        file=sys.stderr
-                    )
-                    print(
-                        f"(glob {glob} matched by file {path})",
-                        file=sys.stderr
-                    )
-                    break
+            glob: str
+            for glob in globs:
+                if path.match(glob, case_sensitive=False):
+                    if hint not in README_CONTENTS:
+                        hint_indented: str = textwrap.indent(hint, "\t")
+                        print(
+                            f"ERROR: {README_PATH} doesn’t contain",
+                            "this hint for",
+                            f"contributors:\n\n{hint_indented}\n",
+                            file=sys.stderr
+                        )
+                        print(
+                            f"(glob {glob} matched by file {path})",
+                            file=sys.stderr
+                        )
+                        break
     # Does the pre-commit config contain some standard hooks for certain
     # files?
     missing_hooks: bool = False
@@ -566,17 +572,18 @@ def repo_style_checker() -> int:
         PC_CONFIG_PATH.read_text(encoding='utf_8')
     )
     repo_info: PreCommitRepoInfo
-    for glob, repo_info in PRE_COMMIT_REPOS_BY_PATH:
+    for globs, repo_info in PRE_COMMIT_REPOS_BY_PATH:
         for path in PATHS:
-            if path.match(glob, case_sensitive=False):
-                hooks_found: bool = check_pc_config_hooks(
-                    PC_CONFIG,
-                    repo_info,
-                    glob
-                )
-                if not hooks_found:
-                    missing_hooks = True
-                break
+            for glob in globs:
+                if path.match(glob, case_sensitive=False):
+                    hooks_found: bool = check_pc_config_hooks(
+                        PC_CONFIG,
+                        repo_info,
+                        glob
+                    )
+                    if not hooks_found:
+                        missing_hooks = True
+                    break
     if missing_hooks:
         return 1
 
