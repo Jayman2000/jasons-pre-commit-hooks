@@ -16,7 +16,8 @@ classifiers = [
 ]
 dependencies = [
     "dulwich",
-    "PyYAML"
+    "PyYAML",
+    "wcwidth"
 ]
 description = "Hooks for <https://pre-commit.com>"
 name = "jasons-pre-commit-hooks"
@@ -29,11 +30,15 @@ version = "0.dev0"
 file = "copying.md"
 
 [project.scripts]
+detect-bad-unicode = "jasons_pre_commit_hooks:detect_bad_unicode"
 forbid-paths-that-match = "jasons_pre_commit_hooks:forbid_paths"
 repo-style-checker = "jasons_pre_commit_hooks:repo_style_checker"
 
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
+
+[tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 
 [tool.setuptools]
 packages = ["jasons_pre_commit_hooks"]
