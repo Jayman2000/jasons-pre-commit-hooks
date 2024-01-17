@@ -65,6 +65,7 @@ See [`copying.md`](./copying.md).
 """
 
 
+PYTHON_GLOBS: Final = ('**.py', '**.pyi')
 YAML_GLOBS: Final = ('**.yml', '**.yaml')
 
 
@@ -106,7 +107,7 @@ HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
     (('.pre-commit-config.yaml',), HFC_PRE_COMMIT_LINKS),
     (('.editorconfig',), HFC_EDITOR_CONFIG),
     (('**.md',), HFC_MARKDOWN),
-    (('**.py',), HFC_RUFF)
+    (PYTHON_GLOBS, HFC_RUFF)
 )
 
 # Pre-commit hooks shouldn’t mess with the files in the LICENSES/
@@ -199,14 +200,14 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_UPDATE),
     (('.editorconfig',), PCR_EDITORCONFIG_CHECKER),
     (('**',), PCR_OFFICIAL_HOOKS),
-    (('**.py',), PCR_OFFICIAL_HOOKS_PYTHON),
+    (PYTHON_GLOBS, PCR_OFFICIAL_HOOKS_PYTHON),
     (('**',), PCR_PYGREP_HOOKS),
     (('**',), PCR_GITLEAKS),
     (('**.toml',), PCR_LANGUAGE_FORMATTERS),
     (YAML_GLOBS, PCR_YAMLLINT),
     (('**.md',), PCR_MARKDOWNLINT_CLI),
-    (('**.py',), PCR_MYPY),
-    (('**.py',), PCR_RUFF),
+    (PYTHON_GLOBS, PCR_MYPY),
+    (PYTHON_GLOBS, PCR_RUFF),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
 )
 
