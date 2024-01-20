@@ -117,7 +117,7 @@ repos:
         # stable releases are likely to not work properly on Windows,
         # and being platform neutral is very important to me.
         repo: https://github.com/Jayman2000/yamllint-pr
-        rev: pr630-rev-2
+        rev: pr630-rev-3
         hooks:
             -
                 id: yamllint
