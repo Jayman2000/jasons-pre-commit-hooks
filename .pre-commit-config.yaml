@@ -9,8 +9,8 @@ repos:
         hooks:
             - id: reuse
     -
-        repo: https://gitlab.com/Jayman2000/pre-commit-update-mr
-        rev: mr4-rev-0
+        repo: https://gitlab.com/vojko.pribudic/pre-commit-update
+        rev: 3d8729932114bf7e7c2e50111ad06d98f40532da
         hooks:
             -
                 id: pre-commit-update
