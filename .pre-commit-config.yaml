@@ -9,8 +9,8 @@ repos:
         hooks:
             - id: reuse
     -
-        repo: https://gitlab.com/vojko.pribudic/pre-commit-update
-        rev: v0.1.3
+        repo: https://gitlab.com/Jayman2000/pre-commit-update-mr
+        rev: mr4-rev-0
         hooks:
             -
                 id: pre-commit-update
@@ -75,7 +75,7 @@ repos:
                 exclude: *default_excludes
     -
         # yamllint disable-line rule:line-length
-        repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+        repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
         rev: v2.12.0
         hooks:
             -
@@ -89,18 +89,15 @@ repos:
                 # files pattern.
                 types: []
     -
-        # This is the version of language-formatters-pre-commit-hooks
-        # from this PR:
-        # <https://github.com/macisamuele/language-formatters-pre-commit-hooks/pull/208>.
-        #
         # Normally, I would just use a stable release of
         # language-formatters-pre-commit-hooks, but stable releases are
         # likely to not work properly on Windows, and being platform
-        # neutral is very important to me.
-        #
-        # yamllint disable-line rule:line-length
-        repo: https://github.com/Jayman2000/language-formatters-pre-commit-hooks-pr
-        rev: pr208-rev-0
+        # neutral is very important to me. Specifically, stable releases
+        # aren’t likely to work well on Windows because there isn’t a
+        # stable release that contains this PR yet:
+        # <https://github.com/macisamuele/language-formatters-pre-commit-hooks/pull/208>.
+        repo: *lfpch_url
+        rev: 97a46d97aea9f027a3a8714244f5c93a74d742de
         hooks:
             -
                 id: pretty-format-toml

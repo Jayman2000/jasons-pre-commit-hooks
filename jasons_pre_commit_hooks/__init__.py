@@ -121,7 +121,16 @@ PCR_REUSE: Final = PreCommitRepoInfo(
     args=None
 )
 PCR_PRE_COMMIT_UPDATE: Final = PreCommitRepoInfo(
-    url='https://gitlab.com/vojko.pribudic/pre-commit-update',
+    # This is a version of pre-commit-update that contains a branch for
+    # this MR [1]. Normally, I would just use the upstream version of
+    # pre-commit-update. Unfortunately, that version isn’t compatible
+    # with the fact that I’m using a hash for one of
+    # language-formatters-pre-commit-hooks revs.
+    #
+    # editorconfig-checker-disable
+    # [1]: <https://gitlab.com/vojko.pribudic/pre-commit-update/-/merge_requests/4>.
+    # editorconfig-checker-enable
+    url='https://gitlab.com/Jayman2000/pre-commit-update-mr',
     hook_ids=('pre-commit-update',)
 )
 PCR_EDITORCONFIG_CHECKER: Final = PreCommitRepoInfo(
@@ -158,7 +167,7 @@ PCR_GITLEAKS: Final = PreCommitRepoInfo(
 )
 PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     # editorconfig-checker-disable
-    url='https://github.com/Jayman2000/language-formatters-pre-commit-hooks-pr',
+    url='https://github.com/macisamuele/language-formatters-pre-commit-hooks',
     # editorconfig-checker-enable
     hook_ids=('pretty-format-toml',),
     args=('--autofix', '--indent', '4')
