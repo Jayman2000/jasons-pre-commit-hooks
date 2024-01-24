@@ -364,8 +364,11 @@ def check_pc_config_hooks(
                 no_errors = False
                 continue
             id: Any = hook.get('id')
-            if id in repo_info.hook_ids:
-                hooks_found[id] = True
+            if id not in repo_info.hook_ids:
+                # This is a hook that we don’t care about, so we can
+                # just ignore it.
+                continue
+            hooks_found[id] = True
             if repo_info.exclude is not None:
                 exclude: Any = hook.get('exclude')
                 if not isinstance(exclude, str):
