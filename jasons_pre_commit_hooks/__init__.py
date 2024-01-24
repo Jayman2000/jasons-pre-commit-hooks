@@ -201,7 +201,7 @@ PCR_PRE_COMMIT_ITSELF: Final = PreCommitRepoInfo(
 )
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     ('**', PCR_REUSE),
-    ('**', PCR_PRE_COMMIT_UPDATE),
+    ('.pre-commit-hooks.yaml', PCR_PRE_COMMIT_UPDATE),
     ('.editorconfig', PCR_EDITORCONFIG_CHECKER),
     ('**', PCR_OFFICIAL_HOOKS),
     ('**.py', PCR_OFFICIAL_HOOKS_PYTHON),
