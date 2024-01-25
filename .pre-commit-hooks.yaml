@@ -3,8 +3,15 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
 -
-    id: &id forbid-paths-that-match
-    name: *id
-    entry: *id
+    id: &id1 detect-bad-unicode
+    name: *id1
+    entry: *id1
+    language: python
+    types: [text]
+    description: Checks to see if UTF-8 files contain “bad” code points
+-
+    id: &id2 forbid-paths-that-match
+    name: *id2
+    entry: *id2
     language: python
     description: Causes an error if paths match certain regex patterns
