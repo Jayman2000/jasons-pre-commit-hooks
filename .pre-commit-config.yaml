@@ -10,7 +10,7 @@ repos:
             - id: reuse
     -
         repo: https://gitlab.com/vojko.pribudic/pre-commit-update
-        rev: 3d8729932114bf7e7c2e50111ad06d98f40532da
+        rev: v0.1.4
         hooks:
             -
                 id: pre-commit-update
