@@ -81,13 +81,6 @@ repos:
             -
                 id: pretty-format-ini
                 exclude: *default_excludes
-                files: '^\.editorconfig$'
-                # If this wasn’t set, then the above files pattern
-                # wouldn’t do anything. Upstream sets
-                # pretty-format-ini’s types to [ini] which causes
-                # .editorconfig to be ignored even if it matches the
-                # files pattern.
-                types: []
     -
         # Normally, I would just use a stable release of
         # language-formatters-pre-commit-hooks, but stable releases are

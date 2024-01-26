@@ -80,6 +80,14 @@ HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
     (PYTHON_GLOBS, HFC_RUFF)
 )
 
+
+EXPECTED_EDITOR_CONFIG: Final = (
+    importlib.resources.files()
+    .joinpath("editor_config.ini")
+    .read_text(encoding='utf_8')
+)
+
+
 # Pre-commit hooks shouldn’t mess with the files in the LICENSES/
 # directory. See 4f1e797 (Don’t run most pre-commit hooks on LICENSES/,
 # 2023-12-25) for details.
@@ -595,6 +603,20 @@ def repo_style_checker() -> int:
     EDITOR_CONFIG_PATH: Final = pathlib.Path('.editorconfig')
     if EDITOR_CONFIG_PATH not in PATHS:
         print_no_file_error(EDITOR_CONFIG_PATH)
+        return 1
+    # Does .editorconfig contain the correct text?
+    EDITOR_CONFIG_CONTENTS: Final = \
+        EDITOR_CONFIG_PATH.read_text(encoding='utf_8')
+    if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
+        print(
+            f"ERROR: {EDITOR_CONFIG_PATH} doesn’t the standard",
+            f"{EDITOR_CONFIG_PATH} file. Fixing…",
+            file=sys.stderr
+        )
+        EDITOR_CONFIG_PATH.write_text(
+            EXPECTED_EDITOR_CONFIG,
+            encoding='utf_8'
+        )
         return 1
     # Is pre-commit set up?
     PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
