@@ -33,9 +33,9 @@ version = "0.dev0"
 file = "copying.md"
 
 [project.scripts]
-detect-bad-unicode = "jasons_pre_commit_hooks:detect_bad_unicode"
-forbid-paths-that-match = "jasons_pre_commit_hooks:forbid_paths"
-repo-style-checker = "jasons_pre_commit_hooks:repo_style_checker"
+detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
+forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths:main"
+repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
 
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
