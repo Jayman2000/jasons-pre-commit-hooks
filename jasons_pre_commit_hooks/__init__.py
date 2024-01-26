@@ -591,6 +591,11 @@ def repo_style_checker() -> int:
             file=sys.stderr
         )
         return 1
+    # Does .editorconfig exist?
+    EDITOR_CONFIG_PATH: Final = pathlib.Path('.editorconfig')
+    if EDITOR_CONFIG_PATH not in PATHS:
+        print_no_file_error(EDITOR_CONFIG_PATH)
+        return 1
     # Is pre-commit set up?
     PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
     if PC_CONFIG_PATH not in PATHS:
