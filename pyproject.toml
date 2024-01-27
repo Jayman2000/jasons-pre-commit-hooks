@@ -20,6 +20,8 @@ classifiers = [
 dependencies = [
     "dulwich",
     "PyYAML",
+    "python-dateutil",
+    "semver",
     "wcwidth"
 ]
 description = "Hooks for <https://pre-commit.com>"
@@ -36,6 +38,8 @@ file = "copying.md"
 detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
 forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths:main"
 repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
+# editorconfig-checker-disable
+unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
 
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"

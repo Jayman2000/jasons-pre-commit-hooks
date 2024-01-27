@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+import contextlib
 import io
 import locale
+import pathlib
 import sys
 import warnings
+from typing import Final
+
+import dulwich.repo
 
 
 # editorconfig-checker-disable
@@ -43,3 +48,8 @@ def make_stdout_stderr_handle_errors_better() -> None:
                 f"sys.{name} was replaced, so we can’t override its "
                 "error handler."
             )
+
+
+def open_cwd_as_repo() -> contextlib.closing[dulwich.repo.Repo]:
+    CWD: Final = str(pathlib.Path.cwd())
+    return contextlib.closing(dulwich.repo.Repo(CWD))

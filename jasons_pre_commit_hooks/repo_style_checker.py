@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
 import argparse
-import contextlib
 import os
 import importlib.resources
 import pathlib
@@ -14,7 +13,7 @@ from typing import Any, Final, NamedTuple, Optional
 import dulwich.repo
 import yaml
 
-from . import init
+from . import init, open_cwd_as_repo
 
 
 COPYING_PATH: Final = importlib.resources.files().joinpath("copying.md")
@@ -188,8 +187,8 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
 def paths_in_repo() -> Iterable[pathlib.Path]:
     # I would have used dulwich.porcelain.ls_files(), but that function
     # isn’t typed.
-    ROOT: Final = str(pathlib.Path.cwd())
-    with contextlib.closing(dulwich.repo.Repo(ROOT)) as repo:
+    repo: dulwich.repo.Repo
+    with open_cwd_as_repo() as repo:
         for byte_path in repo.open_index():
             yield pathlib.Path(os.fsdecode(byte_path))
 
