@@ -41,6 +41,7 @@ repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
 # editorconfig-checker-disable
 unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
 
+# editorconfig-checker-enable
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
 
