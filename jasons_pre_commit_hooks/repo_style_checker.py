@@ -137,6 +137,13 @@ PCR_JASONS_PRE_COMMIT_HOOKS: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
     hook_ids=('detect-bad-unicode',)
 )
+# I’m only enabling this hook to work around this problem:
+# <https://github.com/fsfe/reuse-tool/issues/881>.
+PCR_FORBID_PATHS_THAT_MATCH: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('forbid-paths-that-match',),
+    args=('--pattern', '^LICENSE', '--pattern', '^COPYING')
+)
 PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     # editorconfig-checker-disable
     url='https://github.com/macisamuele/language-formatters-pre-commit-hooks',
@@ -180,6 +187,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_PYGREP_HOOKS),
     (('**',), PCR_GITLEAKS),
     (('**',), PCR_JASONS_PRE_COMMIT_HOOKS),
+    (('**',), PCR_FORBID_PATHS_THAT_MATCH),
     (('**.toml',), PCR_LANGUAGE_FORMATTERS),
     (YAML_GLOBS, PCR_YAMLLINT),
     (('**.md',), PCR_MARKDOWNLINT_CLI),
