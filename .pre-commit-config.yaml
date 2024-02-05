@@ -74,6 +74,13 @@ repos:
                 id: gitleaks
                 exclude: *default_excludes
     -
+        repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
+        rev: 07e690c9693e1684b8f4aa51e6c0bb74aaf46c6a
+        hooks:
+            -
+                id: detect-bad-unicode
+                exclude: *default_excludes
+    -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
         rev: v2.12.0

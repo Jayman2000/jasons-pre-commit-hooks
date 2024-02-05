@@ -133,6 +133,10 @@ PCR_GITLEAKS: Final = PreCommitRepoInfo(
     url='https://github.com/zricethezav/gitleaks',
     hook_ids=('gitleaks',)
 )
+PCR_JASONS_PRE_COMMIT_HOOKS: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('detect-bad-unicode',)
+)
 PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     # editorconfig-checker-disable
     url='https://github.com/macisamuele/language-formatters-pre-commit-hooks',
@@ -175,6 +179,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (PYTHON_GLOBS, PCR_OFFICIAL_HOOKS_PYTHON),
     (('**',), PCR_PYGREP_HOOKS),
     (('**',), PCR_GITLEAKS),
+    (('**',), PCR_JASONS_PRE_COMMIT_HOOKS),
     (('**.toml',), PCR_LANGUAGE_FORMATTERS),
     (YAML_GLOBS, PCR_YAMLLINT),
     (('**.md',), PCR_MARKDOWNLINT_CLI),
