@@ -10,7 +10,7 @@ repos:
             - id: reuse
     -
         repo: https://gitlab.com/vojko.pribudic/pre-commit-update
-        rev: v0.1.4
+        rev: v0.1.5
         hooks:
             -
                 id: pre-commit-update
@@ -68,7 +68,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/zricethezav/gitleaks
-        rev: v8.18.1
+        rev: v8.18.2
         hooks:
             -
                 id: gitleaks
@@ -107,14 +107,14 @@ repos:
         # stable releases are likely to not work properly on Windows,
         # and being platform neutral is very important to me.
         repo: https://github.com/Jayman2000/yamllint-pr
-        rev: pr630-rev-3
+        rev: pr630-rev-4
         hooks:
             -
                 id: yamllint
                 exclude: *default_excludes
     -
         repo: https://github.com/igorshubovych/markdownlint-cli
-        rev: v0.38.0
+        rev: v0.39.0
         hooks:
             -
                 id: markdownlint
@@ -138,7 +138,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.1.14
+        rev: v0.2.0
         hooks:
             -
                 id: ruff
