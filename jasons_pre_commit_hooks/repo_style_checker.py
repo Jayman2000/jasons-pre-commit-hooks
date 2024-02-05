@@ -486,6 +486,7 @@ def main() -> int:
     # certain files?
     globs: Iterable[str]
     hint: str
+    any_errors: bool = False
     for globs, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
         path: pathlib.Path
         for path in PATHS:
@@ -504,7 +505,10 @@ def main() -> int:
                             f"(glob {glob} matched by file {path})",
                             file=sys.stderr
                         )
+                        any_errors = True
                         break
+    if any_errors:
+        return 1
     # Does the pre-commit config contain some standard hooks for certain
     # files?
     missing_hooks: bool = False
