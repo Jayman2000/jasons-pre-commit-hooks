@@ -7,7 +7,8 @@ import importlib.resources
 import pathlib
 import sys
 import textwrap
-from collections.abc import Iterable
+import warnings
+from collections.abc import Container, Iterable
 from typing import Any, Final, NamedTuple, Optional
 
 import dulwich.repo
@@ -16,6 +17,21 @@ import yaml
 from . import init, open_cwd_as_repo
 
 
+CHECK_IDS: Final = (
+    'copying.md exists',
+    'copying.md project name',
+    'copying.md correct text',
+    'README.md exists',
+    'README.md has <h1>',
+    'names match',
+    'README.md links to copying.md',
+    '.editorconfig exists',
+    '.editorconfig correct text',
+    '.pre-commit-config.yaml exists',
+    'README.md has hints',
+    'standard hints',
+    'standard hooks'
+)
 COPYING_PATH: Final = importlib.resources.files().joinpath("copying.md")
 COPYING_TEMPLATE: Final = (
     COPYING_PATH
@@ -359,176 +375,212 @@ def check_pc_config_hooks(
     )
 
 
+def should_check_be_run(id: str, skip_list: Container[str]) -> bool:
+    if id not in CHECK_IDS:
+        warnings.warn(
+            f"{repr(id)} wasn’t in CHECK_IDS. It won’t be listed when "
+            "users run --help."
+        )
+    return id not in skip_list
+
+
 def main() -> int:
     init()
+    ITEM_PREFIX: Final = "\n\t• "
     PARSER: Final = argparse.ArgumentParser(
         description=(
             "Makes sure that repos follow Jason’s style for repos."
-        )
+        ),
+        epilog=(
+            "Here’s the list of checks that can be skipped using "
+            f"--skip:{ITEM_PREFIX}{ITEM_PREFIX.join(CHECK_IDS)}"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    # This command doesn’t take any arguments, so this just makes sure
-    # that --help works and that errors are produced if arguments are
-    # given.
-    PARSER.parse_args()
+    PARSER.add_argument(
+        '-s',
+        '--skip',
+        action='append',
+        default=[],
+        choices=CHECK_IDS,
+        help=(
+            "Skip a specific check. Can be specified multiple times. Be"
+            " sure use quotation marks to prevent your shell from doing"
+            " word splitting."
+        ),
+        metavar="CHECK_ID"
+    )
+    ARGS: Final = PARSER.parse_args()
 
-    # Does copying.md exist?
     PATHS: Final = set(path for path in paths_in_repo())
     COPYING_PATH: Final = pathlib.Path('copying.md')
-    if COPYING_PATH not in PATHS:
-        print_no_file_error(COPYING_PATH)
-        return 1
-    # Can we determine the project’s name by looking at copying.md?
-    TO_LOOK_FOR: Final = "# Copying Information for "
     COPYING_CONTENTS: Final = COPYING_PATH.read_text(encoding='utf_8')
+    TO_LOOK_FOR: Final = "# Copying Information for "
     PROJECT_NAME: Final = extract_str_from_line_that_starts_with(
         COPYING_CONTENTS,
         TO_LOOK_FOR
     )
-    if PROJECT_NAME is None:
-        print(
-            "ERROR: Couldn’t automatically detect the project’s name",
-            f"by looking at {COPYING_PATH}. In order for",
-            f"autodetection to work, {COPYING_PATH} should contain a",
-            "line that looks like",
-            f"this:\n\n\t{TO_LOOK_FOR}<project-name>\n",
-            file=sys.stderr
-        )
-        return 1
-    # Does copying.md contain the correct text?
-    EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(PROJECT_NAME)
-    if EXPECTED_COPYING_INFO != COPYING_CONTENTS:
-        print(
-            f"ERROR: {COPYING_PATH} doesn’t match the standard copying",
-            "info template. Fixing…",
-            file=sys.stderr
-        )
-        COPYING_PATH.write_text(EXPECTED_COPYING_INFO, encoding='utf_8')
-        return 1
-    # Does README.md exist?
     README_PATH: Final = pathlib.Path('README.md')
-    if README_PATH not in PATHS:
-        print_no_file_error(README_PATH)
-        return 1
-    # Does README.md contain an <h1>?
+    EDITOR_CONFIG_PATH: Final = pathlib.Path('.editorconfig')
+    PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
     H1_MARKER: Final = "# "
     README_CONTENTS: Final = README_PATH.read_text(encoding='utf_8')
-    README_H1_CONTENTS: Final = extract_str_from_line_that_starts_with(
-        README_CONTENTS,
-        H1_MARKER
+    README_H1_CONTENTS: Final = (
+        extract_str_from_line_that_starts_with(
+            README_CONTENTS,
+            H1_MARKER
+        )
     )
-    README_H1_ERROR: Final = (
-        "Make sure that there’s a line that looks like"
-        f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
-    )
-    if README_H1_CONTENTS is None:
-        print(
-            f"ERROR: There’s no <h1> in {README_PATH}.",
-            README_H1_ERROR,
-            file=sys.stderr
+
+    if should_check_be_run('copying.md exists', ARGS.skip):
+        if COPYING_PATH not in PATHS:
+            print_no_file_error(COPYING_PATH)
+            return 1
+    if should_check_be_run('copying.md project name', ARGS.skip):
+        if PROJECT_NAME is None:
+            print(
+                "ERROR: Couldn’t automatically detect the project’s",
+                f"name by looking at {COPYING_PATH}. In order for",
+                f"autodetection to work, {COPYING_PATH} should contain",
+                "a line that looks like",
+                f"this:\n\n\t{TO_LOOK_FOR}<project-name>\n",
+                file=sys.stderr
+            )
+            return 1
+    if should_check_be_run('copying.md correct text', ARGS.skip):
+        EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(
+            PROJECT_NAME
         )
-        return 1
-    # Does the <h1> match the project’s name?
-    if README_H1_CONTENTS != PROJECT_NAME:
-        print(
-            f"ERROR: The project’s name in {README_PATH} does not",
-            f"match its name in {COPYING_PATH}.",
-            README_H1_ERROR,
-            file=sys.stderr
+        if EXPECTED_COPYING_INFO != COPYING_CONTENTS:
+            print(
+                f"ERROR: {COPYING_PATH} doesn’t match the standard",
+                "copying info template. Fixing…",
+                file=sys.stderr
+            )
+            COPYING_PATH.write_text(
+                EXPECTED_COPYING_INFO,
+                encoding='utf_8'
+            )
+            return 1
+    if should_check_be_run('README.md exists', ARGS.skip):
+        if README_PATH not in PATHS:
+            print_no_file_error(README_PATH)
+            return 1
+    if should_check_be_run('README.md has <h1>', ARGS.skip):
+        README_H1_ERROR: Final = (
+            "Make sure that there’s a line that looks like"
+            f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
         )
-        return 1
-    # Does the README link to copying.md?
-    if COPYING_LINK not in README_CONTENTS:
-        COPYING_LINK_INDENTED: Final = textwrap.indent(
-            COPYING_LINK,
-            "\t"
-        )
-        print(
-            f"ERROR: {README_PATH} is missing a link to",
-            f"{COPYING_PATH}. Make sure that {README_PATH} contains",
-            f"the following:\n\n{COPYING_LINK_INDENTED}",
-            file=sys.stderr
-        )
-        return 1
-    # Does .editorconfig exist?
-    EDITOR_CONFIG_PATH: Final = pathlib.Path('.editorconfig')
-    if EDITOR_CONFIG_PATH not in PATHS:
-        print_no_file_error(EDITOR_CONFIG_PATH)
-        return 1
-    # Does .editorconfig contain the correct text?
-    EDITOR_CONFIG_CONTENTS: Final = \
-        EDITOR_CONFIG_PATH.read_text(encoding='utf_8')
-    if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
-        print(
-            f"ERROR: {EDITOR_CONFIG_PATH} doesn’t the standard",
-            f"{EDITOR_CONFIG_PATH} file. Fixing…",
-            file=sys.stderr
-        )
-        EDITOR_CONFIG_PATH.write_text(
-            EXPECTED_EDITOR_CONFIG,
-            encoding='utf_8'
-        )
-        return 1
-    # Is pre-commit set up?
-    PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
-    if PC_CONFIG_PATH not in PATHS:
-        print_no_file_error(PC_CONFIG_PATH)
-        return 1
-    # Does README.md have a “Hints for Contributors” section?
-    if HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS:
-        print(
-            f"ERROR: {README_PATH} doesn’t have a “Hints for",
-            f"Contributors” section. Make sure that {README_PATH}",
-            f"contains this:\n\n\t{HINTS_FOR_CONTRIBUTORS_HEADING}",
-            file=sys.stderr
-        )
-        return 1
-    # Do the Hints for Contributors contain some standard hints for
-    # certain files?
-    globs: Iterable[str]
-    hint: str
-    any_errors: bool = False
-    for globs, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
-        path: pathlib.Path
-        for path in PATHS:
-            glob: str
-            for glob in globs:
-                if path.match(glob, case_sensitive=False):
-                    if hint not in README_CONTENTS:
-                        hint_indented: str = textwrap.indent(hint, "\t")
-                        print(
-                            f"ERROR: {README_PATH} doesn’t contain",
-                            "this hint for",
-                            f"contributors:\n\n{hint_indented}\n",
-                            file=sys.stderr
-                        )
-                        print(
-                            f"(glob {glob} matched by file {path})",
-                            file=sys.stderr
-                        )
-                        any_errors = True
-                        break
-    if any_errors:
-        return 1
+        if README_H1_CONTENTS is None:
+            print(
+                f"ERROR: There’s no <h1> in {README_PATH}.",
+                README_H1_ERROR,
+                file=sys.stderr
+            )
+            return 1
+    if should_check_be_run('names match', ARGS.skip):
+        if README_H1_CONTENTS != PROJECT_NAME:
+            print(
+                f"ERROR: The project’s name in {README_PATH} does not",
+                f"match its name in {COPYING_PATH}.",
+                README_H1_ERROR,
+                file=sys.stderr
+            )
+            return 1
+    if should_check_be_run('README.md links to copying.md', ARGS.skip):
+        if COPYING_LINK not in README_CONTENTS:
+            COPYING_LINK_INDENTED: Final = textwrap.indent(
+                COPYING_LINK,
+                "\t"
+            )
+            print(
+                f"ERROR: {README_PATH} is missing a link to",
+                f"{COPYING_PATH}. Make sure that {README_PATH}",
+                f"contains the following:\n\n{COPYING_LINK_INDENTED}",
+                file=sys.stderr
+            )
+            return 1
+    if should_check_be_run('.editorconfig exists', ARGS.skip):
+        if EDITOR_CONFIG_PATH not in PATHS:
+            print_no_file_error(EDITOR_CONFIG_PATH)
+            return 1
+    if should_check_be_run('.editorconfig correct text', ARGS.skip):
+        EDITOR_CONFIG_CONTENTS: Final = \
+            EDITOR_CONFIG_PATH.read_text(encoding='utf_8')
+        if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
+            print(
+                f"ERROR: {EDITOR_CONFIG_PATH} doesn’t the standard",
+                f"{EDITOR_CONFIG_PATH} file. Fixing…",
+                file=sys.stderr
+            )
+            EDITOR_CONFIG_PATH.write_text(
+                EXPECTED_EDITOR_CONFIG,
+                encoding='utf_8'
+            )
+            return 1
+    if should_check_be_run('.pre-commit-config.yaml exists', ARGS.skip):
+        if PC_CONFIG_PATH not in PATHS:
+            print_no_file_error(PC_CONFIG_PATH)
+            return 1
+    if should_check_be_run('README.md has hints', ARGS.skip):
+        if HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS:
+            print(
+                f"ERROR: {README_PATH} doesn’t have a “Hints for",
+                f"Contributors” section. Make sure that {README_PATH}",
+                f"contains this:\n\n\t{HINTS_FOR_CONTRIBUTORS_HEADING}",
+                file=sys.stderr
+            )
+            return 1
+    if should_check_be_run('standard hints', ARGS.skip):
+        globs: Iterable[str]
+        hint: str
+        any_errors: bool = False
+        for globs, hint in HINTS_FOR_CONTRIBUTORS_BY_PATH:
+            path: pathlib.Path
+            for path in PATHS:
+                glob: str
+                for glob in globs:
+                    if path.match(glob, case_sensitive=False):
+                        if hint not in README_CONTENTS:
+                            hint_indented: str = textwrap.indent(
+                                hint,
+                                "\t"
+                            )
+                            print(
+                                f"ERROR: {README_PATH} doesn’t contain",
+                                "this hint for",
+                                f"contributors:\n\n{hint_indented}\n",
+                                file=sys.stderr
+                            )
+                            print(
+                                f"(glob {glob} matched by file {path})",
+                                file=sys.stderr
+                            )
+                            any_errors = True
+                            break
+        if any_errors:
+            return 1
     # Does the pre-commit config contain some standard hooks for certain
     # files?
-    missing_hooks: bool = False
-    PC_CONFIG: Final = yaml.safe_load(
-        PC_CONFIG_PATH.read_text(encoding='utf_8')
-    )
-    repo_info: PreCommitRepoInfo
-    for globs, repo_info in PRE_COMMIT_REPOS_BY_PATH:
-        for path in PATHS:
-            for glob in globs:
-                if path.match(glob, case_sensitive=False):
-                    hooks_found: bool = check_pc_config_hooks(
-                        PC_CONFIG,
-                        repo_info,
-                        glob
-                    )
-                    if not hooks_found:
-                        missing_hooks = True
-                    break
-    if missing_hooks:
-        return 1
+    if should_check_be_run('standard hooks', ARGS.skip):
+        missing_hooks: bool = False
+        PC_CONFIG: Final = yaml.safe_load(
+            PC_CONFIG_PATH.read_text(encoding='utf_8')
+        )
+        repo_info: PreCommitRepoInfo
+        for globs, repo_info in PRE_COMMIT_REPOS_BY_PATH:
+            for path in PATHS:
+                for glob in globs:
+                    if path.match(glob, case_sensitive=False):
+                        hooks_found: bool = check_pc_config_hooks(
+                            PC_CONFIG,
+                            repo_info,
+                            glob
+                        )
+                        if not hooks_found:
+                            missing_hooks = True
+                        break
+        if missing_hooks:
+            return 1
 
     return 0
