@@ -34,11 +34,11 @@ version = "0.dev0"
 [project.license]
 file = "copying.md"
 
+# editorconfig-checker-disable
 [project.scripts]
 detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
-forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths:main"
+forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths_that_match:main"
 repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
-# editorconfig-checker-disable
 unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
 
 # editorconfig-checker-enable
