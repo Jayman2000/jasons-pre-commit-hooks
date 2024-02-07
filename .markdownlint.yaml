@@ -19,4 +19,5 @@ MD013:
     code_blocks: true
     tables: true
     headings: true
+MD024: false
 MD047: true

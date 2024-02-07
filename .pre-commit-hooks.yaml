@@ -15,3 +15,10 @@
     entry: *id2
     language: python
     description: Causes an error if paths match certain regex patterns
+-
+    id: &id3 repo-style-checker
+    name: *id3
+    entry: *id3
+    language: python
+    pass_filenames: false
+    description: Makes sure that repos follow Jason’s style for repos

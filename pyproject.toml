@@ -25,22 +25,23 @@ dependencies = [
     "wcwidth"
 ]
 description = "Hooks for <https://pre-commit.com>"
+dynamic = ["version"]
 name = "jasons-pre-commit-hooks"
 requires-python = ">=3.12"
-version = "0.dev0"
 
 # This file doesn’t really contain a license. Instead, it contains the
 # repo’s copying information.
 [project.license]
 file = "copying.md"
 
+# editorconfig-checker-disable
 [project.scripts]
 detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
-forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths:main"
+forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths_that_match:main"
 repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
-# editorconfig-checker-disable
 unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
 
+# editorconfig-checker-enable
 [project.urls]
 Homepage = "https://github.com/Jayman2000/jasons-pre-commit-hooks"
 
@@ -50,3 +51,5 @@ mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 [tool.setuptools]
 include-package-data = true
 packages = ["jasons_pre_commit_hooks"]
+
+[tool.setuptools_scm]

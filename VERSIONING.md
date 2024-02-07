@@ -22,6 +22,13 @@ arguments are a part of the public API.
 For more information about the format of `.pre-commit-hooks.yaml`, see
 [pre-commit’s documentation][5].
 
+## Version numbers for unstable commits
+
+This project makes no guarantees about the version numbers of unstable
+commits. If a commit hasn’t been marked as being an official release,
+then there’s no guarantee that it will actually conform to the JMVS
+specification.
+
 ## When are new versions released?
 
 In order to figure out when new versions should be released, here’s what
