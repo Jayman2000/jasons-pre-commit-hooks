@@ -12,6 +12,20 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.0.0] — 2024-02-07
+
+### Added
+
+- A pre-commit hook named `repo-style-checker`. It has one option:
+`--skip`
+- A pre-commit hook named `detect-bad-unicode`
+- A pre-commit hook named `unreleased-commit-checker`
+- A version numbering scheme.
+
+### Removed
+
+- Support for Python versions less than 3.12.
+
 ## [pre-version-0] — 2024-01-10
 
 Initial prerelease. This prerelease was created before I had chosen a
@@ -24,6 +38,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
 [pre-version-0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/pre-version-0
 <!--
 editorconfig-checker-enable
