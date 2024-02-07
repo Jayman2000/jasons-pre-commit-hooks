@@ -577,8 +577,6 @@ def main() -> int:
                             break
         if any_errors:
             return 1
-    # Does the pre-commit config contain some standard hooks for certain
-    # files?
     if should_check_be_run('standard hooks', ARGS.skip):
         missing_hooks: bool = False
         PC_CONFIG: Final = yaml.safe_load(
