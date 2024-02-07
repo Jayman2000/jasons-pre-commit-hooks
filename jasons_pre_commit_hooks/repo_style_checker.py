@@ -227,13 +227,14 @@ def print_no_file_error(path: pathlib.Path) -> None:
 
 
 def extract_str_from_line_that_starts_with(
-    text: str,
+    text: Optional[str],
     to_look_for: str
 ) -> Optional[str]:
-    for line in text.splitlines():
-        if line.startswith(to_look_for):
-            extraction_start_point: int = len(to_look_for)
-            return line[extraction_start_point:]
+    if text is not None:
+        for line in text.splitlines():
+            if line.startswith(to_look_for):
+                extraction_start_point: int = len(to_look_for)
+                return line[extraction_start_point:]
     return None
 
 
@@ -384,6 +385,13 @@ def should_check_be_run(id: str, skip_list: Container[str]) -> bool:
     return id not in skip_list
 
 
+def read_text_safe(path: pathlib.Path) -> Optional[str]:
+    try:
+        return path.read_text(encoding='utf_8')
+    except FileNotFoundError:
+        return None
+
+
 def main() -> int:
     init()
     ITEM_PREFIX: Final = "\n\t• "
@@ -414,7 +422,7 @@ def main() -> int:
 
     PATHS: Final = set(path for path in paths_in_repo())
     COPYING_PATH: Final = pathlib.Path('copying.md')
-    COPYING_CONTENTS: Final = COPYING_PATH.read_text(encoding='utf_8')
+    COPYING_CONTENTS: Final = read_text_safe(COPYING_PATH)
     TO_LOOK_FOR: Final = "# Copying Information for "
     PROJECT_NAME: Final = extract_str_from_line_that_starts_with(
         COPYING_CONTENTS,
@@ -424,7 +432,7 @@ def main() -> int:
     EDITOR_CONFIG_PATH: Final = pathlib.Path('.editorconfig')
     PC_CONFIG_PATH: Final = pathlib.Path(".pre-commit-config.yaml")
     H1_MARKER: Final = "# "
-    README_CONTENTS: Final = README_PATH.read_text(encoding='utf_8')
+    README_CONTENTS: Final = read_text_safe(README_PATH)
     README_H1_CONTENTS: Final = (
         extract_str_from_line_that_starts_with(
             README_CONTENTS,
@@ -488,7 +496,10 @@ def main() -> int:
             )
             return 1
     if should_check_be_run('README.md links to copying.md', ARGS.skip):
-        if COPYING_LINK not in README_CONTENTS:
+        if (
+            README_CONTENTS is None
+            or COPYING_LINK not in README_CONTENTS
+        ):
             COPYING_LINK_INDENTED: Final = textwrap.indent(
                 COPYING_LINK,
                 "\t"
@@ -506,7 +517,7 @@ def main() -> int:
             return 1
     if should_check_be_run('.editorconfig correct text', ARGS.skip):
         EDITOR_CONFIG_CONTENTS: Final = \
-            EDITOR_CONFIG_PATH.read_text(encoding='utf_8')
+            read_text_safe(EDITOR_CONFIG_PATH)
         if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
             print(
                 f"ERROR: {EDITOR_CONFIG_PATH} doesn’t the standard",
@@ -523,7 +534,10 @@ def main() -> int:
             print_no_file_error(PC_CONFIG_PATH)
             return 1
     if should_check_be_run('README.md has hints', ARGS.skip):
-        if HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS:
+        if (
+            README_CONTENTS is None
+            or HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS
+        ):
             print(
                 f"ERROR: {README_PATH} doesn’t have a “Hints for",
                 f"Contributors” section. Make sure that {README_PATH}",
@@ -541,7 +555,10 @@ def main() -> int:
                 glob: str
                 for glob in globs:
                     if path.match(glob, case_sensitive=False):
-                        if hint not in README_CONTENTS:
+                        if (
+                            README_CONTENTS is None
+                            or hint not in README_CONTENTS
+                        ):
                             hint_indented: str = textwrap.indent(
                                 hint,
                                 "\t"
