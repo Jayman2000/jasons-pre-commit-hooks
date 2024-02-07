@@ -22,3 +22,12 @@
     language: python
     pass_filenames: false
     description: Makes sure that repos follow Jason’s style for repos
+-
+    id: &id4 unreleased-commit-checker
+    name: *id4
+    entry: *id4
+    language: python
+    pass_filenames: false
+    description: >-
+        Tells you how many unreleased commits there are and gives an
+        error if a release needs to be made.
