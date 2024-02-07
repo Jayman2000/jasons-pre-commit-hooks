@@ -439,6 +439,10 @@ def main() -> int:
             H1_MARKER
         )
     )
+    README_H1_ERROR: Final = (
+        "Make sure that there’s a line that looks like"
+        f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
+    )
 
     if should_check_be_run('copying.md exists', ARGS.skip):
         if COPYING_PATH not in PATHS:
@@ -475,10 +479,6 @@ def main() -> int:
             print_no_file_error(README_PATH)
             return 1
     if should_check_be_run('README.md has <h1>', ARGS.skip):
-        README_H1_ERROR: Final = (
-            "Make sure that there’s a line that looks like"
-            f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
-        )
         if README_H1_CONTENTS is None:
             print(
                 f"ERROR: There’s no <h1> in {README_PATH}.",
