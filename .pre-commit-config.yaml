@@ -89,6 +89,15 @@ repos:
                     - --pattern
                     - '^COPYING'
     -
+        repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
+        # Unfortunately, the latest stable version of Jason’s Pre-commit
+        # Hooks doesn’t have unreleased-commit-checker.
+        rev: da1d0348e5af95fe38407b8f18ae8810ad78a0d1
+        hooks:
+            -
+                id: unreleased-commit-checker
+                exclude: *default_excludes
+    -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
         rev: v2.12.0
