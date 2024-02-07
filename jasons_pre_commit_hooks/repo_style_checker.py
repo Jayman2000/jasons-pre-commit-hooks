@@ -194,6 +194,10 @@ PCR_PRE_COMMIT_ITSELF: Final = PreCommitRepoInfo(
     url='https://github.com/pre-commit/pre-commit',
     hook_ids=('validate_manifest',)
 )
+PCR_UNRELEASED_COMMIT_CHECKER: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('unreleased-commit-checker',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -210,6 +214,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (PYTHON_GLOBS, PCR_MYPY),
     (PYTHON_GLOBS, PCR_RUFF),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
+    (('VERSIONING.md',), PCR_UNRELEASED_COMMIT_CHECKER),
 )
 
 
