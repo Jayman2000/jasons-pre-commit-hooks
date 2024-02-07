@@ -396,7 +396,7 @@ def main() -> int:
         return 1
     # Does copying.md contain the correct text?
     EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(PROJECT_NAME)
-    if EXPECTED_COPYING_INFO.format(PROJECT_NAME) != COPYING_CONTENTS:
+    if EXPECTED_COPYING_INFO != COPYING_CONTENTS:
         print(
             f"ERROR: {COPYING_PATH} doesn’t match the standard copying",
             "info template. Fixing…",
