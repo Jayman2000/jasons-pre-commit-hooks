@@ -411,7 +411,6 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     PARSER.add_argument(
-        '-s',
         '--skip',
         action='append',
         default=[],
