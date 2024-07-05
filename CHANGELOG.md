@@ -12,6 +12,18 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.1.0] — 2024-07-05
+
+### Added
+
+- A pre-commit hook named `unreleased-commit-checker`. It has no options
+at the moment (other than `--help`).
+
+### Changed
+
+- `repo-style-checker` now requires that `unreleased-commit-checker` is
+enabled if repos contain `/VERSIONING.md`.
+
 ## [v0.0.0] — 2024-02-07
 
 ### Added
@@ -39,6 +51,7 @@ version numbering scheme. That’s why its version number is so weird.
 editorconfig-checker-disable
 -->
 [v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
+[v0.1.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.1.0
 [pre-version-0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/pre-version-0
 <!--
 editorconfig-checker-enable
