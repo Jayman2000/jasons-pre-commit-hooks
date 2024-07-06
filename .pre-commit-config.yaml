@@ -5,12 +5,12 @@
 repos:
     -
         repo: https://github.com/fsfe/reuse-tool
-        rev: v3.0.1
+        rev: v4.0.2
         hooks:
             - id: reuse
     -
-        repo: https://gitlab.com/vojko.pribudic/pre-commit-update
-        rev: v0.1.5
+        repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
+        rev: v0.3.3post1
         hooks:
             -
                 id: pre-commit-update
@@ -36,7 +36,7 @@ repos:
                     - -ignore-defaults
     -
         repo: https://github.com/pre-commit/pre-commit-hooks
-        rev: v4.5.0
+        rev: v4.6.0
         hooks:
             -
                 id: check-case-conflict
@@ -68,14 +68,14 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/zricethezav/gitleaks
-        rev: v8.18.2
+        rev: v8.18.4
         hooks:
             -
                 id: gitleaks
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: v0.0.0
+        rev: v0.1.0
         hooks:
             -
                 id: detect-bad-unicode
@@ -88,34 +88,17 @@ repos:
                     - '^LICENSE'
                     - --pattern
                     - '^COPYING'
-    -
-        repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        # Unfortunately, the latest stable version of Jason’s Pre-commit
-        # Hooks doesn’t have unreleased-commit-checker.
-        rev: da1d0348e5af95fe38407b8f18ae8810ad78a0d1
-        hooks:
             -
                 id: unreleased-commit-checker
                 exclude: *default_excludes
     -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
-        rev: v2.12.0
+        rev: v2.13.0
         hooks:
             -
                 id: pretty-format-ini
                 exclude: *default_excludes
-    -
-        # Normally, I would just use a stable release of
-        # language-formatters-pre-commit-hooks, but stable releases are
-        # likely to not work properly on Windows, and being platform
-        # neutral is very important to me. Specifically, stable releases
-        # aren’t likely to work well on Windows because there isn’t a
-        # stable release that contains this PR yet:
-        # <https://github.com/macisamuele/language-formatters-pre-commit-hooks/pull/208>.
-        repo: *lfpch_url
-        rev: 97a46d97aea9f027a3a8714244f5c93a74d742de
-        hooks:
             -
                 id: pretty-format-toml
                 exclude: *default_excludes
@@ -131,21 +114,21 @@ repos:
         # stable releases are likely to not work properly on Windows,
         # and being platform neutral is very important to me.
         repo: https://github.com/Jayman2000/yamllint-pr
-        rev: pr630-rev-4
+        rev: pr630-rev-7
         hooks:
             -
                 id: yamllint
                 exclude: *default_excludes
     -
         repo: https://github.com/igorshubovych/markdownlint-cli
-        rev: v0.39.0
+        rev: v0.41.0
         hooks:
             -
                 id: markdownlint
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/mirrors-mypy
-        rev: v1.8.0
+        rev: v1.10.1
         hooks:
             -
                 id: mypy
@@ -162,14 +145,14 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.2.1
+        rev: v0.5.1
         hooks:
             -
                 id: ruff
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/pre-commit
-        rev: v3.6.0
+        rev: v3.7.1
         hooks:
             -
                 id: validate_manifest
