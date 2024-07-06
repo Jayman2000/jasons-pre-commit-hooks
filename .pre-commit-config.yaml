@@ -88,12 +88,6 @@ repos:
                     - '^LICENSE'
                     - --pattern
                     - '^COPYING'
-    -
-        repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        # Unfortunately, the latest stable version of Jason’s Pre-commit
-        # Hooks doesn’t have unreleased-commit-checker.
-        rev: 802e53a49e229b6b78cca335a66414f9ccd51401
-        hooks:
             -
                 id: unreleased-commit-checker
                 exclude: *default_excludes
