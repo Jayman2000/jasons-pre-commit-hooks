@@ -99,17 +99,6 @@ repos:
             -
                 id: pretty-format-ini
                 exclude: *default_excludes
-    -
-        # Normally, I would just use a stable release of
-        # language-formatters-pre-commit-hooks, but stable releases are
-        # likely to not work properly on Windows, and being platform
-        # neutral is very important to me. Specifically, stable releases
-        # aren’t likely to work well on Windows because there isn’t a
-        # stable release that contains this PR yet:
-        # <https://github.com/macisamuele/language-formatters-pre-commit-hooks/pull/208>.
-        repo: *lfpch_url
-        rev: 3623b5fc40fa188ff98563bad4fa8c853b449831
-        hooks:
             -
                 id: pretty-format-toml
                 exclude: *default_excludes
