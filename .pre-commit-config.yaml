@@ -5,7 +5,7 @@
 repos:
     -
         repo: https://github.com/fsfe/reuse-tool
-        rev: v4.0.2
+        rev: v4.0.3
         hooks:
             - id: reuse
     -
@@ -94,7 +94,7 @@ repos:
     -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
-        rev: v2.13.0
+        rev: v2.14.0
         hooks:
             -
                 id: pretty-format-ini
@@ -145,7 +145,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.5.1
+        rev: v0.5.3
         hooks:
             -
                 id: ruff
