@@ -218,6 +218,12 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
 )
 
 
+def pre_commit_hook_ids() -> Iterable[str]:
+    for _, repo_info in PRE_COMMIT_REPOS_BY_PATH:
+        for hook_id in repo_info.hook_ids:
+            yield hook_id
+
+
 def paths_in_repo() -> Iterable[pathlib.Path]:
     # I would have used dulwich.porcelain.ls_files(), but that function
     # isn’t typed.
@@ -246,7 +252,8 @@ def extract_str_from_line_that_starts_with(
 def check_pc_config_hooks(
     pre_commit_config: dict[Any, Any],
     repo_info: PreCommitRepoInfo,
-    glob: str
+    glob: str,
+    disabled_hooks: Container[str]
 ) -> bool:
     ACTUAL_VALUE: Final = "Its actual value was {}"
     REPOS: Final = pre_commit_config.get('repos')
@@ -261,7 +268,8 @@ def check_pc_config_hooks(
 
     hooks_found: dict[str, bool] = {}
     for hook_id in repo_info.hook_ids:
-        hooks_found[hook_id] = False
+        if hook_id not in disabled_hooks:
+            hooks_found[hook_id] = False
     excludes_respected: bool = True
     args_respected: bool = True
     no_errors: bool = True
@@ -422,6 +430,24 @@ def main() -> int:
             " word splitting."
         ),
         metavar="CHECK_ID"
+    )
+    PARSER.add_argument(
+        '-d',
+        '--disable-hook',
+        action='append',
+        default=[],
+        choices=tuple(pre_commit_hook_ids()),
+        help=(
+            "Normally, the standard hooks check will give you an error"
+            " unless you enable all of the pre-commit hooks that it "
+            "wants you to enable. You can use --disable-hook if you "
+            "don’t want to enable one of those pre-commit hooks. For "
+            "example, if repo-style-checker is telling you to enable "
+            "the detect-bad-unicode hook, but you don’t want to, then "
+            "you can run “repo-style-checker --disable-hook "
+            "detect-bad-unicode”."
+        ),
+        metavar="PRE_COMMIT_HOOK_ID"
     )
     ARGS: Final = PARSER.parse_args()
 
@@ -595,7 +621,8 @@ def main() -> int:
                         hooks_found: bool = check_pc_config_hooks(
                             PC_CONFIG,
                             repo_info,
-                            glob
+                            glob,
+                            ARGS.disable_hook
                         )
                         if not hooks_found:
                             missing_hooks = True
