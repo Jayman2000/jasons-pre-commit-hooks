@@ -68,8 +68,7 @@ HFC_EDITOR_CONFIG: Final = \
     "- This repo uses an [EditorConfig](https://editorconfig.org) file."
 HFC_MARKDOWN: Final = \
 """
-- Use [CommonMark](https://commonmark.org) for
-[Markdown](https://daringfireball.net/projects/markdown) files.
+- Use [CommonMark](https://commonmark.org) for Markdown files.
 """
 HFC_RUFF: Final = \
 """
