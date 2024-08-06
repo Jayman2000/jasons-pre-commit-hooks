@@ -551,8 +551,8 @@ def main() -> int:
             read_text_safe(EDITOR_CONFIG_PATH)
         if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
             print(
-                f"ERROR: {EDITOR_CONFIG_PATH} doesn’t the standard",
-                f"{EDITOR_CONFIG_PATH} file. Fixing…",
+                f"ERROR: {EDITOR_CONFIG_PATH} doesn’t contain the",
+                f"standard {EDITOR_CONFIG_PATH} file. Fixing…",
                 file=sys.stderr
             )
             EDITOR_CONFIG_PATH.write_text(
