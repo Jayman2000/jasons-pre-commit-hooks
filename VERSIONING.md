@@ -42,7 +42,7 @@ the releases’s commit logs.
 a release.
 
 If you want a release to come out sooner, then contribute. The sooner we
-hit the thirty commit mark, the sooner a release happens
+hit the thirty commit mark, the sooner a release happens.
 
 <!--- editorconfig-checker-disable -->
 [1]: https://github.com/Jayman2000/jmvs/releases/tag/v0.0.0
