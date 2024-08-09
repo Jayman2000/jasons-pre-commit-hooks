@@ -5,6 +5,18 @@ SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
 
 # Jason’s Pre-commit Hooks
 
+This repo contains [pre-commit][1] hooks that
+[Jason](https://github.com/Jayman2000) uses for his personal projects.
+If you aren’t Jason and you also aren’t contributing to one of Jason’s
+projects, then this repo probably won’t be helpful to you.
+
+If you want to know more about what the hooks in this repo do, then take
+a look at [`VERSIONING.md`]. Specifically, [`VERSIONING.md`] will tell
+you what you need to to in order to find the API docs for the scripts in
+this repo.
+
+[`VERSIONING.md`]: ./VERSIONING.md
+
 ## Hints for Contributors
 
 - You can use [pre-commit][1] to automatically check your contributions.
