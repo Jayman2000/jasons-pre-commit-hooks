@@ -12,6 +12,30 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.2.0] — 2024-08-09
+
+### Added
+
+- `repo-style-checker` now has a `--disable-hook` option.
+
+### Changed
+
+- The text for one of `repo-style-checker`’s standard Hints for
+Contributors was changed so that it doesn’t link to the original
+Markdown site. It now only links to the CommonMark site.
+- Multiple small improvements to the comments in `repo-style-checker`’s
+standard EditorConfig file were made.
+
+### Fixed
+
+- `repo-style-checker` used to use the old URL for `pre-commit-update`’s
+repo. That old URL now 404s. `repo-style-checker` now uses
+`pre-commit-update`’s new URL.
+- A grammar mistake in one of `repo-style-checker`’s error messages was
+fixed.
+- A grammar mistake in `repo-style-checker`’s standard EditorConfig file
+was fixed.
+
 ## [v0.1.0] — 2024-07-05
 
 ### Added
@@ -50,8 +74,9 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
-[v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
+[v0.2.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.2.0
 [v0.1.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.1.0
+[v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
 [pre-version-0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/pre-version-0
 <!--
 editorconfig-checker-enable
