@@ -197,6 +197,14 @@ PCR_UNRELEASED_COMMIT_CHECKER: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
     hook_ids=('unreleased-commit-checker',)
 )
+PCR_NIXFMT: Final = PreCommitRepoInfo(
+    # Normally, I would use the upstream repo’s URL, but I can’t because
+    # this pull request [1] hasn’t been merged yet.
+    #
+    # [1]: <https://github.com/NixOS/nixfmt/pull/238>
+    url='https://github.com/Jayman2000/nixfmt-pr',
+    hook_ids=('nixfmt',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -214,6 +222,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (PYTHON_GLOBS, PCR_RUFF),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
     (('VERSIONING.md',), PCR_UNRELEASED_COMMIT_CHECKER),
+    (('**.nix',), PCR_NIXFMT),
 )
 
 
