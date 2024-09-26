@@ -10,22 +10,31 @@
     types: [text]
     description: Checks to see if UTF-8 files contain “bad” code points
 -
-    id: &id2 forbid-paths-that-match
+    id: &id2 flake-lock-updater
     name: *id2
     entry: *id2
+    files: '(^|.*/)flake\.lock$'
+    language: python
+    description: >-
+        Runs “nix flake update” if any inputs in flake.lock are over a
+        week old.
+-
+    id: &id3 forbid-paths-that-match
+    name: *id3
+    entry: *id3
     language: python
     description: Causes an error if paths match certain regex patterns
 -
-    id: &id3 repo-style-checker
-    name: *id3
-    entry: *id3
+    id: &id4 repo-style-checker
+    name: *id4
+    entry: *id4
     language: python
     pass_filenames: false
     description: Makes sure that repos follow Jason’s style for repos
 -
-    id: &id4 unreleased-commit-checker
-    name: *id4
-    entry: *id4
+    id: &id5 unreleased-commit-checker
+    name: *id5
+    entry: *id5
     language: python
     pass_filenames: false
     description: >-
