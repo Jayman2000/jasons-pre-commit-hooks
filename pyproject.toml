@@ -37,6 +37,7 @@ file = "copying.md"
 # editorconfig-checker-disable
 [project.scripts]
 detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
+flake-lock-updater = "jasons_pre_commit_hooks.flake_lock_updater:main"
 forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths_that_match:main"
 repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
 unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
