@@ -91,10 +91,12 @@ repos:
             -
                 id: repo-style-checker
                 args:
-                    # I need to disable this on or else it will try to
-                    # overwrite the version of the EditorConfig that’s
-                    # in the main branch with the version of the
-                    # EditorConfig that’s in the latest stable release.
+                    # I need to disable these checks on or else it will
+                    # try to overwrite the version of the files that’s
+                    # in the main branch with the versions of the files
+                    # that’s in the latest stable release.
+                    - --skip
+                    - 'copying.md correct text'
                     - --skip
                     - '.editorconfig correct text'
             -
