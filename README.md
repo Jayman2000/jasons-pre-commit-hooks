@@ -24,8 +24,7 @@ Follow [these instructions][2] to get started. Skip [the part about
 creating a pre-commit configuration][3].
 - This repo uses an [EditorConfig](https://editorconfig.org) file.
 - Try to keep lines shorter than seventy-three characters.
-- Use [CommonMark](https://commonmark.org) for
-[Markdown](https://daringfireball.net/projects/markdown) files.
+- Use [CommonMark](https://commonmark.org) for Markdown files.
 - If you’re using [NixOS](https://nixos.org), then the
 [ruff](https://docs.astral.sh/ruff/) pre-commit hook probably won’t
 work. Here’s how you fix it:
