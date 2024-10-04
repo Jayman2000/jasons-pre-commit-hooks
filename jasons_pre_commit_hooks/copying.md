@@ -24,7 +24,7 @@ etc.) is dedicated to the public domain using [🅭🄍1.0][5].
 
 <!-- editorconfig-checker-disable -->
 
-[1]: https://github.com/fsfe/reuse-docs/blob/0913b0a83b36c161966be1c5e70c81bdadfb8a69/spec.md
+[1]: https://reuse.software/spec-3.2
 [2]: https://spdx.org/licenses/
 [3]: https://sfconservancy.org/news/2022/may/16/vizio-remand-win/
 [4]: https://wiki.spdx.org/view/Legal_Team/Decisions/Dealing_with_Public_Domain_within_SPDX_Files
