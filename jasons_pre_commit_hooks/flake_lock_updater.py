@@ -90,18 +90,16 @@ def main() -> int:
             lock_file_data: object = json.load(lock_file)
 
         if isinstance(lock_file_data, dict):
-            generator: yield_type = all_last_modified_values(
-                    lock_file_path,
-                    lock_file_data
+            latest_last_modified_value: datetime.datetime = max(
+                all_last_modified_values(lock_file_path, lock_file_data)
             )
-            for last_modified_value in generator:
-                input_age = (
-                    datetime.datetime.now(datetime.timezone.utc)
-                    - last_modified_value
-                )
-                if input_age.days > 7:
-                    try_to_update_lock_file(lock_file_path)
-                    break
+            smallest_input_age = (
+                datetime.datetime.now(datetime.timezone.utc)
+                - latest_last_modified_value
+            )
+            if smallest_input_age.days > 7:
+                try_to_update_lock_file(lock_file_path)
+                break
             else:
                 print(f"“{lock_file_path}” doesn’t need to be updated.")
         else:
