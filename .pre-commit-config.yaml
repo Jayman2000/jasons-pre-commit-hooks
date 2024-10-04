@@ -89,6 +89,15 @@ repos:
                     - --pattern
                     - '^COPYING'
             -
+                id: repo-style-checker
+                args:
+                    # I need to disable this on or else it will try to
+                    # overwrite the version of the EditorConfig that’s
+                    # in the main branch with the version of the
+                    # EditorConfig that’s in the latest stable release.
+                    - --skip
+                    - '.editorconfig correct text'
+            -
                 id: unreleased-commit-checker
                 exclude: *default_excludes
     -
