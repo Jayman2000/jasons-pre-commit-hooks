@@ -12,6 +12,30 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.3.0] — 2024-10-04
+
+### Added
+
+- `repo-style-checker` now requires that you use
+[`nixfmt`](https://github.com/NixOS/nixfmt) if you have `.nix` files in
+your repo.
+- `repo-style-checker` now requires that you use [`pre-commit-update`].
+- This repo now has a new pre-commit hook named `flake-lock-updater`.
+- `repo-style-checker` now requires that you use `flake-lock-updater` if
+you have a `flake.lock` file in your repo.
+
+### Changed
+
+- `repo-style-checker`’s standard EditorConfig now uses two spaces for
+the indentation of `.nix` files.
+- The comments in `repo-style-checker`’s standard EditorConfig have been
+improved.
+- `repo-style-checker`’s standard `coping.md` file now uses a stable
+version of the REUSE Specification.
+- `repo-style-checker`’s standard `coping.md` file now does a better job
+at explaining how some items on the SPDX License List aren’t necessarily
+licenses.
+
 ## [v0.2.0] — 2024-08-09
 
 ### Added
@@ -74,10 +98,13 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.3.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.3.0
 [v0.2.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.2.0
 [v0.1.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.1.0
 [v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
 [pre-version-0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/pre-version-0
+
+[`pre-commit-update`]: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
 <!--
 editorconfig-checker-enable
 -->
