@@ -170,14 +170,8 @@ PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     hook_ids=('pretty-format-toml',),
     args=('--autofix', '--indent', '4')
 )
-# This is the version of yamllint from this PR:
-# <https://github.com/adrienverge/yamllint/pull/630>.
-#
-# Normally, I would just use a stable release of yamllint, but
-# stable releases are likely to not work properly on Windows,
-# and being platform neutral is very important to me.
 PCR_YAMLLINT: Final = PreCommitRepoInfo(
-    url='https://github.com/Jayman2000/yamllint-pr',
+    url='https://github.com/adrienverge/yamllint',
     hook_ids=('yamllint',)
 )
 PCR_MARKDOWNLINT_CLI: Final = PreCommitRepoInfo(
