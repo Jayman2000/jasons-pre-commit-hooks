@@ -1,0 +1,97 @@
+{
+    "nodes": {
+        "blueprint": {
+            "inputs": {
+                "nixpkgs": [
+                    "nixpkgs"
+                ],
+                "systems": [
+                    "jasons-nix-flake-style-guide",
+                    "systems"
+                ]
+            },
+            "locked": {
+                "lastModified": 1744632722,
+                "narHash":
+                "sha256-0chvqUV1Kzf8BMQ7MsH3CeicJEb2HeCpwliS77FGyfc=",
+                "owner": "numtide",
+                "repo": "blueprint",
+                "rev": "49bbd5d072b577072f4a1d07d4b0621ecce768af",
+                "type": "github"
+            },
+            "original": {
+                "owner": "numtide",
+                "repo": "blueprint",
+                "type": "github"
+            }
+        },
+        "jasons-nix-flake-style-guide": {
+            "inputs": {
+                "blueprint": [
+                    "blueprint"
+                ],
+                "nixpkgs": [
+                    "nixpkgs"
+                ],
+                "systems": "systems"
+            },
+            "locked": {
+                "lastModified": 1746191492,
+                "narHash":
+                "sha256-10c+CYi/cKvRgf0cnGq753+wTEo0KcD9h7OvrNjM6Ws=",
+                "ref": "refs/heads/main",
+                "rev": "0b370584f3b30fe00b3f3443b0de6f81b0476293",
+                "revCount": 77,
+                "type": "git",
+                "url":
+"https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
+            },
+            "original": {
+                "type": "git",
+                "url":
+"https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
+            }
+        },
+        "nixpkgs": {
+            "locked": {
+                "lastModified": 1746557022,
+                "narHash":
+                "sha256-QkNoyEf6TbaTW5UZYX0OkwIJ/ZMeKSSoOMnSDPQuol0=",
+                "owner": "NixOS",
+                "repo": "nixpkgs",
+                "rev": "1d3aeb5a193b9ff13f63f4d9cc169fb88129f860",
+                "type": "github"
+            },
+            "original": {
+                "owner": "NixOS",
+                "ref": "nixos-24.11",
+                "repo": "nixpkgs",
+                "type": "github"
+            }
+        },
+        "root": {
+            "inputs": {
+                "blueprint": "blueprint",
+                "jasons-nix-flake-style-guide":
+                "jasons-nix-flake-style-guide",
+                "nixpkgs": "nixpkgs"
+            }
+        },
+        "systems": {
+            "flake": false,
+            "locked": {
+                "lastModified": 1,
+                "narHash":
+                "sha256-QtZ7SrT/EZfifeujuZ/5Mc0N3w1W5hwr0gkWMz+XYCA=",
+                "path": "./supported-systems.nix",
+                "type": "path"
+            },
+            "original": {
+                "path": "./supported-systems.nix",
+                "type": "path"
+            }
+        }
+    },
+    "root": "root",
+    "version": 7
+}
