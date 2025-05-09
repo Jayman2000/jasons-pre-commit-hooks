@@ -452,6 +452,15 @@ def main() -> int:
         ),
         metavar="PRE_COMMIT_HOOK_ID"
     )
+    LINE_ENDING_CHOICES: Final = frozenset(('crlf', 'lf'))
+    PARSER.add_argument(
+        '-l',
+        '--line-ending',
+        nargs=1,
+        default='lf',
+        choices=LINE_ENDING_CHOICES,
+        help="The “.editorconfig correct text”"
+    )
     ARGS: Final = PARSER.parse_args()
 
     PATHS: Final = set(path for path in paths_in_repo())
