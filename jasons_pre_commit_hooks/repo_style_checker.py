@@ -90,7 +90,7 @@ HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
 )
 
 
-EXPECTED_EDITOR_CONFIG: Final = (
+EDITOR_CONFIG_TEMPLATE: Final = (
     importlib.resources.files()
     .joinpath("editor_config.ini")
     .read_text(encoding='utf_8')
@@ -452,6 +452,14 @@ def main() -> int:
         ),
         metavar="PRE_COMMIT_HOOK_ID"
     )
+    LINE_ENDING_CHOICES: Final = frozenset(('crlf', 'lf'))
+    PARSER.add_argument(
+        '-l',
+        '--line-ending',
+        default='lf',
+        choices=LINE_ENDING_CHOICES,
+        help="The “.editorconfig correct text”"
+    )
     ARGS: Final = PARSER.parse_args()
 
     PATHS: Final = set(path for path in paths_in_repo())
@@ -550,16 +558,22 @@ def main() -> int:
             print_no_file_error(EDITOR_CONFIG_PATH)
             return 1
     if should_check_be_run('.editorconfig correct text', ARGS.skip):
+        expected_editor_config: str = EDITOR_CONFIG_TEMPLATE
+        if ARGS.line_ending == 'crlf':
+            expected_editor_config = expected_editor_config.replace(
+                "end_of_line = lf",
+                "end_of_line = crlf"
+            )
         EDITOR_CONFIG_CONTENTS: Final = \
             read_text_safe(EDITOR_CONFIG_PATH)
-        if EDITOR_CONFIG_CONTENTS != EXPECTED_EDITOR_CONFIG:
+        if EDITOR_CONFIG_CONTENTS != expected_editor_config:
             print(
                 f"ERROR: {EDITOR_CONFIG_PATH} doesn’t contain the",
                 f"standard {EDITOR_CONFIG_PATH} file. Fixing…",
                 file=sys.stderr
             )
             EDITOR_CONFIG_PATH.write_text(
-                EXPECTED_EDITOR_CONFIG,
+                expected_editor_config,
                 encoding='utf_8'
             )
             return 1
