@@ -36,12 +36,12 @@
                 "systems": "systems"
             },
             "locked": {
-                "lastModified": 1746191492,
+                "lastModified": 1747311249,
                 "narHash":
-                "sha256-10c+CYi/cKvRgf0cnGq753+wTEo0KcD9h7OvrNjM6Ws=",
+                "sha256-0Kt3LHp0uA2XFWkpuZz9nLkEzQ6LXKdhT2Hn2wvT7Ys=",
                 "ref": "refs/heads/main",
-                "rev": "0b370584f3b30fe00b3f3443b0de6f81b0476293",
-                "revCount": 77,
+                "rev": "4fc8e906fbb65e3d0bd4c3b41986495faa2e17fa",
+                "revCount": 82,
                 "type": "git",
                 "url":
 "https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
@@ -54,12 +54,12 @@
         },
         "nixpkgs": {
             "locked": {
-                "lastModified": 1746557022,
+                "lastModified": 1747209494,
                 "narHash":
-                "sha256-QkNoyEf6TbaTW5UZYX0OkwIJ/ZMeKSSoOMnSDPQuol0=",
+                "sha256-fLise+ys+bpyjuUUkbwqo5W/UyIELvRz9lPBPoB0fbM=",
                 "owner": "NixOS",
                 "repo": "nixpkgs",
-                "rev": "1d3aeb5a193b9ff13f63f4d9cc169fb88129f860",
+                "rev": "5d736263df906c5da72ab0f372427814de2f52f8",
                 "type": "github"
             },
             "original": {
