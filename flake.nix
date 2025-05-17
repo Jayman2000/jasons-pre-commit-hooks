@@ -4,7 +4,7 @@
   description = "Pre-commit hooks that I use for my projects";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     blueprint = {
       url = "github:numtide/blueprint";
       inputs = {
