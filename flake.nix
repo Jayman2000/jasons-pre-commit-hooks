@@ -21,6 +21,7 @@
         blueprint.follows = "blueprint";
       };
     };
+    systems.follows = "jasons-nix-flake-style-guide/systems";
   };
   outputs =
     inputs:
