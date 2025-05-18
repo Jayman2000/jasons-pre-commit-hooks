@@ -4,6 +4,7 @@
 pkgs.mkShellNoCC {
   name = "shell-for-working-on-jasons-pre-commit-hooks";
   packages = with pkgs; [
+    gh
     pre-commit
     # Dependencies for pre-commit hooks:
     cabal-install

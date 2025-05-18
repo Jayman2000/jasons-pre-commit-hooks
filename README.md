@@ -1,6 +1,6 @@
 <!--
 SPDX-License-Identifier: CC0-1.0
-SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
+SPDX-FileCopyrightText: 2023–2025 Jason Yundt <jason@jasonyundt.email>
 -->
 
 # Jason’s Pre-commit Hooks
@@ -16,6 +16,25 @@ you what you need to to in order to find the API docs for the scripts in
 this repo.
 
 [`VERSIONING.md`]: ./VERSIONING.md
+
+## The `stable` branch
+
+This repository has a branch that’s named `stable`. Whenever a new
+release of this project is made, the tip of the `stable` branch should
+be updated so that it points to the latest stable release of Jason’s
+Pre-commit Hooks. If it’s been more than a day since a stable release
+has been made and the `stable` branch still hasn’t been updated, then
+someone should open a GitHub issue. It should never take that long to
+update the `stable` branch.
+
+This repository contains a [Nix] [flake]. If you want to use this
+repository’s flake as an input for another flake, then I recommend using
+this repository’s `stable` branch. The `stable` branch allows you to
+easily ensure that you’re always using the latest stable version of
+Jason’s Pre-commit Hooks.
+
+[Nix]: https://nix.dev
+[flake]: https://nix.dev/concepts/flakes
 
 ## Hints for Contributors
 

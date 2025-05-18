@@ -1,6 +1,6 @@
 <!--
 SPDX-License-Identifier: CC0-1.0
-SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+SPDX-FileCopyrightText: 2024–2025 Jason Yundt <jason@jasonyundt.email>
 -->
 
 # Versioning Information for Jason’s Pre-commit Hooks
@@ -37,9 +37,13 @@ I do:
 1. Keep track of the number of unreleased commits. An unreleased commit
 is a commit that’s in the main branch’s commit log, but isn’t in any of
 the releases’s commit logs.
-2. If there’s thirty or more unreleased commits, then do a release.
-3. If there’s an unreleased commit that’s over three months old, then do
-a release.
+2. If there’s thirty or more unreleased commits, then it’s time to do a
+release.
+3. If there’s an unreleased commit that’s over three months old, then
+it’s time to do a release.
+
+Once it’s time to do a release, a release will be created by following
+the instructions in [`Release process.md`](./Release%20process.md).
 
 If you want a release to come out sooner, then contribute. The sooner we
 hit the thirty commit mark, the sooner a release happens.
