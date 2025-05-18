@@ -8,6 +8,10 @@ pkgs.mkShellNoCC {
     # Dependencies for pre-commit hooks:
     cabal-install
     ghc
+    nodejs
+    cargo
+    rustc
+    go
   ];
   shellHook = ''
     export PIP_NO_BINARY=ruff
