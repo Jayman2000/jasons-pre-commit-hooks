@@ -12,6 +12,31 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.4.0] — 2025-05-18
+
+### Added
+
+- This repository now has a [Nix](https://nix.dev)
+[flake](https://nix.dev/concepts/flakes). The flake’s outputs include a
+Nix package for Jason’s Pre-commit Hooks and a dev shell for working on
+this repository.
+- This repository now has a `stable` branch. The `stable` branch can be
+used to easily access the latest stable version of Jason’s Pre-commit
+Hooks.
+
+### Changed
+
+- `repo-style-checker` now uses [the upstream `yamllint`
+repository](https://github.com/adrienverge/yamllint) instead of [a
+fork](https://github.com/Jayman2000/yamllint-pr). The only reason that a
+fork was being used was because [this pull
+request](https://github.com/adrienverge/yamllint/pull/630) hadn’t been
+merged yet. Now that it’s been merged, there’s no need to use a fork of
+yamllint.
+- `repo-style-checker` now has a `--line-ending` option. That option
+should be helpful when working on repositories that only contain
+Windows-only software.
+
 ## [v0.3.0] — 2024-10-04
 
 ### Added
@@ -98,6 +123,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.4.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.4.0
 [v0.3.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.3.0
 [v0.2.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.2.0
 [v0.1.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.1.0
