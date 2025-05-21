@@ -175,3 +175,29 @@ repos:
             -
                 id: nixfmt
                 exclude: *default_excludes
+    -
+        # TOOD: Once the pull request gets merged into the upstream
+        # project, replace this URL with the URL for the upstream
+        # project.
+        #
+        # I’m using a fork of nix-pre-commit-hooks here because the
+        # upstream version doesn’t work unless you have the nix-command
+        # and flakes experimental features enabled. I don’t have any
+        # experimental features enabled on my system (I always use
+        # --extra-experimental-features).
+        repo: https://codeberg.org/JasonYundt/nix-pre-commit-hooks-pr
+        rev: pr-1-rev-0
+        hooks:
+            -
+                id: nix-format
+                exclude: *default_excludes
+                args:
+                    # I find that I get better error messages when I use
+                    # --keep-going.
+                    - --keep-going
+            -
+                id: nix-check-flake
+                exclude: *default_excludes
+                args:
+                    - --all-systems
+                    - --keep-going
