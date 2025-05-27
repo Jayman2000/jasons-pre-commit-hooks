@@ -60,6 +60,7 @@ let
 in
 pkgs.runCommandWith
   {
+    inherit (devShell) stdenv;
     name = pname;
     derivationArgs = {
       # The cacert thing is needed to work around this limitation [1].
