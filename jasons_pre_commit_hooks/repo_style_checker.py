@@ -199,6 +199,18 @@ PCR_NIXFMT: Final = PreCommitRepoInfo(
     url='https://github.com/NixOS/nixfmt',
     hook_ids=('nixfmt',)
 )
+# TOOD: Once the pull request gets merged into the upstream project,
+# replace this URL with the URL for the upstream project.
+#
+# I’m using a fork of nix-pre-commit-hooks here because the upstream
+# version doesn’t work unless you have the nix-command and flakes
+# experimental features enabled. I don’t have any experimental features
+# enabled on my system (I always use --extra-experimental-features).
+PCR_NIX_PRE_COMMIT_HOOKS: Final = PreCommitRepoInfo(
+    url='https://codeberg.org/JasonYundt/nix-pre-commit-hooks-pr',
+    hook_ids=('nix-check-flake',),
+    args=('--all-systems', '--keep-going')
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -217,6 +229,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
     (('VERSIONING.md',), PCR_UNRELEASED_COMMIT_CHECKER),
     (('**.nix',), PCR_NIXFMT),
+    (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS),
     (('**flake.lock',), PCR_FLAKE_LOCK_UPDATER),
 )
 
