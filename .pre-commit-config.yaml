@@ -71,7 +71,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/zricethezav/gitleaks
-        rev: v8.27.0
+        rev: v8.27.1
         hooks:
             -
                 id: gitleaks
@@ -156,7 +156,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.11.12
+        rev: v0.11.13
         hooks:
             -
                 id: ruff
@@ -170,7 +170,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/NixOS/nixfmt
-        rev: 89598649a2a04e3c3c48d7d6b83e745a6e0b3e94
+        rev: af5529a9e56b3429408c9d281518527d3a63cf33
         hooks:
             -
                 id: nixfmt
