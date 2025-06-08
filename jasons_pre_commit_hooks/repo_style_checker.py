@@ -195,10 +195,6 @@ PCR_UNRELEASED_COMMIT_CHECKER: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
     hook_ids=('unreleased-commit-checker',)
 )
-PCR_NIXFMT: Final = PreCommitRepoInfo(
-    url='https://github.com/NixOS/nixfmt',
-    hook_ids=('nixfmt',)
-)
 # TOOD: Once the pull request gets merged into the upstream project,
 # replace this URL with the URL for the upstream project.
 #
@@ -236,7 +232,6 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (PYTHON_GLOBS, PCR_RUFF),
     (('.pre-commit-hooks.yaml',), PCR_PRE_COMMIT_ITSELF),
     (('VERSIONING.md',), PCR_UNRELEASED_COMMIT_CHECKER),
-    (('**.nix',), PCR_NIXFMT),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FLAKE_CHECK),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
     (('**flake.lock',), PCR_FLAKE_LOCK_UPDATER),
