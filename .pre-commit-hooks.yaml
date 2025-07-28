@@ -40,3 +40,12 @@
     description: >-
         Tells you how many unreleased commits there are and gives an
         error if a release needs to be made.
+-
+    id: &id6 forbid-template-markers
+    name: *id5
+    # Eventually, we’re going to start running forbid-template-markers
+    # on the Jason’s Pre-commit Hooks repository. I’m using a \u escape
+    # here in order to make sure that a false positive doesn’t get
+    # triggered for this file.
+    entry: "placeholder-\u0445𭢸눳🕛𫨖-placeholder"
+    language: pygrep
