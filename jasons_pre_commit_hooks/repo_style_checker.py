@@ -150,7 +150,7 @@ PCR_GITLEAKS: Final = PreCommitRepoInfo(
 )
 PCR_JASONS_PRE_COMMIT_HOOKS: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
-    hook_ids=('detect-bad-unicode',)
+    hook_ids=('detect-bad-unicode', 'forbid-template-markers')
 )
 # I’m only enabling this hook to work around this problem:
 # <https://github.com/fsfe/reuse-tool/issues/881>.
