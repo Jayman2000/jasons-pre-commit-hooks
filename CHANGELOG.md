@@ -12,6 +12,29 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.5.0] — 2025-07-28
+
+### Added
+
+- `repo-style-checker` now requires that you use [the
+`nix-check-flake` and the `nix-format` pre-commit
+hooks](https://codeberg.org/hxr404/nix-pre-commit-hooks).
+
+### Changed
+
+- `repo-style-checker`’s standard EditorConfig has been updated. It now
+no longer puts a limit on the lengths of lines in `flake.lock`.
+
+### Removed
+
+- `repo-style-checker` no longer requires that you use [the `nixfmt`
+pre-commit hook](https://github.com/NixOS/nixfmt). Now that, the
+`nix-format` pre-commit hook is required, it doesn’t make sense to
+require two different formatters for `.nix` files. Having two formatters
+is redundant and could possibly result in situations where one formatter
+insists that you do things one way and another formatter insists that
+you do things another way.
+
 ## [v0.4.0] — 2025-05-18
 
 ### Added
@@ -123,6 +146,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.5.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.4.0
 [v0.3.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.3.0
 [v0.2.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.2.0
