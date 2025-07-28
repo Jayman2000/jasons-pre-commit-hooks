@@ -12,8 +12,7 @@
             },
             "locked": {
                 "lastModified": 1753215027,
-                "narHash":
-                "sha256-JvMF7CODUM3C475oApJ8oQ0ym3tvBWkL7C5M2SDAW2g=",
+                "narHash": "sha256-JvMF7CODUM3C475oApJ8oQ0ym3tvBWkL7C5M2SDAW2g=",
                 "owner": "numtide",
                 "repo": "blueprint",
                 "rev": "9f47c131a6bcc8796df7c76450e7883247339dc6",
@@ -33,32 +32,27 @@
                 "nixpkgs": [
                     "nixpkgs"
                 ],
-                "percent-encoding-rosetta-stone":
-                "percent-encoding-rosetta-stone",
+                "percent-encoding-rosetta-stone": "percent-encoding-rosetta-stone",
                 "systems": "systems"
             },
             "locked": {
                 "lastModified": 1749838239,
-                "narHash":
-                "sha256-eiZgsnNmfqZdRBpaevJ23nydPqt0H/jgUFJN3hVdblY=",
+                "narHash": "sha256-eiZgsnNmfqZdRBpaevJ23nydPqt0H/jgUFJN3hVdblY=",
                 "ref": "refs/heads/main",
                 "rev": "f1191fae56f9ffe4253e3e439508b87b620f5907",
                 "revCount": 95,
                 "type": "git",
-                "url":
-"https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
+                "url": "https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
             },
             "original": {
                 "type": "git",
-                "url":
-"https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
+                "url": "https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
             }
         },
         "nixpkgs": {
             "locked": {
                 "lastModified": 1753489912,
-                "narHash":
-                "sha256-uDCFHeXdRIgJpYmtcUxGEsZ+hYlLPBhR83fdU+vbC1s=",
+                "narHash": "sha256-uDCFHeXdRIgJpYmtcUxGEsZ+hYlLPBhR83fdU+vbC1s=",
                 "owner": "NixOS",
                 "repo": "nixpkgs",
                 "rev": "13e8d35b7d6028b7198f8186bc0347c6abaa2701",
@@ -75,23 +69,19 @@
             "flake": false,
             "locked": {
                 "lastModified": 1,
-                "narHash":
-                "sha256-6tgdbyzGtTaEeE+Ho6tLNv7lSlfQ7A24gtSMz4uATF8=",
+                "narHash": "sha256-6tgdbyzGtTaEeE+Ho6tLNv7lSlfQ7A24gtSMz4uATF8=",
                 "type": "tarball",
-                "url":
-"https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
+                "url": "https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
             },
             "original": {
                 "type": "tarball",
-                "url":
-"https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
+                "url": "https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
             }
         },
         "root": {
             "inputs": {
                 "blueprint": "blueprint",
-                "jasons-nix-flake-style-guide":
-                "jasons-nix-flake-style-guide",
+                "jasons-nix-flake-style-guide": "jasons-nix-flake-style-guide",
                 "nixpkgs": "nixpkgs",
                 "systems": [
                     "jasons-nix-flake-style-guide",
