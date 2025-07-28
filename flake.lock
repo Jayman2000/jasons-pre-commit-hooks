@@ -11,12 +11,12 @@
                 ]
             },
             "locked": {
-                "lastModified": 1744632722,
+                "lastModified": 1753215027,
                 "narHash":
-                "sha256-0chvqUV1Kzf8BMQ7MsH3CeicJEb2HeCpwliS77FGyfc=",
+                "sha256-JvMF7CODUM3C475oApJ8oQ0ym3tvBWkL7C5M2SDAW2g=",
                 "owner": "numtide",
                 "repo": "blueprint",
-                "rev": "49bbd5d072b577072f4a1d07d4b0621ecce768af",
+                "rev": "9f47c131a6bcc8796df7c76450e7883247339dc6",
                 "type": "github"
             },
             "original": {
@@ -33,15 +33,17 @@
                 "nixpkgs": [
                     "nixpkgs"
                 ],
+                "percent-encoding-rosetta-stone":
+                "percent-encoding-rosetta-stone",
                 "systems": "systems"
             },
             "locked": {
-                "lastModified": 1748877216,
+                "lastModified": 1749838239,
                 "narHash":
-                "sha256-nGh2w5dRRZRmny3kGldMxxJGMPByeJwwPCNyHQ9/4Ok=",
+                "sha256-eiZgsnNmfqZdRBpaevJ23nydPqt0H/jgUFJN3hVdblY=",
                 "ref": "refs/heads/main",
-                "rev": "d0ef9129143f68fc498505a34520c8fe734ca960",
-                "revCount": 88,
+                "rev": "f1191fae56f9ffe4253e3e439508b87b620f5907",
+                "revCount": 95,
                 "type": "git",
                 "url":
 "https://codeberg.org/JasonYundt/jasons-nix-flake-style-guide.git"
@@ -54,12 +56,12 @@
         },
         "nixpkgs": {
             "locked": {
-                "lastModified": 1749237914,
+                "lastModified": 1753489912,
                 "narHash":
-                "sha256-N5waoqWt8aMr/MykZjSErOokYH6rOsMMXu3UOVH5kiw=",
+                "sha256-uDCFHeXdRIgJpYmtcUxGEsZ+hYlLPBhR83fdU+vbC1s=",
                 "owner": "NixOS",
                 "repo": "nixpkgs",
-                "rev": "70c74b02eac46f4e4aa071e45a6189ce0f6d9265",
+                "rev": "13e8d35b7d6028b7198f8186bc0347c6abaa2701",
                 "type": "github"
             },
             "original": {
@@ -67,6 +69,22 @@
                 "ref": "nixos-25.05",
                 "repo": "nixpkgs",
                 "type": "github"
+            }
+        },
+        "percent-encoding-rosetta-stone": {
+            "flake": false,
+            "locked": {
+                "lastModified": 1,
+                "narHash":
+                "sha256-6tgdbyzGtTaEeE+Ho6tLNv7lSlfQ7A24gtSMz4uATF8=",
+                "type": "tarball",
+                "url":
+"https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
+            },
+            "original": {
+                "type": "tarball",
+                "url":
+"https://codeberg.org/JasonYundt/percent-encoding-rosetta-stone/releases/download/v1/Percent-encoding%20Rosetta%20Stone%20version%201.tar.xz"
             }
         },
         "root": {
