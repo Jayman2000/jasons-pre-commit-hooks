@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
 import argparse
-import os
 import importlib.resources
 import pathlib
 import sys
@@ -11,10 +10,9 @@ import warnings
 from collections.abc import Container, Iterable
 from typing import Any, Final, NamedTuple, Optional
 
-import dulwich.repo
 import yaml
 
-from . import init, open_cwd_as_repo
+from . import init, paths_in_repo
 
 
 CHECK_IDS: Final = (
@@ -247,15 +245,6 @@ def pre_commit_hook_ids() -> Iterable[str]:
     for _, repo_info in PRE_COMMIT_REPOS_BY_PATH:
         for hook_id in repo_info.hook_ids:
             yield hook_id
-
-
-def paths_in_repo() -> Iterable[pathlib.Path]:
-    # I would have used dulwich.porcelain.ls_files(), but that function
-    # isn’t typed.
-    repo: dulwich.repo.Repo
-    with open_cwd_as_repo() as repo:
-        for byte_path in repo.open_index():
-            yield pathlib.Path(os.fsdecode(byte_path))
 
 
 def print_no_file_error(path: pathlib.Path) -> None:
