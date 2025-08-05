@@ -184,7 +184,7 @@ PCR_MYPY: Final = PreCommitRepoInfo(
 )
 PCR_RUFF: Final = PreCommitRepoInfo(
     url='https://github.com/astral-sh/ruff-pre-commit',
-    hook_ids=('ruff',)
+    hook_ids=('ruff-check',)
 )
 PCR_PRE_COMMIT_ITSELF: Final = PreCommitRepoInfo(
     url='https://github.com/pre-commit/pre-commit',
