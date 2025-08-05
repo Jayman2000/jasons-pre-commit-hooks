@@ -505,7 +505,7 @@ def main() -> int:
     )
     README_H1_ERROR: Final = (
         "Make sure that there’s a line that looks like"
-        f"this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
+        f" this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
     )
 
     if should_check_be_run('copying.md exists', ARGS.skip):
