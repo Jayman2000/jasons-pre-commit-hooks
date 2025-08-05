@@ -160,9 +160,6 @@ repos:
         rev: v0.12.7
         hooks:
             -
-                id: ruff
-                exclude: *default_excludes
-            -
                 id: ruff-check
                 exclude: *default_excludes
     -
