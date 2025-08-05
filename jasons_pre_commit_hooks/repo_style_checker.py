@@ -112,7 +112,8 @@ PCR_REUSE: Final = PreCommitRepoInfo(
 )
 PCR_PRE_COMMIT_UPDATE: Final = PreCommitRepoInfo(
     url='https://gitlab.com/vojko.pribudic.foss/pre-commit-update',
-    hook_ids=('pre-commit-update',)
+    hook_ids=('pre-commit-update',),
+    args=('--dry-run',)
 )
 PCR_EDITORCONFIG_CHECKER: Final = PreCommitRepoInfo(
     # editorconfig-checker-disable
