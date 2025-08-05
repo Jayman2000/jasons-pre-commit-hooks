@@ -215,6 +215,10 @@ PCR_NIX_PRE_COMMIT_HOOKS_FMT: Final = PreCommitRepoInfo(
     hook_ids=('nix-format',),
     args=('--keep-going',)
 )
+PCR_GDLINT: Final = PreCommitRepoInfo(
+    url='https://github.com/Scony/godot-gdscript-toolkit',
+    hook_ids=('gdlint',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -235,6 +239,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FLAKE_CHECK),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
     (('**flake.lock',), PCR_FLAKE_LOCK_UPDATER),
+    (('**.gd',), PCR_GDLINT),
 )
 
 
