@@ -13,7 +13,8 @@
     id: &id2 flake-lock-updater
     name: *id2
     entry: *id2
-    files: '(^|.*/)flake\.lock$'
+    always_run: true
+    pass_filenames: false
     language: python
     description: >-
         Runs “nix flake update” if any inputs in flake.lock are over a

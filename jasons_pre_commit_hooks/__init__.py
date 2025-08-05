@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+import collections.abc
 import contextlib
 import io
 import locale
+import os
 import pathlib
 import sys
 import warnings
@@ -53,3 +55,12 @@ def make_stdout_stderr_handle_errors_better() -> None:
 def open_cwd_as_repo() -> contextlib.closing[dulwich.repo.Repo]:
     CWD: Final = str(pathlib.Path.cwd())
     return contextlib.closing(dulwich.repo.Repo(CWD))
+
+
+def paths_in_repo() -> collections.abc.Iterable[pathlib.Path]:
+    # I would have used dulwich.porcelain.ls_files(), but that function
+    # isn’t typed.
+    repo: dulwich.repo.Repo
+    with open_cwd_as_repo() as repo:
+        for byte_path in repo.open_index():
+            yield pathlib.Path(os.fsdecode(byte_path))

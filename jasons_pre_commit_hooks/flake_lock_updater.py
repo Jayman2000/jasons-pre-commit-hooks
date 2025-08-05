@@ -10,7 +10,7 @@ import subprocess
 import sys
 from typing import Final
 
-from . import init
+from . import init, paths_in_repo
 
 
 exit_status: int
@@ -60,6 +60,13 @@ def try_to_update_lock_file(lock_file_path: pathlib.Path) -> None:
     print(f"Successfully updated “{lock_file_path}”.")
 
 
+def all_flake_lock_files() -> collections.abc.Iterable[pathlib.Path]:
+    path: pathlib.Path
+    for path in paths_in_repo():
+        if path.name == "flake.lock":
+            yield path
+
+
 def main() -> int:
     init()
     global exit_status
@@ -73,14 +80,23 @@ def main() -> int:
     )
     PARSER.add_argument(
         "paths",
-        nargs="+",
+        nargs="*",
         type=pathlib.Path,
-        help="The path to a flake.lock file.",
+        help=(
+            "The path to a flake.lock file. If no paths are specified "
+            "on the command-line, then flake-lock-updater will assume "
+            "that the current working directory is somewhere inside a "
+            "Git repository. It will then scan that Git repository for "
+            "files named flake.lock."
+        ),
         metavar="PATH"
     )
     ARGS: Final = PARSER.parse_args()
 
-    for lock_file_path in ARGS.paths:
+    LOCK_FILE_PATHS: Final[collections.abc.Iterable[pathlib.Path]] = (
+        ARGS.paths if len(ARGS.paths) > 0 else all_flake_lock_files()
+    )
+    for lock_file_path in LOCK_FILE_PATHS:
         # Lock files are guaranteed to be UTF-8 JSON files [1].
         #
         # editorconfig-checker-disable
