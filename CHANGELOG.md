@@ -12,6 +12,35 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.6.0] — 2025-08-05
+
+### Added
+
+- This repository now has a new pre-commit hook named
+`forbid-template-markers`.
+- `repo-style-checker` now requires that you use the new
+`forbid-template-markers` pre-commit hook.
+- `repo-style-checker` now requires that you use [`gdlint`] if you have
+`.gd` files in your repo.
+
+### Changed
+
+- `repo-style-checker`’s standard EditorConfig has been updated:
+    - It now uses two spaces for indentation in `flake.lock` files.
+    - It now no longer sets a line length limit for `.nix` files or
+    `.license` files.
+- `repo-style-checker` now requires that you pass the `--dry-run`
+argument to the  [`pre-commit-update`] pre-commit hook.
+- `repo-style-checker` now requires that you use the `ruff-check`
+pre-commit hook instead of the `ruff` pre-commit hook. [(`ruff` is a
+legacy alias for `ruff-check`).][legacy alias]
+
+### Fixed
+
+- A `repo-style-checker` error message no longer contains a typo.
+- The `flake-lock-updater` pre-commit hook will now always run, even if
+you haven’t modified `flake.lock`.
+
 ## [v0.5.0] — 2025-07-28
 
 ### Added
@@ -146,6 +175,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.6.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.6.0
 [v0.5.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.4.0
 [v0.3.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.3.0
@@ -154,7 +184,9 @@ editorconfig-checker-disable
 [v0.0.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.0.0
 [pre-version-0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/pre-version-0
 
+[`gdlint`]: https://github.com/Scony/godot-gdscript-toolkit/blob/b1bcaa19612ccb94049251302b216e5e48b46e66/.pre-commit-hooks.yaml#L1
 [`pre-commit-update`]: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
+[legacy alias]: https://github.com/astral-sh/ruff-pre-commit/blob/4cbc74d53fe5634e58e0e65db7d28939c9cec3f7/.pre-commit-hooks.yaml#L23-L25
 <!--
 editorconfig-checker-enable
 -->
