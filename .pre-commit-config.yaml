@@ -76,7 +76,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: v0.5.0
+        rev: v0.6.0
         hooks:
             -
                 id: detect-bad-unicode
@@ -105,6 +105,9 @@ repos:
                 exclude: *default_excludes
             -
                 id: flake-lock-updater
+                exclude: *default_excludes
+            -
+                id: forbid-template-markers
                 exclude: *default_excludes
     -
         # yamllint disable-line rule:line-length
@@ -157,7 +160,7 @@ repos:
         rev: v0.12.7
         hooks:
             -
-                id: ruff
+                id: ruff-check
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/pre-commit
