@@ -15,8 +15,6 @@ a look at [`VERSIONING.md`]. Specifically, [`VERSIONING.md`] will tell
 you what you need to to in order to find the API docs for the scripts in
 this repo.
 
-[`VERSIONING.md`]: ./VERSIONING.md
-
 ## The `stable` branch
 
 This repository has a branch that’s named `stable`. Whenever a new
@@ -56,6 +54,14 @@ work. Here’s how you fix it:
 [2]: https://pre-commit.com/#quick-start
 [3]: https://pre-commit.com/#2-add-a-pre-commit-configuration
 
+## Additional documentation
+
+- [`CHANGELOG.md`](./CHANGELOG.md)
+- [`Release process.md`](./Release%20process.md)
+- [`VERSIONING.md`]
+
 ## Copying
 
 See [`copying.md`](./copying.md).
+
+[`VERSIONING.md`]: ./VERSIONING.md
