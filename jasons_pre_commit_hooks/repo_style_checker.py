@@ -136,7 +136,6 @@ PCR_OFFICIAL_HOOKS_PYTHON: Final = PreCommitRepoInfo(
     url='https://github.com/pre-commit/pre-commit-hooks',
     hook_ids=(
         'debug-statements',
-        'fix-encoding-pragma'
     )
 )
 PCR_PYGREP_HOOKS: Final = PreCommitRepoInfo(
