@@ -158,10 +158,6 @@ PCR_FORBID_PATHS_THAT_MATCH: Final = PreCommitRepoInfo(
     hook_ids=('forbid-paths-that-match',),
     args=('--pattern', '^LICENSE', '--pattern', '^COPYING')
 )
-PCR_FLAKE_LOCK_UPDATER: Final = PreCommitRepoInfo(
-    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
-    hook_ids=('flake-lock-updater',)
-)
 PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     # editorconfig-checker-disable
     url='https://github.com/macisamuele/language-formatters-pre-commit-hooks',
@@ -237,7 +233,6 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('VERSIONING.md',), PCR_UNRELEASED_COMMIT_CHECKER),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FLAKE_CHECK),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
-    (('**flake.lock',), PCR_FLAKE_LOCK_UPDATER),
     (('**.gd',), PCR_GDLINT),
 )
 
