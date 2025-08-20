@@ -4,6 +4,7 @@
 import argparse
 import importlib.resources
 import pathlib
+import re
 import sys
 import textwrap
 import warnings
@@ -471,9 +472,37 @@ def main() -> int:
         choices=LINE_ENDING_CHOICES,
         help="The “.editorconfig correct text”"
     )
+    PARSER.add_argument(
+        '-i',
+        '--ignore-path-pattern',
+        action='append',
+        default=[],
+        type=re.compile,
+        help=(
+            "repo-style-checker will generate a list of all file paths "
+            "that exist in your repository. That list gets used by "
+            "certain checks. For example, the “standard hints” check "
+            "uses the list of file paths in order to determine whether "
+            "or not there are .py files in your repository. If there "
+            "are .py files in your repository, then the “standard "
+            "hints” check will require that you include a hint about "
+            "installing ruff in README.md. You can use "
+            "--ignore-path-pattern to make sure that certain file paths"
+            " aren’t added to the list of file paths, even if those "
+            "file paths really are in your Git repository. You can use "
+            "--ignore-path-pattern multiple times in a single "
+            "repo-style-checker command. Each time you use "
+            "--ignore-path-pattern, the argument that comes after it "
+            "must be a Python-style regular expression pattern. See "
+            "<https://docs.python.org/3/library/re.html> for details."
+        ),
+        metavar="REGEX_PATTERN"
+    )
     ARGS: Final = PARSER.parse_args()
 
-    PATHS: Final = set(path for path in paths_in_repo())
+    PATHS: Final = set(
+        path for path in paths_in_repo(ARGS.ignore_path_pattern)
+    )
     COPYING_PATH: Final = pathlib.Path('copying.md')
     COPYING_CONTENTS: Final = read_text_safe(COPYING_PATH)
     TO_LOOK_FOR: Final = "# Copying Information for "
