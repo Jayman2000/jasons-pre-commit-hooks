@@ -7,6 +7,7 @@ import io
 import locale
 import os
 import pathlib
+import re
 import sys
 import warnings
 from typing import Final
@@ -57,10 +58,18 @@ def open_cwd_as_repo() -> contextlib.closing[dulwich.repo.Repo]:
     return contextlib.closing(dulwich.repo.Repo(CWD))
 
 
-def paths_in_repo() -> collections.abc.Iterable[pathlib.Path]:
+def paths_in_repo(
+    ignore_patterns: collections.abc.Iterable[re.Pattern[str]]
+) -> collections.abc.Iterable[pathlib.Path]:
     # I would have used dulwich.porcelain.ls_files(), but that function
     # isn’t typed.
     repo: dulwich.repo.Repo
     with open_cwd_as_repo() as repo:
         for byte_path in repo.open_index():
-            yield pathlib.Path(os.fsdecode(byte_path))
+            path = pathlib.Path(os.fsdecode(byte_path))
+            path_string = str(path)
+            for ignore_pattern in ignore_patterns:
+                if ignore_pattern.fullmatch(path_string):
+                    break
+            else:
+                yield pathlib.Path(os.fsdecode(byte_path))
