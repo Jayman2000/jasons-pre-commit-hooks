@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2025 Jason Yundt <jason@jasonyundt.email>
-{ pkgs }:
+{ perSystem, pkgs }:
 pkgs.mkShell {
   name = "shell-for-working-on-jasons-pre-commit-hooks";
   packages = with pkgs; [
@@ -11,7 +11,7 @@ pkgs.mkShell {
     ghc
     nodejs
     cargo
-    rustc
+    perSystem.nixpkgsUnstable.rustc
     go
   ];
   shellHook = ''
