@@ -5,6 +5,9 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # TODO: This can be removed once the regular nixpkgs input provides a new
+    # enough version of rustc.
+    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     blueprint = {
       url = "github:numtide/blueprint";
       inputs = {
