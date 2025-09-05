@@ -12,6 +12,23 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.7.0] — 2025-09-05
+
+### Added
+
+- `repo-style-checker` now has a new `--ignore-path-pattern`
+command-line option.
+
+### Changed
+
+- `repo-style-checker` no longer requires that you use the
+`fix-encoding-pragma` pre-commit hook if your repository contains
+Python code. The latest versions of the `fix-encoding-pragma` pre-commit
+hook will always give you an error that says that you should no longer
+use the `fix-encoding-pragma` pre-commit hook.
+- `repo-style-checker` no longer requires that you use the
+`flake-lock-updater` pre-commit hook.
+
 ## [v0.6.0] — 2025-08-05
 
 ### Added
@@ -175,6 +192,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.7.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.0
 [v0.6.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.6.0
 [v0.5.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.5.0
 [v0.4.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.4.0
