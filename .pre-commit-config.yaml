@@ -57,9 +57,6 @@ repos:
             -
                 id: destroyed-symlinks
                 exclude: *default_excludes
-            -
-                id: fix-encoding-pragma
-                exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/pygrep-hooks
         rev: v1.10.0
@@ -76,7 +73,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: v0.6.0
+        rev: v0.7.0
         hooks:
             -
                 id: detect-bad-unicode
@@ -102,9 +99,6 @@ repos:
                     - '.editorconfig correct text'
             -
                 id: unreleased-commit-checker
-                exclude: *default_excludes
-            -
-                id: flake-lock-updater
                 exclude: *default_excludes
             -
                 id: forbid-template-markers
