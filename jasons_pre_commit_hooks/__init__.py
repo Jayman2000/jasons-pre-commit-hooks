@@ -59,7 +59,7 @@ def open_cwd_as_repo() -> contextlib.closing[dulwich.repo.Repo]:
 
 
 def paths_in_repo(
-    ignore_patterns: collections.abc.Iterable[re.Pattern[str]]
+    ignore_patterns: collections.abc.Iterable[re.Pattern[str]] = ()
 ) -> collections.abc.Iterable[pathlib.Path]:
     # I would have used dulwich.porcelain.ls_files(), but that function
     # isn’t typed.
