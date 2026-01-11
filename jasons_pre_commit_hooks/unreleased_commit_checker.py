@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-disable
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-enable
 import argparse
 import datetime
 from typing import Any, Final, NamedTuple, Optional, Self
 
 import dateutil.relativedelta
 import dulwich.objects
+import dulwich.refs
 import dulwich.repo
 import dulwich.walk
 import semver
@@ -24,11 +27,11 @@ TAG_REF_PREFIX: Final = b'refs/tags/'
 class TagForVersion:
     def __init__(
         self,
-        ref: bytes,
-        second_arg: bytes | dulwich.repo.Repo
+        ref: dulwich.refs.Ref,
+        second_arg: dulwich.objects.ObjectID | dulwich.repo.Repo
     ) -> None:
         self.name: str = ref_to_tag_name(ref)
-        self.target: bytes
+        self.target: dulwich.objects.ObjectID
         if isinstance(second_arg, bytes):
             self.target = second_arg
         else:
@@ -80,14 +83,18 @@ class UnreleasedCommitStats(NamedTuple):
     def from_cwd(cls) -> Self:
         repo: dulwich.repo.Repo
         with open_cwd_as_repo() as repo:
-            REFS: Final[dict[bytes, bytes]] = repo.get_refs()
+            # editorconfig-checker-disable
+            REFS: Final[dict[dulwich.refs.Ref, dulwich.objects.ObjectID]] = \
+                repo.get_refs()
+            # editorconfig-checker-enable
             TAGS: Final = (
                 TagForVersion(ref, repo)
                 for ref in REFS
                 if is_tag(ref)
             )
             LATEST_VERSION: Final[TagForVersion] = max(TAGS)
-            MAIN_HEAD: Final[bytes] = REFS[b'refs/heads/main']
+            MAIN_HEAD: Final[dulwich.objects.ObjectID] = \
+                REFS[dulwich.refs.Ref(b'refs/heads/main')]
             UNRELEASED_COMMIT_WALKER: Final = repo.get_walker(
                 include=[MAIN_HEAD],
                 exclude=[LATEST_VERSION.target]
