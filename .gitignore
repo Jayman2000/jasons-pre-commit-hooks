@@ -96,8 +96,10 @@
 # SPDX-FileCopyrightText: 2021 Wiblz <wiblzcode@gmail.com>
 # SPDX-FileCopyrightText: 2022 Will Frey <jfrey89@gmail.com>
 
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
 # editorconfig-checker-enable
+
+# Python-specific Git ignores:
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -274,3 +276,8 @@ cython_debug/
 #  For a more nuclear option (not recommended) you can uncomment the
 #  following to ignore the entire idea folder.
 #.idea/
+
+
+# Git ignores that are specific to this project:
+
+.nixos-test-history
