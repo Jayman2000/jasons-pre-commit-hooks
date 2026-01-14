@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2023–2024 Jason Yundt <jason@jasonyundt.email>
+# SPDX-FileCopyrightText: 2023–2026 Jason Yundt <jason@jasonyundt.email>
 repos:
     -
         repo: https://github.com/fsfe/reuse-tool
@@ -20,7 +20,7 @@ repos:
     -
         # yamllint disable-line rule:line-length
         repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-        rev: 3.4.1
+        rev: 3.6.0
         hooks:
             -
                 id: editorconfig-checker
@@ -66,7 +66,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/zricethezav/gitleaks
-        rev: v8.29.0
+        rev: v8.30.0
         hooks:
             -
                 id: gitleaks
@@ -106,7 +106,7 @@ repos:
     -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
-        rev: v2.15.0
+        rev: v2.16.0
         hooks:
             -
                 id: pretty-format-ini
@@ -120,21 +120,21 @@ repos:
                     - "4"
     -
         repo: https://github.com/adrienverge/yamllint
-        rev: v1.37.1
+        rev: v1.38.0
         hooks:
             -
                 id: yamllint
                 exclude: *default_excludes
     -
         repo: https://github.com/igorshubovych/markdownlint-cli
-        rev: v0.45.0
+        rev: v0.47.0
         hooks:
             -
                 id: markdownlint
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/mirrors-mypy
-        rev: v1.18.2
+        rev: v1.19.1
         hooks:
             -
                 id: mypy
@@ -151,21 +151,21 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.14.5
+        rev: v0.14.11
         hooks:
             -
                 id: ruff-check
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/pre-commit
-        rev: v4.4.0
+        rev: v4.5.1
         hooks:
             -
                 id: validate_manifest
                 exclude: *default_excludes
     -
         repo: https://github.com/NixOS/nixfmt
-        rev: v1.1.0
+        rev: v1.2.0
         hooks:
             -
                 id: nixfmt
@@ -196,3 +196,22 @@ repos:
                 args:
                     - --all-systems
                     - --keep-going
+    -
+        repo: local
+        hooks:
+            -
+                id: &id test-dev-shell-dependencies-for-pre-commit
+                name: *id
+                exclude: *default_excludes
+                stages:
+                    - manual
+                always_run: true
+                language: system
+                entry: nix
+                args:
+                    - --extra-experimental-features
+                    - nix-command flakes
+                    - run
+                    - --print-build-logs
+                    - .#test-dev-shell-dependencies-for-pre-commit
+                pass_filenames: false
