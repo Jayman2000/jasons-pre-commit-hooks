@@ -12,6 +12,15 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.7.1] — 2026-01-15
+
+### Fixed
+
+- `flake-lock-updater` no longer crashes every time it is run.
+
+- `unreleased-commit-checker` no longer uses incorrect types when
+calling certain [Dulwich](https://pypi.org/project/dulwich) functions.
+
 ## [v0.7.0] — 2025-09-05
 
 ### Added
@@ -192,6 +201,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.7.1]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.1
 [v0.7.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.0
 [v0.6.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.6.0
 [v0.5.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.5.0
