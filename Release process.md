@@ -114,7 +114,7 @@ Jason’s Pre-commit Hooks:
     1. Make sure that your changes to [`CHANGELOG.md`] are committed.
 
     1. Create a new commit that updates the `version` attribute in
-    `flake-blueprint/package.nix`.
+    `flake-blueprint/packages/jasons-pre-commit-hooks.nix`.
 
 1. Create the release by doing the following:
 
@@ -209,7 +209,8 @@ Jason’s Pre-commit Hooks:
     1. If there are any new pre-commit failures, then fix them.
 
     1. Revert the previously made commit that changed the value of the
-    `version` attribute in `flake-blueprint/package.nix`.
+    `version` attribute in
+    `flake-blueprint/packages/jasons-pre-commit-hooks.nix`.
 
 [`CHANGELOG.md`]: ./CHANGELOG.md
 [`VERSIONING.md`]: ./VERSIONING.md
