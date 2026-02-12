@@ -4,7 +4,7 @@
   description = "Pre-commit hooks that I use for my projects";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # TODO: This can be removed once the regular nixpkgs input provides a new
     # enough version of rustc.
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
