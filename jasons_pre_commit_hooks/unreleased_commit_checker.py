@@ -106,7 +106,7 @@ class UnreleasedCommitStats(NamedTuple):
                 OLDEST_UNRELEASED_COMMIT: Final = \
                     UNRELEASED_COMMIT_LOG[-1].commit
                 age_of_oldest = dateutil.relativedelta.relativedelta(
-                    datetime.datetime.now(datetime.timezone.utc),
+                    datetime.datetime.now(datetime.UTC),
                     commit_date(OLDEST_UNRELEASED_COMMIT)
                 )
             except IndexError:

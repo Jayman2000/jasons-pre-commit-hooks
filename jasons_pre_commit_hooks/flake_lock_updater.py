@@ -33,7 +33,7 @@ def all_last_modified_values(
             if isinstance(value, int):
                 yield datetime.datetime.fromtimestamp(
                     value,
-                    tz=datetime.timezone.utc
+                    tz=datetime.UTC
                 )
             else:
                 error_message: str = (
@@ -107,7 +107,7 @@ def main() -> int:
                 all_last_modified_values(lock_file_path, lock_file_data)
             )
             smallest_input_age = (
-                datetime.datetime.now(datetime.timezone.utc)
+                datetime.datetime.now(datetime.UTC)
                 - latest_last_modified_value
             )
             if smallest_input_age.days > 7:
