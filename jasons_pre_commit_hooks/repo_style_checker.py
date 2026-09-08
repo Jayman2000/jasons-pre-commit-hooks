@@ -10,7 +10,7 @@ import sys
 import textwrap
 import warnings
 from collections.abc import Container, Iterable
-from typing import Any, Final, NamedTuple, Optional
+from typing import Any, Final, NamedTuple
 
 import yaml
 
@@ -103,8 +103,8 @@ PRE_COMMIT_STANDARD_EXCLUDE: Final = '^LICENSES/'
 class PreCommitRepoInfo(NamedTuple):
     url: str
     hook_ids: Iterable[str]
-    exclude: Optional[str] = PRE_COMMIT_STANDARD_EXCLUDE
-    args: Optional[Iterable[str]] = None
+    exclude: str | None = PRE_COMMIT_STANDARD_EXCLUDE
+    args: Iterable[str] | None = None
 PCR_REUSE: Final = PreCommitRepoInfo(
     url='https://github.com/fsfe/reuse-tool',
     hook_ids=('reuse',),
@@ -247,9 +247,9 @@ def print_no_file_error(path: pathlib.Path) -> None:
 
 
 def extract_str_from_line_that_starts_with(
-    text: Optional[str],
+    text: str | None,
     to_look_for: str
-) -> Optional[str]:
+) -> str | None:
     if text is not None:
         for line in text.splitlines():
             if line.startswith(to_look_for):
@@ -407,7 +407,7 @@ def should_check_be_run(id: str, skip_list: Container[str]) -> bool:
     return id not in skip_list
 
 
-def read_text_safe(path: pathlib.Path) -> Optional[str]:
+def read_text_safe(path: pathlib.Path) -> str | None:
     try:
         return path.read_text(encoding='utf_8')
     except FileNotFoundError:

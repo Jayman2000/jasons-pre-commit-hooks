@@ -4,7 +4,7 @@
 # editorconfig-checker-enable
 import argparse
 import datetime
-from typing import Any, Final, NamedTuple, Optional, Self
+from typing import Any, Final, NamedTuple, Self
 
 import dateutil.relativedelta
 import dulwich.objects
@@ -35,7 +35,7 @@ class TagForVersion:
         else:
             self.target = second_arg.get_peeled(ref)
 
-        self.version_number: Optional[semver.Version] = None
+        self.version_number: semver.Version | None = None
         if self.name.startswith('v'):
             version_number: str = self.name.removeprefix('v')
             try:
@@ -72,7 +72,7 @@ class TagForVersion:
         return self.version_number is not None
 
 
-age_of_oldest_type = Optional[dateutil.relativedelta.relativedelta]
+age_of_oldest_type = dateutil.relativedelta.relativedelta | None
 class UnreleasedCommitStats(NamedTuple):
     amount: int
     age_of_oldest: age_of_oldest_type
