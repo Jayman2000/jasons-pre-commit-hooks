@@ -151,7 +151,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.15.10
+        rev: v0.16.6
         hooks:
             -
                 id: ruff-check

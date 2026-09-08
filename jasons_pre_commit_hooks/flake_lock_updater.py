@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-disable
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-enable
 import argparse
 import collections.abc
 import datetime
@@ -12,36 +13,32 @@ from typing import Final
 
 from . import init, paths_in_repo
 
-
 exit_status: int
 # See <man:sysexits.h(3head)>.
 EX_DATAERR: Final = 65
 
 
-yield_type = collections.abc.Iterable[datetime.datetime]
 def all_last_modified_values(
     lock_file_path: pathlib.Path,
     json_value: dict[object, object]
-) -> yield_type:
+) -> collections.abc.Iterable[datetime.datetime]:
     global exit_status
     for key, value in json_value.items():
         if isinstance(value, dict):
-            generator: yield_type = all_last_modified_values(
+            yield from all_last_modified_values(
                     lock_file_path,
                     value
             )
-            for last_modified_value in generator:
-                yield last_modified_value
         elif key == "lastModified":
             if isinstance(value, int):
                 yield datetime.datetime.fromtimestamp(
                     value,
-                    tz=datetime.timezone.utc
+                    tz=datetime.UTC
                 )
             else:
                 error_message: str = (
                     f'ERROR: {lock_file_path} contains an invalid'
-                    f' "lastModified" value: {repr(value)}'
+                    f' "lastModified" value: {value!r}'
                 )
                 print(error_message, file=sys.stderr)
                 exit_status = EX_DATAERR
@@ -110,7 +107,7 @@ def main() -> int:
                 all_last_modified_values(lock_file_path, lock_file_data)
             )
             smallest_input_age = (
-                datetime.datetime.now(datetime.timezone.utc)
+                datetime.datetime.now(datetime.UTC)
                 - latest_last_modified_value
             )
             if smallest_input_age.days > 7:

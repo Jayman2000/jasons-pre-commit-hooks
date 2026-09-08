@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-disable
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-enable
 import argparse
 import importlib.resources
 import pathlib
@@ -9,12 +10,11 @@ import sys
 import textwrap
 import warnings
 from collections.abc import Container, Iterable
-from typing import Any, Final, NamedTuple, Optional
+from typing import Any, Final, NamedTuple
 
 import yaml
 
 from . import init, paths_in_repo
-
 
 CHECK_IDS: Final = (
     'copying.md exists',
@@ -103,8 +103,8 @@ PRE_COMMIT_STANDARD_EXCLUDE: Final = '^LICENSES/'
 class PreCommitRepoInfo(NamedTuple):
     url: str
     hook_ids: Iterable[str]
-    exclude: Optional[str] = PRE_COMMIT_STANDARD_EXCLUDE
-    args: Optional[Iterable[str]] = None
+    exclude: str | None = PRE_COMMIT_STANDARD_EXCLUDE
+    args: Iterable[str] | None = None
 PCR_REUSE: Final = PreCommitRepoInfo(
     url='https://github.com/fsfe/reuse-tool',
     hook_ids=('reuse',),
@@ -239,8 +239,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
 
 def pre_commit_hook_ids() -> Iterable[str]:
     for _, repo_info in PRE_COMMIT_REPOS_BY_PATH:
-        for hook_id in repo_info.hook_ids:
-            yield hook_id
+        yield from repo_info.hook_ids
 
 
 def print_no_file_error(path: pathlib.Path) -> None:
@@ -248,9 +247,9 @@ def print_no_file_error(path: pathlib.Path) -> None:
 
 
 def extract_str_from_line_that_starts_with(
-    text: Optional[str],
+    text: str | None,
     to_look_for: str
-) -> Optional[str]:
+) -> str | None:
     if text is not None:
         for line in text.splitlines():
             if line.startswith(to_look_for):
@@ -402,13 +401,13 @@ def check_pc_config_hooks(
 def should_check_be_run(id: str, skip_list: Container[str]) -> bool:
     if id not in CHECK_IDS:
         warnings.warn(
-            f"{repr(id)} wasn’t in CHECK_IDS. It won’t be listed when "
+            f"{id!r} wasn’t in CHECK_IDS. It won’t be listed when "
             "users run --help."
         )
     return id not in skip_list
 
 
-def read_text_safe(path: pathlib.Path) -> Optional[str]:
+def read_text_safe(path: pathlib.Path) -> str | None:
     try:
         return path.read_text(encoding='utf_8')
     except FileNotFoundError:
@@ -495,9 +494,7 @@ def main() -> int:
     )
     ARGS: Final = PARSER.parse_args()
 
-    PATHS: Final = set(
-        path for path in paths_in_repo(ARGS.ignore_path_pattern)
-    )
+    PATHS: Final = set(paths_in_repo(ARGS.ignore_path_pattern))
     COPYING_PATH: Final = pathlib.Path('copying.md')
     COPYING_CONTENTS: Final = read_text_safe(COPYING_PATH)
     TO_LOOK_FOR: Final = "# Copying Information for "
@@ -521,21 +518,24 @@ def main() -> int:
         f" this:\n\n\t{H1_MARKER}{PROJECT_NAME}\n"
     )
 
-    if should_check_be_run('copying.md exists', ARGS.skip):
-        if COPYING_PATH not in PATHS:
-            print_no_file_error(COPYING_PATH)
-            return 1
-    if should_check_be_run('copying.md project name', ARGS.skip):
-        if PROJECT_NAME is None:
-            print(
-                "ERROR: Couldn’t automatically detect the project’s",
-                f"name by looking at {COPYING_PATH}. In order for",
-                f"autodetection to work, {COPYING_PATH} should contain",
-                "a line that looks like",
-                f"this:\n\n\t{TO_LOOK_FOR}<project-name>\n",
-                file=sys.stderr
-            )
-            return 1
+    if (
+        should_check_be_run('copying.md exists', ARGS.skip)
+        and COPYING_PATH not in PATHS
+    ):
+        print_no_file_error(COPYING_PATH)
+        return 1
+    if (
+        should_check_be_run('copying.md project name', ARGS.skip)
+        and PROJECT_NAME is None
+    ):
+        print(
+            "ERROR: Couldn’t automatically detect the project’s name",
+            f"by looking at {COPYING_PATH}. In order for autodetection",
+            f"to work, {COPYING_PATH} should contain a line that looks",
+            f"like this:\n\n\t{TO_LOOK_FOR}<project-name>\n",
+            file=sys.stderr
+        )
+        return 1
     if should_check_be_run('copying.md correct text', ARGS.skip):
         EXPECTED_COPYING_INFO: Final = COPYING_TEMPLATE.format(
             PROJECT_NAME
@@ -551,47 +551,57 @@ def main() -> int:
                 encoding='utf_8'
             )
             return 1
-    if should_check_be_run('README.md exists', ARGS.skip):
-        if README_PATH not in PATHS:
-            print_no_file_error(README_PATH)
-            return 1
-    if should_check_be_run('README.md has <h1>', ARGS.skip):
-        if README_H1_CONTENTS is None:
-            print(
-                f"ERROR: There’s no <h1> in {README_PATH}.",
-                README_H1_ERROR,
-                file=sys.stderr
-            )
-            return 1
-    if should_check_be_run('names match', ARGS.skip):
-        if README_H1_CONTENTS != PROJECT_NAME:
-            print(
-                f"ERROR: The project’s name in {README_PATH} does not",
-                f"match its name in {COPYING_PATH}.",
-                README_H1_ERROR,
-                file=sys.stderr
-            )
-            return 1
-    if should_check_be_run('README.md links to copying.md', ARGS.skip):
-        if (
+    if (
+        should_check_be_run('README.md exists', ARGS.skip)
+        and README_PATH not in PATHS
+    ):
+        print_no_file_error(README_PATH)
+        return 1
+    if (
+        should_check_be_run('README.md has <h1>', ARGS.skip)
+        and README_H1_CONTENTS is None
+    ):
+        print(
+            f"ERROR: There’s no <h1> in {README_PATH}.",
+            README_H1_ERROR,
+            file=sys.stderr
+        )
+        return 1
+    if (
+        should_check_be_run('names match', ARGS.skip)
+        and README_H1_CONTENTS != PROJECT_NAME
+    ):
+        print(
+            f"ERROR: The project’s name in {README_PATH} does not",
+            f"match its name in {COPYING_PATH}.",
+            README_H1_ERROR,
+            file=sys.stderr
+        )
+        return 1
+    if (
+        should_check_be_run('README.md links to copying.md', ARGS.skip)
+        and (
             README_CONTENTS is None
             or COPYING_LINK not in README_CONTENTS
-        ):
-            COPYING_LINK_INDENTED: Final = textwrap.indent(
-                COPYING_LINK,
-                "\t"
-            )
-            print(
-                f"ERROR: {README_PATH} is missing a link to",
-                f"{COPYING_PATH}. Make sure that {README_PATH}",
-                f"contains the following:\n\n{COPYING_LINK_INDENTED}",
-                file=sys.stderr
-            )
-            return 1
-    if should_check_be_run('.editorconfig exists', ARGS.skip):
-        if EDITOR_CONFIG_PATH not in PATHS:
-            print_no_file_error(EDITOR_CONFIG_PATH)
-            return 1
+        )
+    ):
+        COPYING_LINK_INDENTED: Final = textwrap.indent(
+            COPYING_LINK,
+            "\t"
+        )
+        print(
+            f"ERROR: {README_PATH} is missing a link to",
+            f"{COPYING_PATH}. Make sure that {README_PATH} contains",
+            f"the following:\n\n{COPYING_LINK_INDENTED}",
+            file=sys.stderr
+        )
+        return 1
+    if (
+        should_check_be_run('.editorconfig exists', ARGS.skip)
+        and EDITOR_CONFIG_PATH not in PATHS
+    ):
+        print_no_file_error(EDITOR_CONFIG_PATH)
+        return 1
     if should_check_be_run('.editorconfig correct text', ARGS.skip):
         expected_editor_config: str = EDITOR_CONFIG_TEMPLATE
         if ARGS.line_ending == 'crlf':
@@ -612,22 +622,26 @@ def main() -> int:
                 encoding='utf_8'
             )
             return 1
-    if should_check_be_run('.pre-commit-config.yaml exists', ARGS.skip):
-        if PC_CONFIG_PATH not in PATHS:
-            print_no_file_error(PC_CONFIG_PATH)
-            return 1
-    if should_check_be_run('README.md has hints', ARGS.skip):
-        if (
+    if (
+        should_check_be_run('.pre-commit-config.yaml exists', ARGS.skip)
+        and PC_CONFIG_PATH not in PATHS
+    ):
+        print_no_file_error(PC_CONFIG_PATH)
+        return 1
+    if (
+        should_check_be_run('README.md has hints', ARGS.skip)
+        and (
             README_CONTENTS is None
             or HINTS_FOR_CONTRIBUTORS_HEADING not in README_CONTENTS
-        ):
-            print(
-                f"ERROR: {README_PATH} doesn’t have a “Hints for",
-                f"Contributors” section. Make sure that {README_PATH}",
-                f"contains this:\n\n\t{HINTS_FOR_CONTRIBUTORS_HEADING}",
-                file=sys.stderr
-            )
-            return 1
+        )
+    ):
+        print(
+            f"ERROR: {README_PATH} doesn’t have a “Hints for",
+            f"Contributors” section. Make sure that {README_PATH}",
+            f"contains this:\n\n\t{HINTS_FOR_CONTRIBUTORS_HEADING}",
+            file=sys.stderr
+        )
+        return 1
     if should_check_be_run('standard hints', ARGS.skip):
         globs: Iterable[str]
         hint: str
@@ -637,27 +651,26 @@ def main() -> int:
             for path in PATHS:
                 glob: str
                 for glob in globs:
-                    if path.match(glob, case_sensitive=False):
-                        if (
+                    if (
+                        path.match(glob, case_sensitive=False)
+                        and (
                             README_CONTENTS is None
                             or hint not in README_CONTENTS
-                        ):
-                            hint_indented: str = textwrap.indent(
-                                hint,
-                                "\t"
-                            )
-                            print(
-                                f"ERROR: {README_PATH} doesn’t contain",
-                                "this hint for",
-                                f"contributors:\n\n{hint_indented}\n",
-                                file=sys.stderr
-                            )
-                            print(
-                                f"(glob {glob} matched by file {path})",
-                                file=sys.stderr
-                            )
-                            any_errors = True
-                            break
+                        )
+                    ):
+                        hint_indented: str = textwrap.indent(hint, "\t")
+                        print(
+                            f"ERROR: {README_PATH} doesn’t contain",
+                            "this hint for",
+                            f"contributors:\n\n{hint_indented}\n",
+                            file=sys.stderr
+                        )
+                        print(
+                            f"(glob {glob} matched by file {path})",
+                            file=sys.stderr
+                        )
+                        any_errors = True
+                        break
         if any_errors:
             return 1
     if should_check_be_run('standard hooks', ARGS.skip):
