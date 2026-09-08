@@ -494,9 +494,7 @@ def main() -> int:
     )
     ARGS: Final = PARSER.parse_args()
 
-    PATHS: Final = set(
-        path for path in paths_in_repo(ARGS.ignore_path_pattern)
-    )
+    PATHS: Final = set(paths_in_repo(ARGS.ignore_path_pattern))
     COPYING_PATH: Final = pathlib.Path('copying.md')
     COPYING_CONTENTS: Final = read_text_safe(COPYING_PATH)
     TO_LOOK_FOR: Final = "# Copying Information for "
