@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # SPDX-License-Identifier: CC0-1.0
 # editorconfig-checker-disable
 # SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
 # editorconfig-checker-enable
 import argparse
 import datetime
-from typing import Any, Final, NamedTuple, Optional, Self
+from typing import Any, Final, NamedTuple, Self
 
 import dateutil.relativedelta
 import dulwich.objects
@@ -15,7 +14,6 @@ import dulwich.walk
 import semver
 
 from . import init, open_cwd_as_repo
-
 
 # editorconfig-checker-disable
 # See
@@ -37,7 +35,7 @@ class TagForVersion:
         else:
             self.target = second_arg.get_peeled(ref)
 
-        self.version_number: Optional[semver.Version] = None
+        self.version_number: semver.Version | None = None
         if self.name.startswith('v'):
             version_number: str = self.name.removeprefix('v')
             try:
@@ -67,14 +65,14 @@ class TagForVersion:
                 else:
                     return self.version_number < other.version_number
         else:
-            raise ValueError(f"Can’t compare {self} to {other}.")
+            raise TypeError(f"Can’t compare {self} to {other}.")
 
 
     def uses_semver(self) -> bool:
         return self.version_number is not None
 
 
-age_of_oldest_type = Optional[dateutil.relativedelta.relativedelta]
+age_of_oldest_type = dateutil.relativedelta.relativedelta | None
 class UnreleasedCommitStats(NamedTuple):
     amount: int
     age_of_oldest: age_of_oldest_type
@@ -108,7 +106,7 @@ class UnreleasedCommitStats(NamedTuple):
                 OLDEST_UNRELEASED_COMMIT: Final = \
                     UNRELEASED_COMMIT_LOG[-1].commit
                 age_of_oldest = dateutil.relativedelta.relativedelta(
-                    datetime.datetime.now(datetime.timezone.utc),
+                    datetime.datetime.now(datetime.UTC),
                     commit_date(OLDEST_UNRELEASED_COMMIT)
                 )
             except IndexError:

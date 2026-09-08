@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2025 Jason Yundt <jason@jasonyundt.email>
+# SPDX-FileCopyrightText: 2025–2026 Jason Yundt <jason@jasonyundt.email>
 {
   description = "Pre-commit hooks that I use for my projects";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     # TODO: This can be removed once the regular nixpkgs input provides a new
     # enough version of rustc.
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixos-unstable";
