@@ -401,7 +401,7 @@ def check_pc_config_hooks(
 def should_check_be_run(id: str, skip_list: Container[str]) -> bool:
     if id not in CHECK_IDS:
         warnings.warn(
-            f"{repr(id)} wasn’t in CHECK_IDS. It won’t be listed when "
+            f"{id!r} wasn’t in CHECK_IDS. It won’t be listed when "
             "users run --help."
         )
     return id not in skip_list

@@ -38,7 +38,7 @@ def all_last_modified_values(
             else:
                 error_message: str = (
                     f'ERROR: {lock_file_path} contains an invalid'
-                    f' "lastModified" value: {repr(value)}'
+                    f' "lastModified" value: {value!r}'
                 )
                 print(error_message, file=sys.stderr)
                 exit_status = EX_DATAERR
