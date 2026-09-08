@@ -6,7 +6,8 @@ import argparse
 import pathlib
 import sys
 import unicodedata
-from typing import Final, Iterable
+from collections.abc import Iterable
+from typing import Final
 
 import wcwidth
 
