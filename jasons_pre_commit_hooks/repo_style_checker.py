@@ -239,8 +239,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
 
 def pre_commit_hook_ids() -> Iterable[str]:
     for _, repo_info in PRE_COMMIT_REPOS_BY_PATH:
-        for hook_id in repo_info.hook_ids:
-            yield hook_id
+        yield from repo_info.hook_ids
 
 
 def print_no_file_error(path: pathlib.Path) -> None:

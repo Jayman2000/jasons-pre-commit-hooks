@@ -18,20 +18,17 @@ exit_status: int
 EX_DATAERR: Final = 65
 
 
-yield_type = collections.abc.Iterable[datetime.datetime]
 def all_last_modified_values(
     lock_file_path: pathlib.Path,
     json_value: dict[object, object]
-) -> yield_type:
+) -> collections.abc.Iterable[datetime.datetime]:
     global exit_status
     for key, value in json_value.items():
         if isinstance(value, dict):
-            generator: yield_type = all_last_modified_values(
+            yield from all_last_modified_values(
                     lock_file_path,
                     value
             )
-            for last_modified_value in generator:
-                yield last_modified_value
         elif key == "lastModified":
             if isinstance(value, int):
                 yield datetime.datetime.fromtimestamp(
