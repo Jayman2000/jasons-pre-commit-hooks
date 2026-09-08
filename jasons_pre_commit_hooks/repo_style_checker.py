@@ -16,7 +16,6 @@ import yaml
 
 from . import init, paths_in_repo
 
-
 CHECK_IDS: Final = (
     'copying.md exists',
     'copying.md project name',

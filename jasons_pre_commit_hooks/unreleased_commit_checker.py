@@ -15,7 +15,6 @@ import semver
 
 from . import init, open_cwd_as_repo
 
-
 # editorconfig-checker-disable
 # See
 # <https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddeftagatag>.

@@ -13,7 +13,6 @@ from typing import Final
 
 from . import init, paths_in_repo
 
-
 exit_status: int
 # See <man:sysexits.h(3head)>.
 EX_DATAERR: Final = 65
