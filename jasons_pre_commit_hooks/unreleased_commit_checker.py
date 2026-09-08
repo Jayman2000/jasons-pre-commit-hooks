@@ -65,7 +65,7 @@ class TagForVersion:
                 else:
                     return self.version_number < other.version_number
         else:
-            raise ValueError(f"Can’t compare {self} to {other}.")
+            raise TypeError(f"Can’t compare {self} to {other}.")
 
 
     def uses_semver(self) -> bool:
