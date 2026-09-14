@@ -218,10 +218,7 @@ PCR_GDLINT: Final = PreCommitRepoInfo(
 PCR_PRE_COMMIT_CARGO: Final = PreCommitRepoInfo(
     url='https://github.com/AndrejOrsula/pre-commit-cargo',
     hook_ids=('cargo-update',),
-    # This works around this issue [1].
-    #
-    # [1]: <https://github.com/AndrejOrsula/pre-commit-cargo/issues/7>
-    args=()
+    args=('--', '--breaking')
 )
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
