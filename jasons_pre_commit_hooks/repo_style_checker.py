@@ -163,6 +163,7 @@ PCR_LANGUAGE_FORMATTERS: Final = PreCommitRepoInfo(
     url='https://github.com/macisamuele/language-formatters-pre-commit-hooks',
     # editorconfig-checker-enable
     hook_ids=('pretty-format-toml',),
+    exclude=f'{PRE_COMMIT_STANDARD_EXCLUDE}|.*\\.lock$',
     args=('--autofix', '--indent', '4')
 )
 PCR_YAMLLINT: Final = PreCommitRepoInfo(
@@ -214,6 +215,14 @@ PCR_GDLINT: Final = PreCommitRepoInfo(
     url='https://github.com/Scony/godot-gdscript-toolkit',
     hook_ids=('gdlint',)
 )
+PCR_PRE_COMMIT_CARGO: Final = PreCommitRepoInfo(
+    url='https://github.com/AndrejOrsula/pre-commit-cargo',
+    hook_ids=('cargo-update',),
+    # This works around this issue [1].
+    #
+    # [1]: <https://github.com/AndrejOrsula/pre-commit-cargo/issues/7>
+    args=()
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -234,6 +243,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FLAKE_CHECK),
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
     (('**.gd',), PCR_GDLINT),
+    (('Cargo.toml',), PCR_PRE_COMMIT_CARGO),
 )
 
 
