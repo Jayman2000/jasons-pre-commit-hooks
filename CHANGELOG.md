@@ -12,6 +12,33 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.8.0] — 2026-09-14
+
+### Changed
+
+- Removed UTF-8 [encoding declarations] from the top of `.py` files.
+
+    [As of Python 3.0, the default character encoding for `.py` files is
+    UTF-8.][default character encoding] This means that including a
+    UTF-8 encoding declaration does nothing if you’re using Python
+    version 3.0 or higher. The `pyproject.toml` file for the previous
+    version of Jason’s Pre-commit Hooks (v0.7.1) already specified that
+    you need Python version 3.12 or higher in order to install Jason’s
+    Pre-commit Hooks.
+
+    As far as I can tell, this change makes the source code for Jason’s
+    Pre-commit Hooks smaller, but it does not change the behavior of
+    Jason’s Pre-commit Hooks at all.
+
+- Miscellaneous code clean up. In other words, the code for Jason’s
+Pre-commit Hooks was improved without significantly changing its
+behavior.
+
+<!-- editorconfig-checker-disable -->
+[encoding declarations]: https://docs.python.org/3.14/reference/lexical_analysis.html#encoding-declarations
+[default character encoding]: https://docs.python.org/3.14/whatsnew/3.0.html#text-vs-data-instead-of-unicode-vs-8-bit
+<!-- editorconfig-checker-enable -->
+
 ## [v0.7.1] — 2026-01-15
 
 ### Fixed
@@ -201,6 +228,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.8.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.8.0
 [v0.7.1]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.1
 [v0.7.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.0
 [v0.6.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.6.0
