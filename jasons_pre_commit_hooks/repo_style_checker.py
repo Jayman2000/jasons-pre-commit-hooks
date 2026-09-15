@@ -352,12 +352,12 @@ def check_pc_config_hooks(
                     )
                     no_errors = False
                     continue
-                if exclude != repo_info.exclude:
+                if not exclude.startswith(repo_info.exclude):
                     print(
                         f"ERROR: In the pre-commit config, <{url}>’s",
-                        f"{id} hook didn’t use the right value for its",
-                        "exclude pattern. It should have been",
-                        f"{repo_info.exclude}.",
+                        f"{id} hook didn’t use a good value for its",
+                        "exclude pattern. The value should have",
+                        f"started with {repo_info.exclude}.",
                         ACTUAL_VALUE.format(exclude),
                         file=sys.stderr
                     )
