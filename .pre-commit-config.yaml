@@ -16,6 +16,12 @@ repos:
                 id: pre-commit-update
                 args:
                     - --dry-run
+                    # TODO: Switch back to a stable version of Jason’s
+                    # Pre-commit Hooks once there’s a stable release
+                    # that has 9157189fa0f6ab6fea52e4a0079376d089eb862e
+                    # merged into it.
+                    - --bleeding-edge
+                    - jasons-pre-commit-hooks
                 exclude: &default_excludes '^LICENSES/'
     -
         # yamllint disable-line rule:line-length
@@ -73,7 +79,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: v0.8.0
+        rev: 34040e913f5b16d56ff42a945d8ebaac6cba125f
         hooks:
             -
                 id: detect-bad-unicode
