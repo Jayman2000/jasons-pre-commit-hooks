@@ -50,3 +50,10 @@
     # triggered for this file.
     entry: "placeholder-\u0445𭢸눳🕛𫨖-placeholder"
     language: pygrep
+-
+    id: &id7 old-subtree-alert
+    name: *id7
+    entry: *id7
+    language: python
+    always_run: true
+    pass_filenames: false
