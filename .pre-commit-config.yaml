@@ -119,7 +119,7 @@ repos:
                 exclude: *default_excludes
             -
                 id: pretty-format-toml
-                exclude: *default_excludes
+                exclude: ^LICENSES/|.*\.lock$
                 args:
                     - --autofix
                     - --indent
