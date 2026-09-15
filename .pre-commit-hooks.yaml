@@ -1,7 +1,8 @@
 %YAML 1.2
 ---
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# yamllint disable-line rule:line-length
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
 -
     id: &id1 detect-bad-unicode
     name: *id1
@@ -60,3 +61,11 @@
     description: >-
         Make sures that your Cargo.toml files are set to use the latest
         Rust edition.
+-
+    id: &id8 old-subtree-alert
+    name: *id8
+    entry: *id8
+    language: python
+    always_run: true
+    pass_filenames: false
+    description: Gives errors when Git subtrees are too old.
