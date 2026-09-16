@@ -146,8 +146,8 @@ details.
 
     1. Make sure that your changes to [`CHANGELOG.md`] are committed.
 
-    1. Create a new commit that updates the `version` attribute in
-    `flake-blueprint/packages/jasons-pre-commit-hooks.nix`.
+    1. Create a new commit that updates the `version` value in
+    `pyproject.toml`.
 
 1. Create the release by doing the following:
 
@@ -280,8 +280,7 @@ by following these instructions:
     1. If there are any new pre-commit failures, then fix them.
 
     1. Revert the previously made commit that changed the value of the
-    `version` attribute in
-    `flake-blueprint/packages/jasons-pre-commit-hooks.nix`.
+    `version` key in `pyproject.toml`.
 
     1. Switch back to the `main` branch by running this command:
 

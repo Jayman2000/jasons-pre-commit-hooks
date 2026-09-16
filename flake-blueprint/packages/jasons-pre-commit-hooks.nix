@@ -8,12 +8,14 @@
 let
   pythonPackages = pkgs.python3.pkgs;
 in
-pythonPackages.buildPythonApplication {
+pythonPackages.buildPythonApplication (finalAttrs: {
   inherit pname;
-  # TODO: This doesn’t match the version number used by the Python
-  # distribution package. I don’t know how to make this version number
-  # match that version number.
-  version = "0.dev${flake.lastModifiedDate}";
+  version =
+    let
+      pyprojectData = pkgs.lib.trivial.importTOML "${finalAttrs.src}/pyproject.toml";
+    in
+    pyprojectData.project.version;
+
   src = flake;
   pyproject = true;
 
@@ -28,4 +30,4 @@ pythonPackages.buildPythonApplication {
     semver
     wcwidth
   ];
-}
+})
