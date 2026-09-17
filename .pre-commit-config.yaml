@@ -190,6 +190,13 @@ repos:
                     - --all-systems
                     - --keep-going
     -
+        repo: https://github.com/AndrejOrsula/pre-commit-cargo
+        rev: 0.5.0
+        hooks:
+            -
+                id: cargo-fmt
+                exclude: *default_excludes
+    -
         repo: local
         hooks:
             -
