@@ -146,8 +146,8 @@ details.
 
     1. Make sure that your changes to [`CHANGELOG.md`] are committed.
 
-    1. Create a new commit that updates the `version` value in
-    `pyproject.toml`.
+    1. Create a new commit that updates the `version` value in both
+    `Cargo.toml` and `pyproject.toml`.
 
 1. Create the release by doing the following:
 

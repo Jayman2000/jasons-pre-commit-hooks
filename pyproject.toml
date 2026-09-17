@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: 2024 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-disable
+# SPDX-FileCopyrightText: 2024, 2026 Jason Yundt <jason@jasonyundt.email>
+# editorconfig-checker-enable
 
 [build-system]
 build-backend = "setuptools.build_meta"
@@ -25,9 +27,9 @@ dependencies = [
     "wcwidth"
 ]
 description = "Hooks for <https://pre-commit.com>"
-name = "jasons-pre-commit-hooks"
+name = "jasons-pre-commit-hooks-python"
 requires-python = ">=3.12"
-version = "0.dev0"
+version = "0.0.0"
 
 # This file doesn’t really contain a license. Instead, it contains the
 # repo’s copying information.
@@ -36,11 +38,11 @@ file = "copying.md"
 
 # editorconfig-checker-disable
 [project.scripts]
-detect-bad-unicode = "jasons_pre_commit_hooks.detect_bad_unicode:main"
-flake-lock-updater = "jasons_pre_commit_hooks.flake_lock_updater:main"
-forbid-paths-that-match = "jasons_pre_commit_hooks.forbid_paths_that_match:main"
-repo-style-checker = "jasons_pre_commit_hooks.repo_style_checker:main"
-unreleased-commit-checker = "jasons_pre_commit_hooks.unreleased_commit_checker:main"
+detect-bad-unicode = "jasons_pre_commit_hooks_python.detect_bad_unicode:main"
+flake-lock-updater = "jasons_pre_commit_hooks_python.flake_lock_updater:main"
+forbid-paths-that-match = "jasons_pre_commit_hooks_python.forbid_paths_that_match:main"
+repo-style-checker = "jasons_pre_commit_hooks_python.repo_style_checker:main"
+unreleased-commit-checker = "jasons_pre_commit_hooks_python.unreleased_commit_checker:main"
 
 # editorconfig-checker-enable
 [project.urls]
@@ -51,6 +53,6 @@ mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 
 [tool.setuptools]
 include-package-data = true
-packages = ["jasons_pre_commit_hooks"]
+packages = ["jasons_pre_commit_hooks_python"]
 
 [tool.setuptools_scm]

@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2026 Jason Yundt <jason@jasonyundt.email>
+
+[dependencies]
+cargo-util-schemas = "0.14.1"
+toml = "1.1.6"
+
+[dependencies.cargo]
+# This next part makes it so that Cargo avoids using external
+# dependencies. This is useful because pre-commit only guarantees that a
+# Rust toolchain is available for Rust pre-commit hooks. pre-commit does
+# not guarantee that external dependencies are available.
+default-features = false
+features = [
+    "http-transport-reqwest",
+    "vendored-libgit2",
+    "vendored-openssl"
+]
+version = "0.98.0"
+
+[dependencies.clap]
+features = ["derive"]
+version = "4.6.7"
+
+[package]
+edition = "2024"
+name = "jasons-pre-commit-hooks-rust"
+version = "0.0.0"

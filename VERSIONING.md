@@ -12,15 +12,19 @@ project’s public API:
 - This repo can be installed as a [Python distribution package][2] by
 running `pip install .`
 - That distribution package provides multiple [console scripts][3]. Only
-console scripts that are listed in `.pre-commit-hooks.yaml` are part of
-the public API.
-- You can run `<console-script-name> --help` to get a list of options
-and arguments that are accepted by that command. Those options and
-arguments are a part of the public API.
-- This repo can be used as a [pre-commit hooks repo][4].
+Python console scripts that are listed in `.pre-commit-hooks.yaml` are
+part of the public API.
+- This repo also contains a [Rust package][4]. It can be built by
+running `cargo build`
+- That Rust package provides at least one binary. Only the Rust binaries
+that are listed in `.pre-commit-hooks.yaml` are part of the public API.
+- You can run `<python-console-script> --help` or `<rust-binary> --help`
+to get a list of options and arguments that are accepted by that
+command. Those options and arguments are a part of the public API.
+- This repo can be used as a [pre-commit hooks repo][5].
 - The contents of `.pre-commit-hooks.yaml` is a part of the public API.
 For more information about the format of `.pre-commit-hooks.yaml`, see
-[pre-commit’s documentation][5].
+[pre-commit’s documentation][6].
 
 ## Version numbers for unstable commits
 
@@ -93,7 +97,7 @@ fixes for significant bugs introduced in regular releases.
 
 ## Determining the previous version number
 
-[The JMVS specification talks about incrementing version numbers:][6]
+[The JMVS specification talks about incrementing version numbers:][7]
 
 > 1. Patch version Z (x.y.Z | x > 0) MUST be incremented if only
 > backward compatible bug fixes are introduced. A bug fix is defined as
@@ -154,7 +158,8 @@ the instructions in [`Release process.md`](./Release%20process.md).
 [1]: https://github.com/Jayman2000/jmvs/releases/tag/v0.0.0
 [2]: https://packaging.python.org/en/latest/glossary/#term-Distribution-Package
 [3]: https://setuptools.pypa.io/en/stable/userguide/entry_point.html#console-scripts
-[4]: https://pre-commit.com/#repos-repo
-[5]: https://pre-commit.com/#creating-new-hooks
-[6]: https://github.com/Jayman2000/jmvs/blob/v0.0.0/semver.md#semantic-versioning-specification-semver
+[4]: https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html#packages-and-crates
+[5]: https://pre-commit.com/#repos-repo
+[6]: https://pre-commit.com/#creating-new-hooks
+[7]: https://github.com/Jayman2000/jmvs/blob/v0.0.0/semver.md#semantic-versioning-specification-semver
 <!--- editorconfig-checker-enable -->
