@@ -611,11 +611,13 @@ def main() -> int:
         return 1
     if should_check_be_run('.editorconfig correct text', ARGS.skip):
         expected_editor_config: str = EDITOR_CONFIG_TEMPLATE
+        expected_editor_config_newline: str = "\n"
         if ARGS.line_ending == 'crlf':
             expected_editor_config = expected_editor_config.replace(
                 "end_of_line = lf",
                 "end_of_line = crlf"
             )
+            expected_editor_config_newline = "\r\n"
         EDITOR_CONFIG_CONTENTS: Final = \
             read_text_safe(EDITOR_CONFIG_PATH)
         if EDITOR_CONFIG_CONTENTS != expected_editor_config:
@@ -626,7 +628,8 @@ def main() -> int:
             )
             EDITOR_CONFIG_PATH.write_text(
                 expected_editor_config,
-                encoding='utf_8'
+                encoding='utf_8',
+                newline=expected_editor_config_newline
             )
             return 1
     if (
