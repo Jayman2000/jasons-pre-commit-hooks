@@ -1,10 +1,6 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-FileCopyrightText: 2025–2026 Jason Yundt <jason@jasonyundt.email>
-{
-  pname,
-  pkgs,
-  flake,
-}:
+{ pname, pkgs }:
 let
   pythonPackages = pkgs.python3.pkgs;
 in
@@ -21,7 +17,14 @@ pythonPackages.buildPythonApplication (
       pname;
     inherit (pyprojectData.project) version;
 
-    src = flake;
+    src =
+      let
+        root = ../..;
+      in
+      pkgs.lib.fileset.toSource {
+        inherit root;
+        fileset = pkgs.lib.fileset.union (root + /pyproject.toml) (root + /jasons_pre_commit_hooks_python);
+      };
     pyproject = true;
 
     build-system = with pythonPackages; [
