@@ -12,6 +12,7 @@ pkgs.mkShell {
     nodejs
     cargo
     perSystem.nixpkgsUnstable.rustc
+    rustfmt
     go
   ];
   shellHook = ''

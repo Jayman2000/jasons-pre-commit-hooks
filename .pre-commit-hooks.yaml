@@ -50,3 +50,13 @@
     # triggered for this file.
     entry: "placeholder-\u0445𭢸눳🕛𫨖-placeholder"
     language: pygrep
+-
+    id: &id7 check-if-rust-edition-is-old
+    name: *id7
+    entry: *id7
+    language: rust
+    always_run: true
+    pass_filenames: false
+    description: >-
+        Make sures that your Cargo.toml files are set to use the latest
+        Rust edition.
