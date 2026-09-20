@@ -220,6 +220,10 @@ PCR_PRE_COMMIT_CARGO: Final = PreCommitRepoInfo(
     hook_ids=('cargo-update',),
     args=('--', '--breaking')
 )
+PCR_JPCH_FOR_CARGO_TOML_FILES: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('check-if-rust-edition-is-old',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -241,6 +245,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
     (('**.gd',), PCR_GDLINT),
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO),
+    (('Cargo.toml',), PCR_JPCH_FOR_CARGO_TOML_FILES),
 )
 
 
