@@ -217,6 +217,10 @@ PCR_GDLINT: Final = PreCommitRepoInfo(
 )
 PCR_PRE_COMMIT_CARGO: Final = PreCommitRepoInfo(
     url='https://github.com/AndrejOrsula/pre-commit-cargo',
+    hook_ids=('cargo-fmt',),
+)
+PCR_PRE_COMMIT_CARGO_UPDATE: Final = PreCommitRepoInfo(
+    url='https://github.com/AndrejOrsula/pre-commit-cargo',
     hook_ids=('cargo-update',),
     args=('--', '--breaking')
 )
@@ -245,6 +249,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**.nix',), PCR_NIX_PRE_COMMIT_HOOKS_FMT),
     (('**.gd',), PCR_GDLINT),
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO),
+    (('Cargo.toml',), PCR_PRE_COMMIT_CARGO_UPDATE),
     (('Cargo.toml',), PCR_JPCH_FOR_CARGO_TOML_FILES),
 )
 
