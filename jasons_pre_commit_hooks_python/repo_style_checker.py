@@ -228,6 +228,10 @@ PCR_JPCH_FOR_CARGO_TOML_FILES: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
     hook_ids=('check-if-rust-edition-is-old',)
 )
+PCR_JPCH_GITIGNORE_GENERATOR: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('gitignore-generator',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -251,6 +255,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO),
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO_UPDATE),
     (('Cargo.toml',), PCR_JPCH_FOR_CARGO_TOML_FILES),
+    (('Extra.gitignore',), PCR_JPCH_GITIGNORE_GENERATOR),
 )
 
 
