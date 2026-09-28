@@ -12,6 +12,48 @@ The format is based on
 [`./VERSIONING.md`](./VERSIONING.md) for information about this
 project’s version numbers.
 
+## [v0.9.0] — 2026-09-28
+
+### Added
+
+- A new `check-if-rust-edition-is-old` pre-commit hook
+
+- A new `old-subtree-alert` pre-commit hook
+
+- A new `gitignore-generator` pre-commit hook
+
+### Changed
+
+- `repo-style-checker` now requires that the [`cargo-update`] and
+[`cargo-fmt`] pre-commit hooks are used if the repository contains at
+least one `Cargo.toml` file.
+
+- `repo-style-checker`’s standard EditorConfig file has been updated so
+that there isn’t line length limits for `.lock` files.
+
+- `repo-style-checker` now allows you to extend pre-commit hook exclude
+patterns. This means that you can now exclude additional files on top of
+what you are required to exclude.
+
+- `repo-style-checker` now requires that the new `gitignore-generator`
+hook is used if the repository contains a `Extra.gitignore` file.
+
+- `repo-style-checker` now requires that a new Hint for Contributors is
+present if the repository contains a `Extra.gitignore` file.
+
+### Fixed
+
+- `repo-style-checker --line-ending lf` will now actually use LF [line
+endings][line-endings] when you run it on Windows. Previously, if you
+ran that command on Windows, then it would incorrectly use CRLF line
+endings.
+
+<!-- editorconfig-checker-disable -->
+[`cargo-fmt`]: https://github.com/AndrejOrsula/pre-commit-cargo/blob/0.5.0/.pre-commit-hooks.yaml#L1
+[`cargo-update`]: https://github.com/AndrejOrsula/pre-commit-cargo/blob/0.5.0/.pre-commit-hooks.yaml#L10
+[line-endings]: https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-5/#G10213
+<!-- editorconfig-checker-enable -->
+
 ## [v0.8.0] — 2026-09-14
 
 ### Changed
@@ -228,6 +270,7 @@ version numbering scheme. That’s why its version number is so weird.
 <!--
 editorconfig-checker-disable
 -->
+[v0.9.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.9.0
 [v0.8.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.8.0
 [v0.7.1]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.1
 [v0.7.0]: https://github.com/Jayman2000/jasons-pre-commit-hooks/releases/tag/v0.7.0
