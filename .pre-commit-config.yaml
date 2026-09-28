@@ -196,6 +196,14 @@ repos:
             -
                 id: cargo-fmt
                 exclude: *default_excludes
+            -
+                id: cargo-update
+                exclude: *default_excludes
+                args:
+                    - --cutoff
+                    - 3 months ago
+                    - --
+                    - --breaking
     -
         repo: local
         hooks:
