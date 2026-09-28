@@ -109,6 +109,9 @@ repos:
             -
                 id: forbid-template-markers
                 exclude: *default_excludes
+            -
+                id: check-if-rust-edition-is-old
+                exclude: *default_excludes
     -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
