@@ -79,13 +79,25 @@ work. Here’s how you fix it:
     2. Run `pre-commit clean`
     3. Run `pre-commit install-hooks`
 """
+HFC_GITIGNORE_GENERATOR: Final = \
+"""
+- This repository does not contain a `.gitignore` file. Instead, this
+repository has a pre-commit hook that will automatically generate a
+`.gitignore` file for you. Once you have pre-commit installed, you can
+run this command in order to generate a `.gitignore` file:
+
+    ```bash
+    pre-commit run --all gitignore-generator
+    ```
+"""
 HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
     (('**',), HFC_LINE_LENGTH),
     (('.pre-commit-config.yaml',), HFC_PRE_COMMIT),
     (('.pre-commit-config.yaml',), HFC_PRE_COMMIT_LINKS),
     (('.editorconfig',), HFC_EDITOR_CONFIG),
     (('**.md',), HFC_MARKDOWN),
-    (PYTHON_GLOBS, HFC_RUFF)
+    (PYTHON_GLOBS, HFC_RUFF),
+    (("Extra.gitignore",), HFC_GITIGNORE_GENERATOR)
 )
 
 
@@ -228,6 +240,10 @@ PCR_JPCH_FOR_CARGO_TOML_FILES: Final = PreCommitRepoInfo(
     url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
     hook_ids=('check-if-rust-edition-is-old',)
 )
+PCR_JPCH_GITIGNORE_GENERATOR: Final = PreCommitRepoInfo(
+    url='https://github.com/Jayman2000/jasons-pre-commit-hooks',
+    hook_ids=('gitignore-generator',)
+)
 PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('**',), PCR_REUSE),
     (('.pre-commit-config.yaml',), PCR_PRE_COMMIT_UPDATE),
@@ -251,6 +267,7 @@ PRE_COMMIT_REPOS_BY_PATH: Final = (
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO),
     (('Cargo.toml',), PCR_PRE_COMMIT_CARGO_UPDATE),
     (('Cargo.toml',), PCR_JPCH_FOR_CARGO_TOML_FILES),
+    (('Extra.gitignore',), PCR_JPCH_GITIGNORE_GENERATOR),
 )
 
 

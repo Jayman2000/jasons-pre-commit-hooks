@@ -21,6 +21,7 @@ classifiers = [
 ]
 dependencies = [
     "dulwich",
+    "identify",
     "PyYAML",
     "python-dateutil",
     "semver",
@@ -41,6 +42,7 @@ file = "copying.md"
 detect-bad-unicode = "jasons_pre_commit_hooks_python.detect_bad_unicode:main"
 flake-lock-updater = "jasons_pre_commit_hooks_python.flake_lock_updater:main"
 forbid-paths-that-match = "jasons_pre_commit_hooks_python.forbid_paths_that_match:main"
+gitignore-generator = "jasons_pre_commit_hooks_python.gitignore_generator:main"
 old-subtree-alert = "jasons_pre_commit_hooks_python.old_subtree_alert:main"
 repo-style-checker = "jasons_pre_commit_hooks_python.repo_style_checker:main"
 unreleased-commit-checker = "jasons_pre_commit_hooks_python.unreleased_commit_checker:main"
