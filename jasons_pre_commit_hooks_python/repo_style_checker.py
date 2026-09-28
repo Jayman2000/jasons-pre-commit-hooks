@@ -79,13 +79,25 @@ work. Here’s how you fix it:
     2. Run `pre-commit clean`
     3. Run `pre-commit install-hooks`
 """
+HFC_GITIGNORE_GENERATOR: Final = \
+"""
+- This repository does not contain a `.gitignore` file. Instead, this
+repository has a pre-commit hook that will automatically generate a
+`.gitignore` file for you. Once you have pre-commit installed, you can
+run this command in order to generate a `.gitignore` file:
+
+    ```bash
+    pre-commit run --all gitignore-generator
+    ```
+"""
 HINTS_FOR_CONTRIBUTORS_BY_PATH: Final = (
     (('**',), HFC_LINE_LENGTH),
     (('.pre-commit-config.yaml',), HFC_PRE_COMMIT),
     (('.pre-commit-config.yaml',), HFC_PRE_COMMIT_LINKS),
     (('.editorconfig',), HFC_EDITOR_CONFIG),
     (('**.md',), HFC_MARKDOWN),
-    (PYTHON_GLOBS, HFC_RUFF)
+    (PYTHON_GLOBS, HFC_RUFF),
+    (("Extra.gitignore",), HFC_GITIGNORE_GENERATOR)
 )
 
 
