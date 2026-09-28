@@ -30,7 +30,7 @@ dependencies = [
 description = "Hooks for <https://pre-commit.com>"
 name = "jasons-pre-commit-hooks-python"
 requires-python = ">=3.12"
-version = "0.9.0"
+version = "0.0.0"
 
 # This file doesn’t really contain a license. Instead, it contains the
 # repo’s copying information.
