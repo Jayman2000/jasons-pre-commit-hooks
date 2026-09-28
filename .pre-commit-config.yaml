@@ -80,7 +80,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/Jayman2000/jasons-pre-commit-hooks
-        rev: 34040e913f5b16d56ff42a945d8ebaac6cba125f
+        rev: 42af0ca492bf6e8ef224cae08ed61c7f14f3a172
         hooks:
             -
                 id: detect-bad-unicode
