@@ -112,6 +112,14 @@ repos:
             -
                 id: check-if-rust-edition-is-old
                 exclude: *default_excludes
+            -
+                id: old-subtree-alert
+                exclude: *default_excludes
+                args:
+                    - jasons_pre_commit_hooks_python/gitignore
+                    - https://github.com/github/gitignore
+                    - HEAD
+                    - 3 months ago
     -
         # yamllint disable-line rule:line-length
         repo: &lfpch_url https://github.com/macisamuele/language-formatters-pre-commit-hooks
