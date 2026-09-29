@@ -16,12 +16,6 @@ repos:
                 id: pre-commit-update
                 args:
                     - --dry-run
-                    # TODO: Switch back to a stable version of Jason’s
-                    # Pre-commit Hooks once there’s a stable release
-                    # that has 9157189fa0f6ab6fea52e4a0079376d089eb862e
-                    # merged into it.
-                    - --bleeding-edge
-                    - jasons-pre-commit-hooks
                 # yamllint disable-line rule:line-length
                 exclude: &default_excludes '^LICENSES/|^jasons_pre_commit_hooks_python/gitignore'
     -
