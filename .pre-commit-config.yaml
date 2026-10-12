@@ -10,7 +10,7 @@ repos:
             - id: reuse
     -
         repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
-        rev: v0.9.0
+        rev: v0.10.0
         hooks:
             -
                 id: pre-commit-update
@@ -146,7 +146,7 @@ repos:
                 exclude: *default_excludes
     -
         repo: https://github.com/pre-commit/mirrors-mypy
-        rev: v2.3.1
+        rev: v2.4.0
         hooks:
             -
                 id: mypy
@@ -163,7 +163,7 @@ repos:
                     - --strict
     -
         repo: https://github.com/astral-sh/ruff-pre-commit
-        rev: v0.16.9
+        rev: v0.17.0
         hooks:
             -
                 id: ruff-check
