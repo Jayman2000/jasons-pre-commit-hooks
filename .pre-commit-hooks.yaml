@@ -80,3 +80,33 @@
     description: >-
         Automatically generates a gitignore file based on the contents
         of your repo.
+-
+    # TODO: This should be removed if this upstream cargo-edit feature
+    # request [1] gets implemented.
+    #
+    # [1]: <TODO: File the upstream feature request>
+    id: &id10 cargo-upgrade
+    name: *id10
+    # When creating a Rust pre-commit hook that depends on a Rust binary
+    # that’s from an external package, you would normally add an
+    # additional_dependencies entry that looks something like this:
+    #
+    # additional_dependencies: "cli:cargo-edit:0.13.13"
+    #
+    # (See this part of pre-commit’s documentation [1]).
+    #
+    # If I were to do that, then I would need to figure out a way to
+    # make sure that that the version number in that
+    # additional_dependencies line gets kept up to date. Instead of
+    # figuring that out, I have decided to use a shim. That way, I can
+    # just rely on the existing mechanisms for keeping Cargo.toml and
+    # Cargo.lock files up to date.
+    #
+    # [1]: <https://pre-commit.com#rust>
+    entry: shim-for-cargo-upgrade
+    args:
+        - upgrade
+    language: rust
+    always_run: true
+    pass_filenames: false
+    description: Updates version ranges in Cargo.toml files.

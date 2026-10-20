@@ -1,9 +1,11 @@
 <!--
 SPDX-License-Identifier: CC0-1.0
-SPDX-FileCopyrightText: 2024–2025 Jason Yundt <jason@jasonyundt.email>
+SPDX-FileCopyrightText: 2024–2026 Jason Yundt <jason@jasonyundt.email>
 -->
 
 # Versioning Information for Jason’s Pre-commit Hooks
+
+## Public API
 
 This project follows [version 0.0.0 of the JMVS specification][1]. That
 specification says that projects must declare a public API. Here is this
@@ -25,6 +27,35 @@ command. Those options and arguments are a part of the public API.
 - The contents of `.pre-commit-hooks.yaml` is a part of the public API.
 For more information about the format of `.pre-commit-hooks.yaml`, see
 [pre-commit’s documentation][6].
+
+### Special rules for the `cargo-upgrade` pre-commit hook
+
+The `cargo-upgrade` pre-commit hook is an exception to the above public
+API rules:
+
+- The `cargo-upgrade` pre-commit hook listed in `.pre-commit-hooks.yaml`
+corresponds with the `shim-for-cargo-upgrade` Rust binary. This
+repository does not provide a `cargo-upgrade` Rust binary.
+- The `cargo-upgrade` pre-commit hook is a part of the public API.
+- The `shim-for-cargo-upgrade` Rust binary is a part of the public API.
+- When you run `shim-for-cargo-upgrade`, it will run [`cargo`]. Any
+command-line arguments that were passed to `shim-for-cargo-upgrade`
+(other than the first item from the return value of [Rust’s
+`std::env::args_os()` function][args_os]) will be forwarded to `cargo`.
+- If you run `shim-for-cargo-upgrade --help`, then you might get a list
+of options and arguments that are accepted by the
+`shim-for-cargo-upgrade` command. If do get a list of options and
+arguments, then those options and arguments are not a part of the public
+API.
+- When running `shim-for-cargo-upgrade`, you must use the `cargo
+upgrade` subcommand. If you use a different subcommand or no subcommand
+at all, then you are breaking this public API’s rules. Don’t do that.
+- You can run `shim-for-cargo-upgrade upgrade --help` to get a list of
+options and arguments that are accepted by the `cargo upgrade`
+subcommand. Those options and arguments are a part of the public API.
+
+[`cargo`]: https://doc.rust-lang.org/cargo/index.html
+[args_os]: https://doc.rust-lang.org/1.98.1/std/env/fn.args_os.html
 
 ## Version numbers for unstable commits
 
