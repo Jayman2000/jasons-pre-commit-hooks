@@ -14,6 +14,7 @@ pkgs.mkShell {
     perSystem.nixpkgsUnstable.rustc
     rustfmt
     go
+    perl
   ];
   shellHook = ''
     export PIP_NO_BINARY=ruff

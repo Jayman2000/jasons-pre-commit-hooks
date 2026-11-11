@@ -131,7 +131,7 @@ let
       # This is required or else the machine will run out of resources.
       virtualisation = {
         memorySize = 8 * 1024;
-        diskSize = 4 * 1024;
+        diskSize = 8 * 1024;
       };
     };
   nixosIntegrationTestModule = {
